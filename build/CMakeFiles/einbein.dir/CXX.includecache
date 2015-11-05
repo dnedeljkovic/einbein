@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/dejan/eeros-framework/includes/eeros/logger/LogEntry.hpp
+
+/home/dejan/eeros-framework/includes/eeros/logger/LogWriter.hpp
+eeros/logger/Writer.hpp
+-
+string
+-
+
+/home/dejan/eeros-framework/includes/eeros/logger/Logger.hpp
+eeros/logger/LogEntry.hpp
+-
+
+/home/dejan/eeros-framework/includes/eeros/logger/StreamLogWriter.hpp
+eeros/logger/LogWriter.hpp
+-
+ostream
+-
+mutex
+-
+
+/home/dejan/eeros-framework/includes/eeros/logger/Writer.hpp
+
+/home/dejan/projects/einbein/main.cpp
+iostream
+-
+eeros/logger/Logger.hpp
+-
+eeros/logger/StreamLogWriter.hpp
+-
+

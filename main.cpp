@@ -1,6 +1,16 @@
 #include <iostream>
 
-int main(int argc, char **argv) {
-    std::cout << "Hello, world!" << std::endl;
+#include <eeros/logger/Logger.hpp>
+#include <eeros/logger/StreamLogWriter.hpp>
+
+int main() {
+    using namespace eeros::logger;
+
+    StreamLogWriter w(std::cout);
+    Logger<LogWriter>::setDefaultWriter(&w);
+    Logger<LogWriter> log;
+
+    log.info() << "Hello, einbein";
+
     return 0;
 }
