@@ -9,6 +9,5 @@ link_directories(/home/dejan/flinklib/build-arm/lib)
 
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
-add_executable(einbein main.cpp)
-
-target_link_libraries(einbein eeros)
+add_subdirectory(src)
+add_subdirectory(test)

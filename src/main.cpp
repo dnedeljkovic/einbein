@@ -1,5 +1,5 @@
 #include <iostream>
-#include <eeros/hal/FlinkPwm.hpp>
+#include <unistd.h>
 
 #include <eeros/hal/HAL.hpp>
 #include <eeros/safety/SafetySystem.hpp>
@@ -10,7 +10,7 @@
 #include <eeros/hal/FlinkDigOut.hpp>
 #include <eeros/hal/FlinkFqd.hpp>
 #include <eeros/hal/FlinkAnalogOut.hpp>
-
+#include <eeros/hal/FlinkPwm.hpp>
 
 
 #define FPGA_DEVICE "/dev/flink0"
@@ -28,13 +28,13 @@ using namespace eeros::logger;
 using namespace eeros::hal;
 //using namespace eeros::safety;
 
-static volatile bool running = true;
+/*static volatile bool running = true;
 void sig_handler(int signum){
     running = false;
-}
+}*/
 
 int main(int argc, char *argv[]){
-    signal(SIGINT, sig_handler);
+//    signal(SIGINT, sig_handler);
 
     StreamLogWriter w(std::cout);
     Logger<LogWriter>::setDefaultWriter(&w);
@@ -48,13 +48,13 @@ int main(int argc, char *argv[]){
     HAL& hal = HAL::instance();
     
     log.trace() << "  Creating device structure...";
-    FlinkDevice onBoard (ON_BOAD_FPGA_DEVICE);
+    FlinkDevice onBoard (FPGA_DEVICE);
     
     /*
      * GPIO
      */
     // Safety Stop
-    FlinkDigIn safetyStop("safetyStop", &onBoard, GPIO_ID, 33);
+/*    FlinkDigIn safetyStop("safetyStop", &onBoard, GPIO_ID, 33);
     // Motor 1
     FlinkDigOut mot1IN1("mot1IN1", &onBoard, GPIO_ID, 0);
     FlinkDigOut mot1IN2("mot1IN2", &onBoard, GPIO_ID, 1);
@@ -112,7 +112,7 @@ int main(int argc, char *argv[]){
     FlinkDigIn SwitchMode4("SwitchMode4", &onBoard, GPIO_ID, 50);
     FlinkDigIn SwitchMode5("SwitchMode5", &onBoard, GPIO_ID, 51);
     FlinkDigIn SwitchMode6("SwitchMode6", &onBoard, GPIO_ID, 52);
-    
+*/    
     // FPGA Digital IO
     // TODO gpio 53 to 65
     
@@ -120,27 +120,27 @@ int main(int argc, char *argv[]){
      * FQD
      */
     // Motor 1
-    FlinkFqd mot1Enc("mot1Enc", &onBoard, FQD_ID, 0); //TODO scale, offset, initValue
+/*    FlinkFqd mot1Enc("mot1Enc", &onBoard, FQD_ID, 0); //TODO scale, offset, initValue
     // Motor 2
     FlinkFqd mot2Enc("mot2Enc", &onBoard, FQD_ID, 1); //TODO scale, offset, initValue
     // Motor 3
     FlinkFqd mot3Enc("mot3Enc", &onBoard, FQD_ID, 2); //TODO scale, offset, initValue
-    
+*/    
     /*
      * DAC
      */
     // Motor 1
-    FlinkAnalogOut mot1DAC("mot1DAC", &onBoard, DAC_ID, 0); //TODO scale, offset
+/*    FlinkAnalogOut mot1DAC("mot1DAC", &onBoard, DAC_ID, 0); //TODO scale, offset
     // Motor 2
     FlinkAnalogOut mot2DAC("mot2DAC", &onBoard, DAC_ID, 1); //TODO scale, offset
     // Motor 2
     FlinkAnalogOut mot3DAC("mot3DAC", &onBoard, DAC_ID, 2); //TODO scale, offset
-    
+*/    
     /*
      * PWM
      */
     // LiDAR 
-    FlinkPwm lidarPWM("lidarPWM", &onBoard, PWM_ID, 0); //not used (TODO scale, offset)
+//    FlinkPwm lidarPWM("lidarPWM", &onBoard, PWM_ID, 0); //not used (TODO scale, offset)
     
     /*
      * IMU
@@ -151,9 +151,10 @@ int main(int argc, char *argv[]){
     /*
      * Add to HAL
      */
-    hal.addPeripheralInput(&safetyStop);
+//    hal.addPeripheralInput(&safetyStop);
     //TODO hier weiter machen!!!!!
     
+      
     log.trace() << "ended";
     exit (1);
 }

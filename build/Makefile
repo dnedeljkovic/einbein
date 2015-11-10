@@ -108,32 +108,21 @@ einbein: cmake_check_build_system
 
 # fast build rule for target.
 einbein/fast:
-	$(MAKE) -f CMakeFiles/einbein.dir/build.make CMakeFiles/einbein.dir/build
+	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/build
 .PHONY : einbein/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+#=============================================================================
+# Target rules for targets named digIO
 
-# target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/einbein.dir/build.make CMakeFiles/einbein.dir/main.cpp.o
-.PHONY : main.cpp.o
+# Build rule for target.
+digIO: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 digIO
+.PHONY : digIO
 
-main.i: main.cpp.i
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/einbein.dir/build.make CMakeFiles/einbein.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/einbein.dir/build.make CMakeFiles/einbein.dir/main.cpp.s
-.PHONY : main.cpp.s
+# fast build rule for target.
+digIO/fast:
+	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/build
+.PHONY : digIO/fast
 
 # Help Target
 help:
@@ -142,11 +131,9 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... einbein"
 	@echo "... rebuild_cache"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... einbein"
+	@echo "... digIO"
 .PHONY : help
 
 
