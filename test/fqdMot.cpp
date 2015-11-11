@@ -11,14 +11,15 @@
 #include <eeros/hal/FlinkFqd.hpp>
 #include <eeros/hal/FlinkAnalogOut.hpp>
 #include <eeros/hal/FlinkPwm.hpp>
+#include "../constants/constants.hpp"
 
 
 #define FPGA_DEVICE "/dev/flink0"
 
 // unique-id of flink subdevices
-#define FQD_ID	0
-//#define DAC_ID	3
-//#define GPIO_ID	2
+#define FQD_ID	1
+//#define DAC_ID	0
+#define GPIO_ID	3
 //#define IMU_ID	5
 //#define PWM_ID	6
 
@@ -44,14 +45,20 @@ int main(int argc, char *argv[]){
     FlinkDevice onBoard (FPGA_DEVICE);
     
     
-
     FlinkDigIn TasterRes3("TasterRes3", &onBoard, GPIO_ID, 0);
     FlinkDigIn TasterStart("TasterStart", &onBoard, GPIO_ID, 1);
     FlinkDigOut LEDRes5("LEDRes5", &onBoard, GPIO_ID, 2);
     
+    FlinkDigOut Mot3EncSupret("Mot3EncSupret", &onBoard, GPIO_ID, 3);
+    FlinkFqd mot3Enc("mot3Enc", &onBoard, FQD_ID, 0, fqd0scale, fqd0offset, fqd0delta);
+    
     hal.addPeripheralInput(&TasterRes3);
     hal.addPeripheralInput(&TasterStart);
     hal.addPeripheralOutput(&LEDRes5);
+    hal.addPeripheralOutput(&Mot3EncSupret);
+    hal.addPeripheralInput(&mot3Enc);
+    
+    Mot3EncSupret.set(false);	//set output to GND
     
     bool toggle = true;
         
@@ -59,10 +66,13 @@ int main(int argc, char *argv[]){
   
       if(!TasterStart.get()){
 	toggle = !toggle;
-	sleep(1);
+	mot3Enc.reset();
       }
       
       LEDRes5.set(toggle);
+      sleep(1);
+      log.info() << "Motor 3 Encoder: " << mot3Enc.get();
+      
     }
       
     log.trace() << "ended";

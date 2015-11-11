@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/dejan/projects/einbein/test/digIO.cpp" "/home/dejan/projects/einbein/build/test/CMakeFiles/digIO.dir/digIO.cpp.o"
+  "/home/dejan/projects/einbein/test/fqdMot.cpp" "/home/dejan/projects/einbein/build/test/CMakeFiles/fqdMot.dir/fqdMot.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -74,7 +74,7 @@ src/preinstall:
 src/CMakeFiles/einbein.dir/all:
 	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/depend
 	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/dejan/projects/einbein/build/CMakeFiles  2
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/dejan/projects/einbein/build/CMakeFiles  3
 	@echo "Built target einbein"
 .PHONY : src/CMakeFiles/einbein.dir/all
 
@@ -106,16 +106,55 @@ clean: src/CMakeFiles/einbein.dir/clean
 # Directory level rules for directory test
 
 # Convenience name for "all" pass in the directory.
+test/all: test/CMakeFiles/dacMot.dir/all
 test/all: test/CMakeFiles/digIO.dir/all
+test/all: test/CMakeFiles/fqdMot.dir/all
 .PHONY : test/all
 
 # Convenience name for "clean" pass in the directory.
+test/clean: test/CMakeFiles/dacMot.dir/clean
 test/clean: test/CMakeFiles/digIO.dir/clean
+test/clean: test/CMakeFiles/fqdMot.dir/clean
 .PHONY : test/clean
 
 # Convenience name for "preinstall" pass in the directory.
 test/preinstall:
 .PHONY : test/preinstall
+
+#=============================================================================
+# Target rules for target test/CMakeFiles/dacMot.dir
+
+# All Build rule for target.
+test/CMakeFiles/dacMot.dir/all:
+	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/depend
+	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/dejan/projects/einbein/build/CMakeFiles  1
+	@echo "Built target dacMot"
+.PHONY : test/CMakeFiles/dacMot.dir/all
+
+# Include target in all.
+all: test/CMakeFiles/dacMot.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+test/CMakeFiles/dacMot.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/dacMot.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 0
+.PHONY : test/CMakeFiles/dacMot.dir/rule
+
+# Convenience name for target.
+dacMot: test/CMakeFiles/dacMot.dir/rule
+.PHONY : dacMot
+
+# clean rule for target.
+test/CMakeFiles/dacMot.dir/clean:
+	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/clean
+.PHONY : test/CMakeFiles/dacMot.dir/clean
+
+# clean rule for target.
+clean: test/CMakeFiles/dacMot.dir/clean
+.PHONY : clean
 
 #=============================================================================
 # Target rules for target test/CMakeFiles/digIO.dir
@@ -124,7 +163,7 @@ test/preinstall:
 test/CMakeFiles/digIO.dir/all:
 	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/depend
 	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/dejan/projects/einbein/build/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/dejan/projects/einbein/build/CMakeFiles  2
 	@echo "Built target digIO"
 .PHONY : test/CMakeFiles/digIO.dir/all
 
@@ -150,6 +189,41 @@ test/CMakeFiles/digIO.dir/clean:
 
 # clean rule for target.
 clean: test/CMakeFiles/digIO.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target test/CMakeFiles/fqdMot.dir
+
+# All Build rule for target.
+test/CMakeFiles/fqdMot.dir/all:
+	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/depend
+	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/dejan/projects/einbein/build/CMakeFiles  4
+	@echo "Built target fqdMot"
+.PHONY : test/CMakeFiles/fqdMot.dir/all
+
+# Include target in all.
+all: test/CMakeFiles/fqdMot.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+test/CMakeFiles/fqdMot.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/fqdMot.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 0
+.PHONY : test/CMakeFiles/fqdMot.dir/rule
+
+# Convenience name for target.
+fqdMot: test/CMakeFiles/fqdMot.dir/rule
+.PHONY : fqdMot
+
+# clean rule for target.
+test/CMakeFiles/fqdMot.dir/clean:
+	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/clean
+.PHONY : test/CMakeFiles/fqdMot.dir/clean
+
+# clean rule for target.
+clean: test/CMakeFiles/fqdMot.dir/clean
 .PHONY : clean
 
 #=============================================================================

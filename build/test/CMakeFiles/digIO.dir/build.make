@@ -49,37 +49,37 @@ include test/CMakeFiles/digIO.dir/progress.make
 # Include the compile flags for this target's objects.
 include test/CMakeFiles/digIO.dir/flags.make
 
-test/CMakeFiles/digIO.dir/DigIO.cpp.o: test/CMakeFiles/digIO.dir/flags.make
-test/CMakeFiles/digIO.dir/DigIO.cpp.o: ../test/DigIO.cpp
+test/CMakeFiles/digIO.dir/digIO.cpp.o: test/CMakeFiles/digIO.dir/flags.make
+test/CMakeFiles/digIO.dir/digIO.cpp.o: ../test/digIO.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/dejan/projects/einbein/build/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object test/CMakeFiles/digIO.dir/DigIO.cpp.o"
-	cd /home/dejan/projects/einbein/build/test && /usr/bin/arm-linux-gnueabihf-g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/digIO.dir/DigIO.cpp.o -c /home/dejan/projects/einbein/test/DigIO.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object test/CMakeFiles/digIO.dir/digIO.cpp.o"
+	cd /home/dejan/projects/einbein/build/test && /usr/bin/arm-linux-gnueabihf-g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/digIO.dir/digIO.cpp.o -c /home/dejan/projects/einbein/test/digIO.cpp
 
-test/CMakeFiles/digIO.dir/DigIO.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/digIO.dir/DigIO.cpp.i"
-	cd /home/dejan/projects/einbein/build/test && /usr/bin/arm-linux-gnueabihf-g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/dejan/projects/einbein/test/DigIO.cpp > CMakeFiles/digIO.dir/DigIO.cpp.i
+test/CMakeFiles/digIO.dir/digIO.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/digIO.dir/digIO.cpp.i"
+	cd /home/dejan/projects/einbein/build/test && /usr/bin/arm-linux-gnueabihf-g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/dejan/projects/einbein/test/digIO.cpp > CMakeFiles/digIO.dir/digIO.cpp.i
 
-test/CMakeFiles/digIO.dir/DigIO.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/digIO.dir/DigIO.cpp.s"
-	cd /home/dejan/projects/einbein/build/test && /usr/bin/arm-linux-gnueabihf-g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/dejan/projects/einbein/test/DigIO.cpp -o CMakeFiles/digIO.dir/DigIO.cpp.s
+test/CMakeFiles/digIO.dir/digIO.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/digIO.dir/digIO.cpp.s"
+	cd /home/dejan/projects/einbein/build/test && /usr/bin/arm-linux-gnueabihf-g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/dejan/projects/einbein/test/digIO.cpp -o CMakeFiles/digIO.dir/digIO.cpp.s
 
-test/CMakeFiles/digIO.dir/DigIO.cpp.o.requires:
-.PHONY : test/CMakeFiles/digIO.dir/DigIO.cpp.o.requires
+test/CMakeFiles/digIO.dir/digIO.cpp.o.requires:
+.PHONY : test/CMakeFiles/digIO.dir/digIO.cpp.o.requires
 
-test/CMakeFiles/digIO.dir/DigIO.cpp.o.provides: test/CMakeFiles/digIO.dir/DigIO.cpp.o.requires
-	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/DigIO.cpp.o.provides.build
-.PHONY : test/CMakeFiles/digIO.dir/DigIO.cpp.o.provides
+test/CMakeFiles/digIO.dir/digIO.cpp.o.provides: test/CMakeFiles/digIO.dir/digIO.cpp.o.requires
+	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/digIO.cpp.o.provides.build
+.PHONY : test/CMakeFiles/digIO.dir/digIO.cpp.o.provides
 
-test/CMakeFiles/digIO.dir/DigIO.cpp.o.provides.build: test/CMakeFiles/digIO.dir/DigIO.cpp.o
+test/CMakeFiles/digIO.dir/digIO.cpp.o.provides.build: test/CMakeFiles/digIO.dir/digIO.cpp.o
 
 # Object files for target digIO
 digIO_OBJECTS = \
-"CMakeFiles/digIO.dir/DigIO.cpp.o"
+"CMakeFiles/digIO.dir/digIO.cpp.o"
 
 # External object files for target digIO
 digIO_EXTERNAL_OBJECTS =
 
-test/digIO: test/CMakeFiles/digIO.dir/DigIO.cpp.o
+test/digIO: test/CMakeFiles/digIO.dir/digIO.cpp.o
 test/digIO: test/CMakeFiles/digIO.dir/build.make
 test/digIO: test/CMakeFiles/digIO.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable digIO"
@@ -89,7 +89,7 @@ test/digIO: test/CMakeFiles/digIO.dir/link.txt
 test/CMakeFiles/digIO.dir/build: test/digIO
 .PHONY : test/CMakeFiles/digIO.dir/build
 
-test/CMakeFiles/digIO.dir/requires: test/CMakeFiles/digIO.dir/DigIO.cpp.o.requires
+test/CMakeFiles/digIO.dir/requires: test/CMakeFiles/digIO.dir/digIO.cpp.o.requires
 .PHONY : test/CMakeFiles/digIO.dir/requires
 
 test/CMakeFiles/digIO.dir/clean:

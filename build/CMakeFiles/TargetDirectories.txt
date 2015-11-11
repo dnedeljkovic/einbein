@@ -1,2 +1,4 @@
+/home/dejan/projects/einbein/build/test/CMakeFiles/dacMot.dir
 /home/dejan/projects/einbein/build/test/CMakeFiles/digIO.dir
 /home/dejan/projects/einbein/build/src/CMakeFiles/einbein.dir
+/home/dejan/projects/einbein/build/test/CMakeFiles/fqdMot.dir

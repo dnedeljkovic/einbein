@@ -16,9 +16,9 @@
 #define FPGA_DEVICE "/dev/flink0"
 
 // unique-id of flink subdevices
-//#define FQD_ID	0
-//#define DAC_ID	3
-#define GPIO_ID	2
+//#define FQD_ID	1
+//#define DAC_ID	0
+#define GPIO_ID	3
 //#define IMU_ID	5
 //#define PWM_ID	6
 

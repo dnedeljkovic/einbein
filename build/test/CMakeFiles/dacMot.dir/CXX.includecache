@@ -218,7 +218,9 @@ stdint.h
 sys/types.h
 -
 
-/home/dejan/projects/einbein/test/digIO.cpp
+/home/dejan/projects/einbein/constants/constants.hpp
+
+/home/dejan/projects/einbein/test/dacMot.cpp
 iostream
 -
 unistd.h
@@ -243,4 +245,6 @@ eeros/hal/FlinkAnalogOut.hpp
 -
 eeros/hal/FlinkPwm.hpp
 -
+../constants/constants.hpp
+/home/dejan/projects/einbein/constants/constants.hpp
 

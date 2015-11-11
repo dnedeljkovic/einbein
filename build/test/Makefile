@@ -99,6 +99,20 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+test/CMakeFiles/dacMot.dir/rule:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/dacMot.dir/rule
+.PHONY : test/CMakeFiles/dacMot.dir/rule
+
+# Convenience name for target.
+dacMot: test/CMakeFiles/dacMot.dir/rule
+.PHONY : dacMot
+
+# fast build rule for target.
+dacMot/fast:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/build
+.PHONY : dacMot/fast
+
+# Convenience name for target.
 test/CMakeFiles/digIO.dir/rule:
 	cd /home/dejan/projects/einbein/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/digIO.dir/rule
 .PHONY : test/CMakeFiles/digIO.dir/rule
@@ -112,29 +126,91 @@ digIO/fast:
 	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/build
 .PHONY : digIO/fast
 
-DigIO.o: DigIO.cpp.o
-.PHONY : DigIO.o
+# Convenience name for target.
+test/CMakeFiles/fqdMot.dir/rule:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/fqdMot.dir/rule
+.PHONY : test/CMakeFiles/fqdMot.dir/rule
+
+# Convenience name for target.
+fqdMot: test/CMakeFiles/fqdMot.dir/rule
+.PHONY : fqdMot
+
+# fast build rule for target.
+fqdMot/fast:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/build
+.PHONY : fqdMot/fast
+
+dacMot.o: dacMot.cpp.o
+.PHONY : dacMot.o
 
 # target to build an object file
-DigIO.cpp.o:
-	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/DigIO.cpp.o
-.PHONY : DigIO.cpp.o
+dacMot.cpp.o:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/dacMot.cpp.o
+.PHONY : dacMot.cpp.o
 
-DigIO.i: DigIO.cpp.i
-.PHONY : DigIO.i
+dacMot.i: dacMot.cpp.i
+.PHONY : dacMot.i
 
 # target to preprocess a source file
-DigIO.cpp.i:
-	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/DigIO.cpp.i
-.PHONY : DigIO.cpp.i
+dacMot.cpp.i:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/dacMot.cpp.i
+.PHONY : dacMot.cpp.i
 
-DigIO.s: DigIO.cpp.s
-.PHONY : DigIO.s
+dacMot.s: dacMot.cpp.s
+.PHONY : dacMot.s
 
 # target to generate assembly for a file
-DigIO.cpp.s:
-	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/DigIO.cpp.s
-.PHONY : DigIO.cpp.s
+dacMot.cpp.s:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/dacMot.cpp.s
+.PHONY : dacMot.cpp.s
+
+digIO.o: digIO.cpp.o
+.PHONY : digIO.o
+
+# target to build an object file
+digIO.cpp.o:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/digIO.cpp.o
+.PHONY : digIO.cpp.o
+
+digIO.i: digIO.cpp.i
+.PHONY : digIO.i
+
+# target to preprocess a source file
+digIO.cpp.i:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/digIO.cpp.i
+.PHONY : digIO.cpp.i
+
+digIO.s: digIO.cpp.s
+.PHONY : digIO.s
+
+# target to generate assembly for a file
+digIO.cpp.s:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/digIO.cpp.s
+.PHONY : digIO.cpp.s
+
+fqdMot.o: fqdMot.cpp.o
+.PHONY : fqdMot.o
+
+# target to build an object file
+fqdMot.cpp.o:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/fqdMot.cpp.o
+.PHONY : fqdMot.cpp.o
+
+fqdMot.i: fqdMot.cpp.i
+.PHONY : fqdMot.i
+
+# target to preprocess a source file
+fqdMot.cpp.i:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/fqdMot.cpp.i
+.PHONY : fqdMot.cpp.i
+
+fqdMot.s: fqdMot.cpp.s
+.PHONY : fqdMot.s
+
+# target to generate assembly for a file
+fqdMot.cpp.s:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/fqdMot.cpp.s
+.PHONY : fqdMot.cpp.s
 
 # Help Target
 help:
@@ -142,12 +218,20 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... dacMot"
 	@echo "... digIO"
 	@echo "... edit_cache"
+	@echo "... fqdMot"
 	@echo "... rebuild_cache"
-	@echo "... DigIO.o"
-	@echo "... DigIO.i"
-	@echo "... DigIO.s"
+	@echo "... dacMot.o"
+	@echo "... dacMot.i"
+	@echo "... dacMot.s"
+	@echo "... digIO.o"
+	@echo "... digIO.i"
+	@echo "... digIO.s"
+	@echo "... fqdMot.o"
+	@echo "... fqdMot.i"
+	@echo "... fqdMot.s"
 .PHONY : help
 
 

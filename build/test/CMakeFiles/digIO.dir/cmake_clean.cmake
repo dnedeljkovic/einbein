@@ -1,5 +1,5 @@
 FILE(REMOVE_RECURSE
-  "CMakeFiles/digIO.dir/DigIO.cpp.o"
+  "CMakeFiles/digIO.dir/digIO.cpp.o"
   "digIO.pdb"
   "digIO"
 )
