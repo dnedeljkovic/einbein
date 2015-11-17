@@ -48,4 +48,5 @@ SET(CMAKE_DEPEND_INFO_FILES
   "test/CMakeFiles/dacMot.dir/DependInfo.cmake"
   "test/CMakeFiles/digIO.dir/DependInfo.cmake"
   "test/CMakeFiles/fqdMot.dir/DependInfo.cmake"
+  "test/CMakeFiles/imu.dir/DependInfo.cmake"
   )

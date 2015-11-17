@@ -6,3 +6,6 @@ target_link_libraries(fqdMot eeros flink)
 
 add_executable(dacMot dacMot.cpp)
 target_link_libraries(dacMot eeros flink)
+
+add_executable(imu imu.cpp)
+target_link_libraries(imu eeros)

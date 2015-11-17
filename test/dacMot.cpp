@@ -33,6 +33,7 @@ using namespace eeros::hal;
 int main(int argc, char *argv[]){
     StreamLogWriter w(std::cout);
     Logger<LogWriter>::setDefaultWriter(&w);
+    w.show(~0); // show all messages
     Logger<LogWriter> log;
     
     // Start

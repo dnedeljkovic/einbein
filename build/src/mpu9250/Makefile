@@ -69,14 +69,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles /home/dejan/projects/einbein/build/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
+	cd /home/dejan/projects/einbein/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles /home/dejan/projects/einbein/build/src/mpu9250/CMakeFiles/progress.marks
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f CMakeFiles/Makefile2 src/mpu9250/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f CMakeFiles/Makefile2 src/mpu9250/clean
 .PHONY : clean
 
 # The main clean target
@@ -85,83 +85,18 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f CMakeFiles/Makefile2 src/mpu9250/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f CMakeFiles/Makefile2 src/mpu9250/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/dejan/projects/einbein/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
-
-#=============================================================================
-# Target rules for targets named einbein
-
-# Build rule for target.
-einbein: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 einbein
-.PHONY : einbein
-
-# fast build rule for target.
-einbein/fast:
-	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/build
-.PHONY : einbein/fast
-
-#=============================================================================
-# Target rules for targets named dacMot
-
-# Build rule for target.
-dacMot: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 dacMot
-.PHONY : dacMot
-
-# fast build rule for target.
-dacMot/fast:
-	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/build
-.PHONY : dacMot/fast
-
-#=============================================================================
-# Target rules for targets named digIO
-
-# Build rule for target.
-digIO: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 digIO
-.PHONY : digIO
-
-# fast build rule for target.
-digIO/fast:
-	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/build
-.PHONY : digIO/fast
-
-#=============================================================================
-# Target rules for targets named fqdMot
-
-# Build rule for target.
-fqdMot: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 fqdMot
-.PHONY : fqdMot
-
-# fast build rule for target.
-fqdMot/fast:
-	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/build
-.PHONY : fqdMot/fast
-
-#=============================================================================
-# Target rules for targets named imu
-
-# Build rule for target.
-imu: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 imu
-.PHONY : imu
-
-# fast build rule for target.
-imu/fast:
-	$(MAKE) -f test/CMakeFiles/imu.dir/build.make test/CMakeFiles/imu.dir/build
-.PHONY : imu/fast
 
 # Help Target
 help:
@@ -171,11 +106,6 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... einbein"
-	@echo "... dacMot"
-	@echo "... digIO"
-	@echo "... fqdMot"
-	@echo "... imu"
 .PHONY : help
 
 
@@ -187,6 +117,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/dejan/projects/einbein/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
