@@ -32,7 +32,7 @@
  * delay_ms(unsigned long num_ms)
  * get_ms(unsigned long *count)
  */
-#include "linux_glue.h"
+#include "../glue/linux_glue.h"
 
 
 /* These defines are copied from dmpDefaultMPU6050.c in the general MPL

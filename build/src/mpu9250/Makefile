@@ -98,6 +98,164 @@ depend:
 	cd /home/dejan/projects/einbein/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+# Convenience name for target.
+src/mpu9250/CMakeFiles/mpu9250.dir/rule:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f CMakeFiles/Makefile2 src/mpu9250/CMakeFiles/mpu9250.dir/rule
+.PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/rule
+
+# Convenience name for target.
+mpu9250: src/mpu9250/CMakeFiles/mpu9250.dir/rule
+.PHONY : mpu9250
+
+# fast build rule for target.
+mpu9250/fast:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/build
+.PHONY : mpu9250/fast
+
+eMPL/inv_mpu.o: eMPL/inv_mpu.c.o
+.PHONY : eMPL/inv_mpu.o
+
+# target to build an object file
+eMPL/inv_mpu.c.o:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/eMPL/inv_mpu.c.o
+.PHONY : eMPL/inv_mpu.c.o
+
+eMPL/inv_mpu.i: eMPL/inv_mpu.c.i
+.PHONY : eMPL/inv_mpu.i
+
+# target to preprocess a source file
+eMPL/inv_mpu.c.i:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/eMPL/inv_mpu.c.i
+.PHONY : eMPL/inv_mpu.c.i
+
+eMPL/inv_mpu.s: eMPL/inv_mpu.c.s
+.PHONY : eMPL/inv_mpu.s
+
+# target to generate assembly for a file
+eMPL/inv_mpu.c.s:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/eMPL/inv_mpu.c.s
+.PHONY : eMPL/inv_mpu.c.s
+
+eMPL/inv_mpu_dmp_motion_driver.o: eMPL/inv_mpu_dmp_motion_driver.c.o
+.PHONY : eMPL/inv_mpu_dmp_motion_driver.o
+
+# target to build an object file
+eMPL/inv_mpu_dmp_motion_driver.c.o:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/eMPL/inv_mpu_dmp_motion_driver.c.o
+.PHONY : eMPL/inv_mpu_dmp_motion_driver.c.o
+
+eMPL/inv_mpu_dmp_motion_driver.i: eMPL/inv_mpu_dmp_motion_driver.c.i
+.PHONY : eMPL/inv_mpu_dmp_motion_driver.i
+
+# target to preprocess a source file
+eMPL/inv_mpu_dmp_motion_driver.c.i:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/eMPL/inv_mpu_dmp_motion_driver.c.i
+.PHONY : eMPL/inv_mpu_dmp_motion_driver.c.i
+
+eMPL/inv_mpu_dmp_motion_driver.s: eMPL/inv_mpu_dmp_motion_driver.c.s
+.PHONY : eMPL/inv_mpu_dmp_motion_driver.s
+
+# target to generate assembly for a file
+eMPL/inv_mpu_dmp_motion_driver.c.s:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/eMPL/inv_mpu_dmp_motion_driver.c.s
+.PHONY : eMPL/inv_mpu_dmp_motion_driver.c.s
+
+glue/linux_glue.o: glue/linux_glue.c.o
+.PHONY : glue/linux_glue.o
+
+# target to build an object file
+glue/linux_glue.c.o:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/glue/linux_glue.c.o
+.PHONY : glue/linux_glue.c.o
+
+glue/linux_glue.i: glue/linux_glue.c.i
+.PHONY : glue/linux_glue.i
+
+# target to preprocess a source file
+glue/linux_glue.c.i:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/glue/linux_glue.c.i
+.PHONY : glue/linux_glue.c.i
+
+glue/linux_glue.s: glue/linux_glue.c.s
+.PHONY : glue/linux_glue.s
+
+# target to generate assembly for a file
+glue/linux_glue.c.s:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/glue/linux_glue.c.s
+.PHONY : glue/linux_glue.c.s
+
+mpu9250/mpu9250.o: mpu9250/mpu9250.c.o
+.PHONY : mpu9250/mpu9250.o
+
+# target to build an object file
+mpu9250/mpu9250.c.o:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o
+.PHONY : mpu9250/mpu9250.c.o
+
+mpu9250/mpu9250.i: mpu9250/mpu9250.c.i
+.PHONY : mpu9250/mpu9250.i
+
+# target to preprocess a source file
+mpu9250/mpu9250.c.i:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.i
+.PHONY : mpu9250/mpu9250.c.i
+
+mpu9250/mpu9250.s: mpu9250/mpu9250.c.s
+.PHONY : mpu9250/mpu9250.s
+
+# target to generate assembly for a file
+mpu9250/mpu9250.c.s:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.s
+.PHONY : mpu9250/mpu9250.c.s
+
+mpu9250/quaternion.o: mpu9250/quaternion.c.o
+.PHONY : mpu9250/quaternion.o
+
+# target to build an object file
+mpu9250/quaternion.c.o:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o
+.PHONY : mpu9250/quaternion.c.o
+
+mpu9250/quaternion.i: mpu9250/quaternion.c.i
+.PHONY : mpu9250/quaternion.i
+
+# target to preprocess a source file
+mpu9250/quaternion.c.i:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.i
+.PHONY : mpu9250/quaternion.c.i
+
+mpu9250/quaternion.s: mpu9250/quaternion.c.s
+.PHONY : mpu9250/quaternion.s
+
+# target to generate assembly for a file
+mpu9250/quaternion.c.s:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.s
+.PHONY : mpu9250/quaternion.c.s
+
+mpu9250/vector3d.o: mpu9250/vector3d.c.o
+.PHONY : mpu9250/vector3d.o
+
+# target to build an object file
+mpu9250/vector3d.c.o:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o
+.PHONY : mpu9250/vector3d.c.o
+
+mpu9250/vector3d.i: mpu9250/vector3d.c.i
+.PHONY : mpu9250/vector3d.i
+
+# target to preprocess a source file
+mpu9250/vector3d.c.i:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.i
+.PHONY : mpu9250/vector3d.c.i
+
+mpu9250/vector3d.s: mpu9250/vector3d.c.s
+.PHONY : mpu9250/vector3d.s
+
+# target to generate assembly for a file
+mpu9250/vector3d.c.s:
+	cd /home/dejan/projects/einbein/build && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.s
+.PHONY : mpu9250/vector3d.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -105,7 +263,26 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... mpu9250"
 	@echo "... rebuild_cache"
+	@echo "... eMPL/inv_mpu.o"
+	@echo "... eMPL/inv_mpu.i"
+	@echo "... eMPL/inv_mpu.s"
+	@echo "... eMPL/inv_mpu_dmp_motion_driver.o"
+	@echo "... eMPL/inv_mpu_dmp_motion_driver.i"
+	@echo "... eMPL/inv_mpu_dmp_motion_driver.s"
+	@echo "... glue/linux_glue.o"
+	@echo "... glue/linux_glue.i"
+	@echo "... glue/linux_glue.s"
+	@echo "... mpu9250/mpu9250.o"
+	@echo "... mpu9250/mpu9250.i"
+	@echo "... mpu9250/mpu9250.s"
+	@echo "... mpu9250/quaternion.o"
+	@echo "... mpu9250/quaternion.i"
+	@echo "... mpu9250/quaternion.s"
+	@echo "... mpu9250/vector3d.o"
+	@echo "... mpu9250/vector3d.i"
+	@echo "... mpu9250/vector3d.s"
 .PHONY : help
 
 

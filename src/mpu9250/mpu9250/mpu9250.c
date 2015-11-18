@@ -35,10 +35,18 @@ static int data_fusion(mpudata_t *mpu);
 static unsigned short inv_row_2_scale(const signed char *row);
 static unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx);
 
-int yaw_mixing_factor;
+int first = 1;
+float RAccel, RREst;
+float Axz, Ayz, AxzOld, AyzOld;
+float normAccel[3];
+float REst[3], REstOld[3];
+float rGyro[3], rawGyroOld[3];
+double timeOld = 0.0;
+int wGyro = 10; //can be chosen from 5 to 20;
 
 int cRow = 0;
 char data[512000];
+
 
 
 int mpu9250_init(int i2c_bus, int sample_rate)
@@ -178,9 +186,9 @@ int data_ready()
 
 void calibrate_data(mpudata_t *mpu)
 {
-		mpu->calibratedAccel[VEC3_X] = -mpu->rawAccel[VEC3_X] / 16;
-		mpu->calibratedAccel[VEC3_Y] = mpu->rawAccel[VEC3_Y] / 16;
-		mpu->calibratedAccel[VEC3_Z] = mpu->rawAccel[VEC3_Z] / 16;
+	mpu->calibratedAccel[VEC3_X] = -mpu->rawAccel[VEC3_X] / 16;
+	mpu->calibratedAccel[VEC3_Y] = mpu->rawAccel[VEC3_Y] / 16;
+	mpu->calibratedAccel[VEC3_Z] = mpu->rawAccel[VEC3_Z] / 16;
 }
 
 
@@ -216,6 +224,80 @@ int data_fusion(mpudata_t *mpu)
 
 	return 0;
 }
+
+/* Position estimation is an example of the algorithmus 
+ * from http://www.starlino.com/imu_guide.html
+ */
+void estimate_position(mpudata_t *mpu, unsigned long loop_delay, double time){
+ /* float RAccel, RREst;
+  float Axz, Ayz, AxzOld, AyzOld;
+  float normAccel[3];
+  float REst[3], REstOld[3];
+  float rGyro[3], rawGyroOld[3];
+  double timeOld;
+  int wGyro = 5; //can be chosen from 5 to 20;*/
+  int i;
+  
+  double timedelay = (time-timeOld);
+  
+  // normalize acceleration
+  RAccel = sqrt(mpu->calibratedAccel[VEC3_X]*mpu->calibratedAccel[VEC3_X] + 
+		    mpu->calibratedAccel[VEC3_Y]*mpu->calibratedAccel[VEC3_Y] +
+		    mpu->calibratedAccel[VEC3_Z]*mpu->calibratedAccel[VEC3_Z] );
+  normAccel[VEC3_X] = mpu->calibratedAccel[VEC3_X] / RAccel;
+  normAccel[VEC3_Y] = mpu->calibratedAccel[VEC3_Y] / RAccel;
+  normAccel[VEC3_Z] = mpu->calibratedAccel[VEC3_Z] / RAccel;
+  
+  if(first){
+    printf("first estimation\n");
+    for(i=VEC3_X;i<(VEC3_Z+1);i++){
+      REst[i] = normAccel[i];
+      REstOld[i] = REst[i];
+    }
+    first = 0;
+  }else{
+    // estimation
+    AxzOld = atan2f(REstOld[VEC3_X],REstOld[VEC3_Z]);
+    AyzOld = atan2f(REstOld[VEC3_Y],REstOld[VEC3_Z]);
+    Axz = AxzOld + (-mpu->rawGyro[VEC3_X] - rawGyroOld[VEC3_X])*DEGREE_TO_RAD/2 * timedelay;
+    Ayz = AyzOld + (-mpu->rawGyro[VEC3_Y] - rawGyroOld[VEC3_Y])*DEGREE_TO_RAD/2 * timedelay;
+    rGyro[VEC3_X] = sinf(Axz) / sqrt(1 + cosf(Axz)*cos(Axz) * tan(Ayz)*tan(Ayz));
+    rGyro[VEC3_Y] = sinf(Ayz) / sqrt(1 + cosf(Ayz)*cos(Ayz) * tan(Axz)*tan(Axz));
+   
+    if(REstOld[VEC3_Z]>=0){
+      rGyro[VEC3_Z] = sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
+    }else{
+      rGyro[VEC3_Z] = -sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
+    }
+    
+    RREst = sqrt(REst[VEC3_X]*REst[VEC3_X] + REst[VEC3_Y]*REst[VEC3_Y] + REst[VEC3_Z]*REst[VEC3_Z]);
+    for(i=VEC3_X;i<(VEC3_Z+1);i++){
+      REst[i] = ((normAccel[i] + rGyro[i] * wGyro)/(1 + wGyro)) / RREst;
+      REstOld[i] = REst[i];
+    }    
+    timeOld = time;
+    
+    //printf("rEst: X %f    Y %f    Z %f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z]);
+    
+    printf("%d;%d;%d;%f;%f;%f;%f;%f;%f;%d;%d;%d;%f\n", mpu->rawGyro[VEC3_X], mpu->rawGyro[VEC3_Y], mpu->rawGyro[VEC3_Z], REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z], normAccel[VEC3_X], normAccel[VEC3_Y], normAccel[VEC3_Z], mpu->calibratedAccel[VEC3_X], mpu->calibratedAccel[VEC3_Y], mpu->calibratedAccel[VEC3_Z],timedelay);
+    
+/*    
+    if(cRow < 200){
+		char val[16];
+//		sprintf(val, "%0.2f;%0.2f;%0.2f;%0.2f\n",
+//				dmpQuat[QUAT_W], dmpQuat[QUAT_X], dmpQuat[QUAT_Y], dmpQuat[QUAT_Z]);
+		sprintf(val, "%d;%d;%d\n", mpu->rawGyro[VEC3_X], mpu->rawGyro[VEC3_Y], mpu->rawGyro[VEC3_Z]);
+		//sprintf(val, "%d;%d;%d;%f;%f;%f;%f;%f;%f;%d;%d;%d;%f\n", mpu->rawGyro[VEC3_X], mpu->rawGyro[VEC3_Y], mpu->rawGyro[VEC3_Z], REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z], normAccel[VEC3_X], normAccel[VEC3_Y], normAccel[VEC3_Z], mpu->calibratedAccel[VEC3_X], mpu->calibratedAccel[VEC3_Y], mpu->calibratedAccel[VEC3_Z],timedelay);
+		strcat(data, val);
+		cRow++;
+		saveData(data);
+    }else printf("save to quit task! \n\n\n");
+ */       
+  }
+  
+}
+
+
 
 /* These next two functions convert the orientation matrix (see
  * gyro_orientation) to a scalar representation for use by the DMP.
@@ -261,18 +343,21 @@ unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx)
 
 
 
-//
-//void saveData(char *writeBuffer){
-//	char *fileName = "magnetometer.csv";
-//	FILE *fData = fopen(fileName, "a");
-//	if (fData != NULL){
-//		if (fwrite(writeBuffer, strlen(writeBuffer), 1, fData) > 0){
-//			fclose(fData);
-//			sync(); // Call sync to write the data without delay.
-////			printf("Data written to the file.\n");
-//		}
-//		else {
-//			printf("Write failed. Zero bytes written to the file.\n");
-//		}
-//	}
-//}
+/*
+void saveData(char *writeBuffer){
+	char *fileName = "gyro.csv";
+	FILE *fData = fopen(fileName, "a");
+	if (fData != NULL){
+		if (fwrite(writeBuffer, strlen(writeBuffer), 1, fData) > 0){
+			fclose(fData);
+			sync(); // Call sync to write the data without delay.
+			printf("Data written to the file.\n");
+		}
+		else {
+			printf("Write failed. Zero bytes written to the file.\n");
+		}
+	}else{
+	  printf("Open file failed.\n");
+	}
+}
+*/

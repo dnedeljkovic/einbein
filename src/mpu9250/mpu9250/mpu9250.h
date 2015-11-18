@@ -61,6 +61,7 @@ int mpu9250_init(int i2c_bus, int sample_rate);
 void mpu9250_exit();
 int mpu9250_read(mpudata_t *mpu);
 int mpu9250_read_dmp(mpudata_t *mpu);
+void estimate_position(mpudata_t *mpu, unsigned long loop_delay, double time);
 
 #endif /* MPU9250_H */
 

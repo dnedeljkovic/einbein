@@ -13,6 +13,7 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/2.8.12.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/2.8.12.2/CMakeSystem.cmake"
   "../src/CMakeLists.txt"
+  "../src/mpu9250/CMakeLists.txt"
   "../test/CMakeLists.txt"
   "/usr/share/cmake-2.8/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-2.8/Modules/CMakeCXXInformation.cmake"
@@ -39,12 +40,14 @@ SET(CMAKE_MAKEFILE_OUTPUTS
 SET(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "src/mpu9250/CMakeFiles/CMakeDirectoryInformation.cmake"
   "test/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 SET(CMAKE_DEPEND_INFO_FILES
   "src/CMakeFiles/einbein.dir/DependInfo.cmake"
+  "src/mpu9250/CMakeFiles/mpu9250.dir/DependInfo.cmake"
   "test/CMakeFiles/dacMot.dir/DependInfo.cmake"
   "test/CMakeFiles/digIO.dir/DependInfo.cmake"
   "test/CMakeFiles/fqdMot.dir/DependInfo.cmake"

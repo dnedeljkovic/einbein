@@ -57,14 +57,16 @@ CMAKE_BINARY_DIR = /home/dejan/projects/einbein/build
 
 # Convenience name for "all" pass in the directory.
 src/all: src/CMakeFiles/einbein.dir/all
+src/all: src/mpu9250/all
 .PHONY : src/all
 
 # Convenience name for "clean" pass in the directory.
 src/clean: src/CMakeFiles/einbein.dir/clean
+src/clean: src/mpu9250/clean
 .PHONY : src/clean
 
 # Convenience name for "preinstall" pass in the directory.
-src/preinstall:
+src/preinstall: src/mpu9250/preinstall
 .PHONY : src/preinstall
 
 #=============================================================================
@@ -100,6 +102,56 @@ src/CMakeFiles/einbein.dir/clean:
 
 # clean rule for target.
 clean: src/CMakeFiles/einbein.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory src/mpu9250
+
+# Convenience name for "all" pass in the directory.
+src/mpu9250/all: src/mpu9250/CMakeFiles/mpu9250.dir/all
+.PHONY : src/mpu9250/all
+
+# Convenience name for "clean" pass in the directory.
+src/mpu9250/clean: src/mpu9250/CMakeFiles/mpu9250.dir/clean
+.PHONY : src/mpu9250/clean
+
+# Convenience name for "preinstall" pass in the directory.
+src/mpu9250/preinstall:
+.PHONY : src/mpu9250/preinstall
+
+#=============================================================================
+# Target rules for target src/mpu9250/CMakeFiles/mpu9250.dir
+
+# All Build rule for target.
+src/mpu9250/CMakeFiles/mpu9250.dir/all:
+	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/depend
+	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/dejan/projects/einbein/build/CMakeFiles  6 7 8 9 10 11
+	@echo "Built target mpu9250"
+.PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/all
+
+# Include target in all.
+all: src/mpu9250/CMakeFiles/mpu9250.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+src/mpu9250/CMakeFiles/mpu9250.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 6
+	$(MAKE) -f CMakeFiles/Makefile2 src/mpu9250/CMakeFiles/mpu9250.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 0
+.PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/rule
+
+# Convenience name for target.
+mpu9250: src/mpu9250/CMakeFiles/mpu9250.dir/rule
+.PHONY : mpu9250
+
+# clean rule for target.
+src/mpu9250/CMakeFiles/mpu9250.dir/clean:
+	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/clean
+.PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/clean
+
+# clean rule for target.
+clean: src/mpu9250/CMakeFiles/mpu9250.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -232,7 +284,7 @@ clean: test/CMakeFiles/fqdMot.dir/clean
 # Target rules for target test/CMakeFiles/imu.dir
 
 # All Build rule for target.
-test/CMakeFiles/imu.dir/all:
+test/CMakeFiles/imu.dir/all: src/mpu9250/CMakeFiles/mpu9250.dir/all
 	$(MAKE) -f test/CMakeFiles/imu.dir/build.make test/CMakeFiles/imu.dir/depend
 	$(MAKE) -f test/CMakeFiles/imu.dir/build.make test/CMakeFiles/imu.dir/build
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/dejan/projects/einbein/build/CMakeFiles  5
@@ -245,7 +297,7 @@ all: test/CMakeFiles/imu.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/imu.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 7
 	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/imu.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dejan/projects/einbein/build/CMakeFiles 0
 .PHONY : test/CMakeFiles/imu.dir/rule

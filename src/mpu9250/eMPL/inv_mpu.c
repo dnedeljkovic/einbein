@@ -36,7 +36,7 @@
  * fabsf(float x)
  * min(int a, int b)
  */
-#include "linux_glue.h"
+#include "../glue/linux_glue.h"
 
 /* Time for some messy macro work. =]
  * #define MPU9150

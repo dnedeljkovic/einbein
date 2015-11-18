@@ -14,6 +14,12 @@
 # EXTERNAL cache entries
 ########################
 
+//No help, variable specified on the command line.
+ADDITIONAL_INCLUDE_DIRS:UNINITIALIZED=/home/dejan/eeros-framework/includes /home/dejan/flinklib/include
+
+//No help, variable specified on the command line.
+ADDITIONAL_LINK_DIRS:UNINITIALIZED=/home/dejan/eeros-framework/build-arm/src/libeeros.so /home/dejan/flinklib/build-arm/lib/libflink.so
+
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/arm-linux-gnueabihf-ar
 
@@ -185,6 +191,12 @@ einbein_BINARY_DIR:STATIC=/home/dejan/projects/einbein/build
 //Value Computed by CMake
 einbein_SOURCE_DIR:STATIC=/home/dejan/projects/einbein
 
+//Dependencies for target
+libmpu9250_LIB_DEPENDS:STATIC=
+
+//Dependencies for target
+mpu9250_LIB_DEPENDS:STATIC=
+
 
 ########################
 # INTERNAL cache entries
@@ -280,7 +292,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=3
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=4
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

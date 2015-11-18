@@ -3,3 +3,4 @@
 /home/dejan/projects/einbein/build/src/CMakeFiles/einbein.dir
 /home/dejan/projects/einbein/build/test/CMakeFiles/fqdMot.dir
 /home/dejan/projects/einbein/build/test/CMakeFiles/imu.dir
+/home/dejan/projects/einbein/build/src/mpu9250/CMakeFiles/mpu9250.dir

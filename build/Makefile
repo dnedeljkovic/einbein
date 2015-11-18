@@ -112,6 +112,19 @@ einbein/fast:
 .PHONY : einbein/fast
 
 #=============================================================================
+# Target rules for targets named mpu9250
+
+# Build rule for target.
+mpu9250: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 mpu9250
+.PHONY : mpu9250
+
+# fast build rule for target.
+mpu9250/fast:
+	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/build
+.PHONY : mpu9250/fast
+
+#=============================================================================
 # Target rules for targets named dacMot
 
 # Build rule for target.
@@ -172,6 +185,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... einbein"
+	@echo "... mpu9250"
 	@echo "... dacMot"
 	@echo "... digIO"
 	@echo "... fqdMot"

@@ -61,7 +61,7 @@ void quaternionToEuler(quaternion_t q, vector3d_t v)
 
 
 /**
- *	Quaternionen zu Euler  Berechnung von InvenSense
+ *	Quaternionen to Euler from InvenSense
  */
 	v[VEC3_Y] = asinf(2.0f * q[QUAT_Y] * q[QUAT_Z] + 2.0f * q[QUAT_W] * q[QUAT_X]);
 
@@ -88,7 +88,7 @@ void eulerToQuaternion(vector3d_t v, quaternion_t q)
 
 
 /**
- *	Euler zu Quaternionen Berechnung von InvenSense
+ *	Euler to Quaternionen from InvenSense
  */
 	q[QUAT_W] = cosX2 * cosY2 * cosZ2 - sinX2 * sinY2 * sinZ2;
 	q[QUAT_X] = cosX2 * sinY2 * cosZ2 - sinX2 * cosY2 * sinZ2;

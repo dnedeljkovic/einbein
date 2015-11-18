@@ -11,7 +11,7 @@ Build Directory Path=file:///home/dejan/projects/einbein/build
 Build Type=Debug
 CMake Binary=file:///usr/bin/cmake
 Environment Profile=
-Extra Arguments=-DCMAKE_TOOLCHAIN_FILE=/home/dejan/arm-toolchain.cmake
+Extra Arguments=-DADDITIONAL_INCLUDE_DIRS="/home/dejan/eeros-framework/includes /home/dejan/flinklib/include" -DADDITIONAL_LINK_DIRS="/home/dejan/eeros-framework/build-arm/src/libeeros.so /home/dejan/flinklib/build-arm/lib/libflink.so" -DCMAKE_TOOLCHAIN_FILE=/home/dejan/arm-toolchain.cmake
 Install Directory=file:///usr/local
 
 [Project]

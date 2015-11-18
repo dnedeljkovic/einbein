@@ -81,6 +81,7 @@ imu_EXTERNAL_OBJECTS =
 
 test/imu: test/CMakeFiles/imu.dir/imu.cpp.o
 test/imu: test/CMakeFiles/imu.dir/build.make
+test/imu: src/mpu9250/libmpu9250.a
 test/imu: test/CMakeFiles/imu.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable imu"
 	cd /home/dejan/projects/einbein/build/test && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/imu.dir/link.txt --verbose=$(VERBOSE)

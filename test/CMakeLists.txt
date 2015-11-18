@@ -8,4 +8,4 @@ add_executable(dacMot dacMot.cpp)
 target_link_libraries(dacMot eeros flink)
 
 add_executable(imu imu.cpp)
-target_link_libraries(imu eeros)
+target_link_libraries(imu mpu9250 eeros)

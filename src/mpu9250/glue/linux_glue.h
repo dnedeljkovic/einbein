@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "inv_mpu.h"
+#include "../eMPL/inv_mpu.h"
 
 #define MIN_I2C_BUS 0
 #define MAX_I2C_BUS 7

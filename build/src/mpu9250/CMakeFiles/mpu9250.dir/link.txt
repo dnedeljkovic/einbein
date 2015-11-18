@@ -1,0 +1,2 @@
+/usr/bin/arm-linux-gnueabihf-ar cr libmpu9250.a  CMakeFiles/mpu9250.dir/eMPL/inv_mpu.c.o CMakeFiles/mpu9250.dir/eMPL/inv_mpu_dmp_motion_driver.c.o CMakeFiles/mpu9250.dir/glue/linux_glue.c.o CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o
+/usr/bin/arm-linux-gnueabihf-ranlib libmpu9250.a
