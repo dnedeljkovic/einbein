@@ -114,5 +114,7 @@ int mpu_read_reg(unsigned char reg, unsigned char *data);
 int mpu_run_self_test(long *gyro, long *accel);
 int mpu_register_tap_cb(void (*func)(unsigned char, unsigned char));
 
+int set_acc_offset(double x_offset,double y_offset,double z_offset);
+
 #endif  /* #ifndef _INV_MPU_H_ */
 

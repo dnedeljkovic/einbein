@@ -37,6 +37,11 @@ typedef unsigned long inv_time_t;
 
 #define INV_NEW_DATA 64
 
+//define ACC offset in g
+#define ACC_X_OFFSET 0.035
+#define ACC_Y_OFFSET 0.011
+#define ACC_Z_OFFSET 0.014
+
 using namespace eeros;
 using namespace eeros::logger;
 using namespace eeros::hal;
@@ -57,39 +62,56 @@ void print_fused_euler_angles(mpudata_t *mpu, Logger<LogWriter> *log);
 void print_calibrated_accel(mpudata_t *mpu, Logger<LogWriter> *log);
 void register_sig_handler();
 void sigint_handler(int sig);
+int set_cal();
 
 int done;
 
 
 
 int main(int argc, char *argv[]){
-    StreamLogWriter w(std::cout);
-    Logger<LogWriter>::setDefaultWriter(&w);
-    w.show(~0); // show all messages
-    Logger<LogWriter> log;
     
-    // Start
-    log.info() << "Application einbein started...";
+  char *accel_cal_file = NULL;
 
-    // Initialize hardware
-    log.info() << "Initializing hardware";
-    HAL& hal = HAL::instance();
-    
-    
-    int i2c_bus = DEFAULT_I2C_BUS;
-    int sample_rate = DEFAULT_SAMPLE_RATE_HZ;
+  StreamLogWriter w(std::cout);
+  Logger<LogWriter>::setDefaultWriter(&w);
+  w.show(~0); // show all messages
+  Logger<LogWriter> log;
 
-    register_sig_handler();
+  // Start
+  log.info() << "Application einbein started...";
 
-    if (mpu9250_init(i2c_bus, sample_rate))
-	    exit(1);
+  // Initialize hardware
+  log.info() << "Initializing hardware";
+  HAL& hal = HAL::instance();
 
-    read_loop(sample_rate, &log);
 
-    mpu9250_exit();
+  int i2c_bus = DEFAULT_I2C_BUS;
+  int sample_rate = DEFAULT_SAMPLE_RATE_HZ;
 
-    log.trace() << "ended";
-    exit (1);
+  register_sig_handler();
+
+  if (mpu9250_init(i2c_bus, sample_rate))
+    exit(1);
+
+  //set_cal();
+  
+  //set_acc_offset(ACC_X_OFFSET,ACC_Y_OFFSET,ACC_Z_OFFSET);
+ 
+  
+  int wait = 20;
+  while(wait > 0){
+    printf("measurement starts in %d\n",wait);
+    sleep(1);
+    wait--;
+  }
+
+  read_loop(sample_rate, &log);
+  
+
+  mpu9250_exit();
+
+  log.trace() << "ended";
+  exit (1);
 }
 
 void read_loop(unsigned int sample_rate, Logger<LogWriter> *log)
@@ -113,8 +135,8 @@ void read_loop(unsigned int sample_rate, Logger<LogWriter> *log)
 	if (mpu9250_read(&mpu) == 0) {
 		//print_fused_euler_angles(&mpu, log);
 		//print_calibrated_accel(&mpu, log);
-		
-		estimate_position(&mpu, loop_delay, System::getTime());
+		derivate_accel(&mpu);
+		//estimate_position(&mpu, loop_delay, System::getTime());
 	}
 
 	linux_delay_ms(loop_delay);
@@ -134,6 +156,70 @@ void print_calibrated_accel(mpudata_t *mpu, Logger<LogWriter> *log)
 	       << " Y: " << mpu->calibratedAccel[VEC3_Y]
 	       << " Z: " << mpu->calibratedAccel[VEC3_Z];
 }
+
+
+
+int set_cal()
+{
+  int i;
+  FILE *f;
+  char buff[32];
+  long val[6];
+  caldata_t cal;
+  
+ /* f = fopen(cal_file, "r");
+		
+  if (!f) {
+    perror("open(<cal-file>)");
+    return -1;
+  }
+  else {*/
+    
+    f = fopen("./accelcal.txt", "r");
+
+    if (!f) {
+      printf("Default accelcal.txt not found\n");
+      return 0;
+    }
+ // }	
+  
+  
+  memset(buff, 0, sizeof(buff));
+	
+  for (i = 0; i < 6; i++) {
+    if (!fgets(buff, 20, f)) {
+      printf("Not enough lines in calibration file\n");
+      break;
+    }
+
+    val[i] = atoi(buff);
+
+    if (val[i] == 0) {
+      printf("Invalid cal value: %s\n", buff);
+      break;
+    }
+  }
+  
+  fclose(f);
+
+  if (i != 6) 
+	  return -1;
+
+  cal.offset[0] = (short)((val[0] + val[1]) / 2);
+  cal.offset[1] = (short)((val[2] + val[3]) / 2);
+  cal.offset[2] = (short)((val[4] + val[5]) / 2);
+
+  cal.range[0] = (short)(val[1] - cal.offset[0]);
+  cal.range[1] = (short)(val[3] - cal.offset[1]);
+  cal.range[2] = (short)(val[5] - cal.offset[2]);
+
+  
+  mpu9250_set_accel_cal(&cal);
+
+  return 0;
+  
+}
+
 
 void register_sig_handler()
 {

@@ -415,7 +415,7 @@ const struct test_s test = {
     .max_g_offset   = .5f,   //500 mg for Accel Criteria C
     .sample_wait_ms = 10    //10ms sample time wait
 
-
+/*
 ,.accel_sens     = 32768/16,
 .reg_lpf        = 1,    // 188Hz.
 .reg_accel_fsr  = 0x18, // 16g.
@@ -426,7 +426,7 @@ const struct test_s test = {
 .max_gyro_var   = 0.14f,
 .min_g          = 0.3f,
 .max_g          = 0.95f,
-.max_accel_var  = 0.14f
+.max_accel_var  = 0.14f*/
 };
 
 static struct gyro_state_s st = {
@@ -2615,6 +2615,82 @@ int mpu_get_compass_fsr(unsigned short *fsr)
     fsr[0] = st.hw->compass_fsr;
     return 0;
 }
+
+
+
+
+
+
+
+/* Set acceleration offset into the register of MPU9250
+ * (Dejan Nedeljkovic)
+ */
+int set_acc_offset(double x_offset,double y_offset,double z_offset){
+  long int xa_off = x_offset*16384;
+  long int ya_off = y_offset*16384;
+  long int za_off = z_offset*16384;
+  
+  unsigned char data[2];
+  data[0] = ((xa_off>>7)&0XFF); 
+  data[1] = ((xa_off<<1)&0XFF);
+  if (i2c_write(st.hw->addr, st.reg->accel_offs, 2, data))
+    return -1;
+  
+  data[0] = ((ya_off>>7)&0XFF);
+  data[1] = ((ya_off<<1)&0XFF);
+  if (i2c_write(st.hw->addr, st.reg->accel_offs+3, 2, data))
+    return -1;
+  
+  data[0] = ((za_off>>7)&0XFF);
+  data[1] = ((za_off<<1)&0XFF);
+  if (i2c_write(st.hw->addr, st.reg->accel_offs+6, 2, data))
+    return -1;
+  
+  /*
+  unsigned char data_read[6];
+  i2c_read(st.hw->addr, 0x06, 6, data_read);
+  printf("data: %d\n",(int)data_read[0]);
+  printf("data: %d\n",(int)data_read[1]);
+  printf("data: %d\n",(int)data_read[2]);
+  printf("data: %d\n",(int)data_read[3]);
+  printf("data: %d\n",(int)data_read[4]);
+  printf("data: %d\n",(int)data_read[5]);
+  
+  
+  long int data[3];
+  data[0] = xa_off; 
+  data[1] = ya_off; 
+  data[2] = za_off; 
+  mpu_set_accel_bias(data);
+  */
+  unsigned char data_read[0];
+  
+  i2c_read(st.hw->addr, 0x77, 1, data_read);
+  printf("data: %d\n",(int)data_read[0]);
+  i2c_read(st.hw->addr, 0x78, 1, data_read);
+  printf("data: %d\n",(int)data_read[0]);
+  i2c_read(st.hw->addr, 0x7A, 1, data_read);
+  printf("data: %d\n",(int)data_read[0]);
+  i2c_read(st.hw->addr, 0x7B, 1, data_read);
+  printf("data: %d\n",(int)data_read[0]);
+  i2c_read(st.hw->addr, 0x7D, 1, data_read);
+  printf("data: %d\n",(int)data_read[0]);
+  i2c_read(st.hw->addr, 0x7E, 1, data_read);
+  printf("data: %d\n",(int)data_read[0]);
+  
+/*
+  i2c_read(st.hw->addr, 0x06, 6, data_read);
+  printf("data: %d\n",(int)data_read[0]);
+  printf("data: %d\n",(int)data_read[1]);
+  printf("data: %d\n",(int)data_read[2]);
+  printf("data: %d\n",(int)data_read[3]);
+  printf("data: %d\n",(int)data_read[4]);
+  printf("data: %d\n",(int)data_read[5]);*/
+  
+  
+  return 0;
+}
+
 
 /**
  *  @brief      Enters LP accel motion interrupt mode.
