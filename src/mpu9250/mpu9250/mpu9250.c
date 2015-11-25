@@ -45,6 +45,7 @@ float Axz, Ayz, AxzOld, AyzOld;
 float normAccel[3];
 float REst[3], REstOld[3];
 float rGyro[3], rawGyroOld[3];
+float euler[3];
 double timeOld = 0.0;
 int wGyro = 10; //can be chosen from 5 to 20;
 
@@ -91,41 +92,41 @@ int mpu9250_init(int i2c_bus, int sample_rate)
 		return -1;
 	}
 
-	if (mpu_configure_fifo(INV_XYZ_GYRO | INV_XYZ_ACCEL)) {
-		printf("\nmpu_configure_fifo() failed\n");
-		return -1;
-	}
+// 	if (mpu_configure_fifo(INV_XYZ_GYRO | INV_XYZ_ACCEL)) {
+// 		printf("\nmpu_configure_fifo() failed\n");
+// 		return -1;
+// 	}
 
 	if (mpu_set_sample_rate(sample_rate)) {
 		printf("\nmpu_set_sample_rate() failed\n");
 		return -1;
 	}
 
-	if (dmp_load_motion_driver_firmware()) {
-		printf("\ndmp_load_motion_driver_firmware() failed\n");
-		return -1;
-	}
-
-	if (dmp_set_orientation(inv_orientation_matrix_to_scalar(gyro_orientation))) {
-		printf("\ndmp_set_orientation() failed\n");
-		return -1;
-	}
-
-	if (dmp_enable_feature(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_SEND_RAW_ACCEL
-						| DMP_FEATURE_SEND_CAL_GYRO | DMP_FEATURE_GYRO_CAL)) {
-		printf("\ndmp_enable_feature() failed\n");
-		return -1;
-	}
- 
-	if (dmp_set_fifo_rate(sample_rate)) {
-		printf("\ndmp_set_fifo_rate() failed\n");
-		return -1;
-	}
-
-	if (mpu_set_dmp_state(1)) {
-		printf("\nmpu_set_dmp_state(1) failed\n");
-		return -1;
-	}
+// 	if (dmp_load_motion_driver_firmware()) {
+// 		printf("\ndmp_load_motion_driver_firmware() failed\n");
+// 		return -1;
+// 	}
+// 
+// 	if (dmp_set_orientation(inv_orientation_matrix_to_scalar(gyro_orientation))) {
+// 		printf("\ndmp_set_orientation() failed\n");
+// 		return -1;
+// 	}
+// 
+// 	if (dmp_enable_feature(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_SEND_RAW_ACCEL
+// 						| DMP_FEATURE_SEND_CAL_GYRO | DMP_FEATURE_GYRO_CAL)) {
+// 		printf("\ndmp_enable_feature() failed\n");
+// 		return -1;
+// 	}
+//  
+// 	if (dmp_set_fifo_rate(sample_rate)) {
+// 		printf("\ndmp_set_fifo_rate() failed\n");
+// 		return -1;
+// 	}
+// 
+// 	if (mpu_set_dmp_state(1)) {
+// 		printf("\nmpu_set_dmp_state(1) failed\n");
+// 		return -1;
+// 	}
 
 	printf(" done\n\n");
 
@@ -143,11 +144,16 @@ void mpu9250_exit()
 
 int mpu9250_read_dmp(mpudata_t *mpu)
 {
+  //printf("read dmp\n");
 	short sensors;
 	unsigned char more;
 
-	if (!data_ready())
-		return -1;
+	if (!data_ready()){
+	  //printf("dmp data not ready: %d\n",data_ready());
+	  //linux_delay_ms(1);
+	  return -1;
+	}
+	
 
 	if (dmp_read_fifo(mpu->rawGyro, mpu->rawAccel, mpu->rawQuat, &mpu->dmpTimestamp, &sensors, &more) < 0) {
 		printf("dmp_read_fifo() failed\n");
@@ -168,8 +174,11 @@ int mpu9250_read_dmp(mpudata_t *mpu)
 
 int mpu9250_read(mpudata_t *mpu)
 {
-	if (mpu9250_read_dmp(mpu) != 0)
-		return -1;
+  //printf("read dmp\n");
+	if (mpu9250_read_dmp(mpu) != 0){
+	 // printf("read dmp failed\n");
+	  return -1;
+	}  
 
 	calibrate_data(mpu);
 
@@ -185,11 +194,18 @@ int data_ready()
 		return 0;
 	}
 
-	return (status == (MPU_INT_STATUS_DATA_READY | MPU_INT_STATUS_DMP | MPU_INT_STATUS_DMP_0));
+	return (status == (MPU_INT_STATUS_DATA_READY/* | MPU_INT_STATUS_DMP | MPU_INT_STATUS_DMP_0*/));
 }
 
 void calibrate_data(mpudata_t *mpu)
 {
+ /***************************************************************************
+ * 
+ * ***************************  if Teil löschen  ***************************
+ * 
+ * **************************************************************************
+ */
+ //printf("calibrate data\n");
   if (use_accel_cal) {
     mpu->calibratedAccel[VEC3_X] = -(short)(((long)mpu->rawAccel[VEC3_X] * (long)ACCEL_SENSOR_RANGE)
 		      / (long)accel_cal_data.range[VEC3_X]);
@@ -201,7 +217,7 @@ void calibrate_data(mpudata_t *mpu)
 		      / (long)accel_cal_data.range[VEC3_Z]);
   }
   else {
-    mpu->calibratedAccel[VEC3_X] = -mpu->rawAccel[VEC3_X];
+    mpu->calibratedAccel[VEC3_X] = mpu->rawAccel[VEC3_X];
     mpu->calibratedAccel[VEC3_Y] = mpu->rawAccel[VEC3_Y];
     mpu->calibratedAccel[VEC3_Z] = mpu->rawAccel[VEC3_Z];
   }
@@ -232,6 +248,20 @@ int data_fusion(mpudata_t *mpu)
 }
 
 
+int mpu9250_read_reg(mpudata_t *mpu){
+//   short sensors;
+//   unsigned char more;
+//   if (!data_ready()){
+//     return -1;
+//   }
+//   if(mpu_read_fifo(mpu->rawGyro, mpu->rawAccel, &mpu->dmpTimestamp, &sensors, &more) < 0){
+//     printf("mpu_read_fifo() failed\n");
+//     return -1;
+//   }
+//   
+  return 0;
+}
+
 /* Derivation of the acceleration to get velocity and position
  */ 
 void derivate_accel(mpudata_t *mpu){
@@ -243,6 +273,7 @@ void derivate_accel(mpudata_t *mpu){
   double vx, vy, vz;
   double px, py, pz;
   quaternion_t dmpQuat;
+  matrix3d_t rotMatrix;
   
   dmpQuat[QUAT_W] = (float)mpu->rawQuat[QUAT_W];
   dmpQuat[QUAT_X] = (float)mpu->rawQuat[QUAT_X];
@@ -250,6 +281,11 @@ void derivate_accel(mpudata_t *mpu){
   dmpQuat[QUAT_Z] = (float)mpu->rawQuat[QUAT_Z];
   
   quaternionNormalize(dmpQuat);
+    
+  quaternionToRotMatrix(dmpQuat,rotMatrix);
+  
+  //%printf("Rotations Matrix\n");
+ //printf("%f\t%f\t%f\n%f\t%f\t%f\n%f\t%f\t%f\n",rotMatrix[0][0],rotMatrix[0][1],rotMatrix[0][2],rotMatrix[1][0],rotMatrix[1][1],rotMatrix[1][2],rotMatrix[2][0],rotMatrix[2][1],rotMatrix[2][2]);
   
   // if first ..... einfügen !!!!!!!!!!!!!!!
   
@@ -264,6 +300,7 @@ void derivate_accel(mpudata_t *mpu){
   
   //printf("Position: X %f   Y %f   Z %f\n",px,py,pz);
   printf("%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f\n",ax,ay,az,vx,vy,vz,px,py,pz,deltaT, dmpQuat[QUAT_W],dmpQuat[QUAT_X],dmpQuat[QUAT_Y],dmpQuat[QUAT_Z]);
+  //printf("%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f;%f\n",ax,ay,az,vx,vy,vz,px,py,pz,deltaT, dmpQuat[QUAT_W],dmpQuat[QUAT_X],dmpQuat[QUAT_Y],dmpQuat[QUAT_Z],rotMatrix[0][0],rotMatrix[0][1],rotMatrix[0][2],rotMatrix[1][0],rotMatrix[1][1],rotMatrix[1][2],rotMatrix[2][0],rotMatrix[2][1],rotMatrix[2][2]);
   //printf("%f;%f;%f;%f\n",dmpQuat[QUAT_W],dmpQuat[QUAT_X],dmpQuat[QUAT_Y],dmpQuat[QUAT_Z]);
   
   timeOld = mpu->dmpTimestamp;
@@ -274,28 +311,59 @@ void derivate_accel(mpudata_t *mpu){
 
 
 
+/* **************************************************************************
+ * 
+ * ********************  estimate position EVTL löschen  ********************
+ * 
+ * **************************************************************************
+ */
 /* Position estimation is an example of the algorithmus 
  * from http://www.starlino.com/imu_guide.html
  */
-void estimate_position(mpudata_t *mpu, unsigned long loop_delay, double time){
- /* float RAccel, RREst;
-  float Axz, Ayz, AxzOld, AyzOld;
-  float normAccel[3];
-  float REst[3], REstOld[3];
-  float rGyro[3], rawGyroOld[3];
-  double timeOld;
-  int wGyro = 5; //can be chosen from 5 to 20;*/
+void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time){
   int i;
   
   double timedelay = (time-timeOld);
   
+  short gyro[3];
+  short accel[3];
+  
+
+  
+  unsigned char data_read[6];
+  
+  //read accel
+  i2c_read(0x69, 0x3B, 6, data_read);
+//   printf("XH: %d\n",(int)data_read[0]);
+//   printf("XL: %d\n",(int)data_read[1]);
+//   printf("YH: %d\n",(int)data_read[2]);
+//   printf("YL: %d\n",(int)data_read[3]);
+//   printf("ZH: %d\n",(int)data_read[4]);
+//   printf("ZL: %d\n",(int)data_read[5]);
+  
+  accel[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
+  accel[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
+  accel[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
+  
+  //printf("%d  %d  %d  %f\n", accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], time);
+  
+  
+  //read gyro
+  i2c_read(0x69, 0x43, 6, data_read);
+  
+  gyro[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
+  gyro[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
+  gyro[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
+  
+  //printf("%d  %d  %d  %f\n\n", gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], time);
+  
   // normalize acceleration
-  RAccel = sqrt(mpu->calibratedAccel[VEC3_X]*mpu->calibratedAccel[VEC3_X] + 
-		    mpu->calibratedAccel[VEC3_Y]*mpu->calibratedAccel[VEC3_Y] +
-		    mpu->calibratedAccel[VEC3_Z]*mpu->calibratedAccel[VEC3_Z] );
-  normAccel[VEC3_X] = mpu->calibratedAccel[VEC3_X] / RAccel;
-  normAccel[VEC3_Y] = mpu->calibratedAccel[VEC3_Y] / RAccel;
-  normAccel[VEC3_Z] = mpu->calibratedAccel[VEC3_Z] / RAccel;
+  RAccel = sqrt(accel[VEC3_X]*accel[VEC3_X] + 
+		accel[VEC3_Y]*accel[VEC3_Y] +
+		accel[VEC3_Z]*accel[VEC3_Z] );
+  normAccel[VEC3_X] = accel[VEC3_X] / RAccel;
+  normAccel[VEC3_Y] = accel[VEC3_Y] / RAccel;
+  normAccel[VEC3_Z] = accel[VEC3_Z] / RAccel;
   
   if(first){
     printf("first estimation\n");
@@ -308,13 +376,15 @@ void estimate_position(mpudata_t *mpu, unsigned long loop_delay, double time){
     // estimation
     AxzOld = atan2f(REstOld[VEC3_X],REstOld[VEC3_Z]);
     AyzOld = atan2f(REstOld[VEC3_Y],REstOld[VEC3_Z]);
-    Axz = AxzOld + (-mpu->rawGyro[VEC3_X] - rawGyroOld[VEC3_X])*DEGREE_TO_RAD/2 * timedelay;
-    Ayz = AyzOld + (-mpu->rawGyro[VEC3_Y] - rawGyroOld[VEC3_Y])*DEGREE_TO_RAD/2 * timedelay;
+    Axz = AxzOld + (-gyro[VEC3_X] - rawGyroOld[VEC3_X])/**DEGREE_TO_RAD*//2 * timedelay;
+    Ayz = AyzOld + (-gyro[VEC3_Y] - rawGyroOld[VEC3_Y])/**DEGREE_TO_RAD*//2 * timedelay;
     rGyro[VEC3_X] = sinf(Axz) / sqrt(1 + cosf(Axz)*cos(Axz) * tan(Ayz)*tan(Ayz));
     rGyro[VEC3_Y] = sinf(Ayz) / sqrt(1 + cosf(Ayz)*cos(Ayz) * tan(Axz)*tan(Axz));
    
-    if(REstOld[VEC3_Z]>=0){
+    if(REstOld[VEC3_Z]>0){
       rGyro[VEC3_Z] = sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
+    }else if(REstOld[VEC3_Z]==0){
+      rGyro[VEC3_Z] = 0;
     }else{
       rGyro[VEC3_Z] = -sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
     }
@@ -323,18 +393,75 @@ void estimate_position(mpudata_t *mpu, unsigned long loop_delay, double time){
     for(i=VEC3_X;i<(VEC3_Z+1);i++){
       REst[i] = ((normAccel[i] + rGyro[i] * wGyro)/(1 + wGyro)) / RREst;
       REstOld[i] = REst[i];
-    }    
+    }
+    
+    euler[VEC3_X] = asinf(REst[VEC3_X]);
+    euler[VEC3_Y] = asinf(REst[VEC3_Y]);
+//     if(REst[VEC3_Z]<1){
+      euler[VEC3_Z] = asinf(REst[VEC3_Z]);
+//     }else{
+//       euler[VEC3_Z] = asinf(1);
+//     }
+    
     timeOld = time;
     
     //printf("rEst: X %f    Y %f    Z %f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z]);
     
-    printf("%d;%d;%d;%f;%f;%f;%f;%f;%f;%d;%d;%d;%f\n", mpu->rawGyro[VEC3_X], mpu->rawGyro[VEC3_Y], mpu->rawGyro[VEC3_Z], REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z], normAccel[VEC3_X], normAccel[VEC3_Y], normAccel[VEC3_Z], mpu->calibratedAccel[VEC3_X], mpu->calibratedAccel[VEC3_Y], mpu->calibratedAccel[VEC3_Z],timedelay);
+     printf("%f;%f;%f;%f;%f;%f;%d;%d;%d;%d;%d;%d;%f;%f;%f;%f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z], euler[VEC3_X], euler[VEC3_Y], euler[VEC3_Z], gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], normAccel[VEC3_X], normAccel[VEC3_Y], normAccel[VEC3_Z], timedelay);
+  
+  
+//   // normalize acceleration
+//   RAccel = sqrt(mpu->calibratedAccel[VEC3_X]*mpu->calibratedAccel[VEC3_X] + 
+// 		    mpu->calibratedAccel[VEC3_Y]*mpu->calibratedAccel[VEC3_Y] +
+// 		    mpu->calibratedAccel[VEC3_Z]*mpu->calibratedAccel[VEC3_Z] );
+//   normAccel[VEC3_X] = mpu->calibratedAccel[VEC3_X] / RAccel;
+//   normAccel[VEC3_Y] = mpu->calibratedAccel[VEC3_Y] / RAccel;
+//   normAccel[VEC3_Z] = mpu->calibratedAccel[VEC3_Z] / RAccel;
+//   
+//   if(first){
+//     printf("first estimation\n");
+//     for(i=VEC3_X;i<(VEC3_Z+1);i++){
+//       REst[i] = //normAccel[i];
+//       REstOld[i] = REst[i];
+//     }
+//     first = 0;
+//   }else{
+//     // estimation
+//     AxzOld = atan2f(REstOld[VEC3_X],REstOld[VEC3_Z]);
+//     AyzOld = atan2f(REstOld[VEC3_Y],REstOld[VEC3_Z]);
+//     Axz = AxzOld + (-mpu->rawGyro[VEC3_X] - rawGyroOld[VEC3_X])*DEGREE_TO_RAD/2 * timedelay;
+//     Ayz = AyzOld + (-mpu->rawGyro[VEC3_Y] - rawGyroOld[VEC3_Y])*DEGREE_TO_RAD/2 * timedelay;
+//     rGyro[VEC3_X] = sinf(Axz) / sqrt(1 + cosf(Axz)*cos(Axz) * tan(Ayz)*tan(Ayz));
+//     rGyro[VEC3_Y] = sinf(Ayz) / sqrt(1 + cosf(Ayz)*cos(Ayz) * tan(Axz)*tan(Axz));
+//    
+//     if(REstOld[VEC3_Z]>=0){
+//       rGyro[VEC3_Z] = sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
+//     }else{
+//       rGyro[VEC3_Z] = -sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
+//     }
+//     
+//     RREst = sqrt(REst[VEC3_X]*REst[VEC3_X] + REst[VEC3_Y]*REst[VEC3_Y] + REst[VEC3_Z]*REst[VEC3_Z]);
+//     for(i=VEC3_X;i<(VEC3_Z+1);i++){
+//       REst[i] = ((normAccel[i] + rGyro[i] * wGyro)/(1 + wGyro)) / RREst;
+//       REstOld[i] = REst[i];
+//     }    
+//     timeOld = time;
+//     
+//     //printf("rEst: X %f    Y %f    Z %f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z]);
+//     
+//     printf("%f;%f;%f;%f;%f;%f;%f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z], normAccel[VEC3_X], normAccel[VEC3_Y], normAccel[VEC3_Z], timedelay);
      
   }
   
 }
 
 
+/* **************************************************************************
+ * 
+ * ********************  mpu9250_set_accel_cal löschen  ********************
+ * 
+ * **************************************************************************
+ */
 void mpu9250_set_accel_cal(caldata_t *cal)
 {
   int i;

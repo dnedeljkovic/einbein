@@ -560,7 +560,9 @@ printf("\nread mem defined MPU6500\n");
      * first 3kB are needed by the DMP, we'll use the last 1kB for the FIFO.
      */
 
+    //data[0] = BIT_FIFO_SIZE_1024 | 0x8;
     data[0] = BIT_FIFO_SIZE_1024 | 0x8;
+    printf("data accel cfg 2: %d\n",(int)data[0]);
     if (i2c_write(st.hw->addr, st.reg->accel_cfg2, 1, data))
         return -1;
 
@@ -592,7 +594,7 @@ printf("\nread mem defined MPU6500\n");
         return -1;
     if (mpu_set_lpf(42))
         return -1;
-    if (mpu_set_sample_rate(50))
+    if (mpu_set_sample_rate(100))	//******************** hier war 50 ****************************
         return -1;
     if (mpu_configure_fifo(0))
         return -1;
@@ -2621,7 +2623,12 @@ int mpu_get_compass_fsr(unsigned short *fsr)
 
 
 
-
+/* **************************************************************************
+ * 
+ * ***********************  set_acc_offset löschen  ************************
+ * 
+ * **************************************************************************
+ */
 /* Set acceleration offset into the register of MPU9250
  * (Dejan Nedeljkovic)
  */

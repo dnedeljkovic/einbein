@@ -64,7 +64,7 @@ void register_sig_handler();
 void sigint_handler(int sig);
 int set_cal();
 
-int done;
+int done = 0;
 
 
 
@@ -96,14 +96,26 @@ int main(int argc, char *argv[]){
   //set_cal();
   
   //set_acc_offset(ACC_X_OFFSET,ACC_Y_OFFSET,ACC_Z_OFFSET);
- 
   
-  int wait = 20;
+  
+  /*
+  unsigned char data_read[0];
+  
+  i2c_read(0x69, 0x19, 1, data_read);
+  printf("ACC Config 2: %d\n",(int)data_read[0]);
+  
+  i2c_read(0x69, 0x19, 1, data_read);
+  printf("mpu frequence: %d\n",(int)data_read[0]);
+  */
+  
+  
+  
+  /*int wait = 20;
   while(wait > 0){
     printf("measurement starts in %d\n",wait);
     sleep(1);
     wait--;
-  }
+  }*/
 
   read_loop(sample_rate, &log);
   
@@ -130,16 +142,30 @@ void read_loop(unsigned int sample_rate, Logger<LogWriter> *log)
 
     linux_delay_ms(loop_delay);
     
+    double time;
 
     while (!done) {
-	if (mpu9250_read(&mpu) == 0) {
+      
+//       if(mpu9250_read_reg(&mpu) == 0){
+// 	estimate_position(/*&mpu, loop_delay, System::getTime()*/);
+//       }
+      
+//       time = System::getTime();
+      
+      estimate_position(/*&mpu, loop_delay,*/ System::getTime());
+      
+//       printf("time do calculate: %f\n",System::getTime()-time);
+      
+// 	if (mpu9250_read(&mpu) == 0) {
 		//print_fused_euler_angles(&mpu, log);
 		//print_calibrated_accel(&mpu, log);
-		derivate_accel(&mpu);
-		//estimate_position(&mpu, loop_delay, System::getTime());
-	}
-
-	linux_delay_ms(loop_delay);
+// 		derivate_accel(&mpu);
+		
+	   //printf("timestamp: %ld\n",mpu.dmpTimestamp-timeOld);
+// 	}
+// 	timeOld = mpu.dmpTimestamp;
+// 	linux_delay_ms(loop_delay);
+// 	linux_delay_ms(1);
     }
 }
 
@@ -159,31 +185,31 @@ void print_calibrated_accel(mpudata_t *mpu, Logger<LogWriter> *log)
 
 
 
+
+
+
+
+/* **************************************************************************
+ * 
+ * ***************************  set_cal löschen  ***************************
+ * 
+ * **************************************************************************
+ */
 int set_cal()
 {
   int i;
   FILE *f;
   char buff[32];
   long val[6];
-  caldata_t cal;
-  
- /* f = fopen(cal_file, "r");
-		
-  if (!f) {
-    perror("open(<cal-file>)");
-    return -1;
-  }
-  else {*/
+  caldata_t cal; 
     
-    f = fopen("./accelcal.txt", "r");
+  f = fopen("./accelcal.txt", "r");
 
-    if (!f) {
-      printf("Default accelcal.txt not found\n");
-      return 0;
-    }
- // }	
-  
-  
+  if (!f) {
+    printf("Default accelcal.txt not found\n");
+    return 0;
+  }
+   
   memset(buff, 0, sizeof(buff));
 	
   for (i = 0; i < 6; i++) {
@@ -203,7 +229,7 @@ int set_cal()
   fclose(f);
 
   if (i != 6) 
-	  return -1;
+    return -1;
 
   cal.offset[0] = (short)((val[0] + val[1]) / 2);
   cal.offset[1] = (short)((val[2] + val[3]) / 2);

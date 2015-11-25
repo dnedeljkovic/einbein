@@ -72,6 +72,23 @@ void quaternionToEuler(quaternion_t q, vector3d_t v)
 			q[QUAT_Y] * q[QUAT_Y] - q[QUAT_Z] * q[QUAT_Z] - q[QUAT_X] * q[QUAT_X] + q[QUAT_W] * q[QUAT_W]);
 }
 
+
+void quaternionToRotMatrix(quaternion_t q, matrix3d_t m)
+{
+/**
+ *	Quaternionen to Rotation Matrix
+ */
+	m[MATRIX_11] = q[QUAT_W]*q[QUAT_W] + q[QUAT_X]*q[QUAT_X] - q[QUAT_Y]*q[QUAT_Y] - q[QUAT_Z]*q[QUAT_Z];
+	m[MATRIX_12] = 2*(q[QUAT_X]*q[QUAT_Y] - q[QUAT_W]*q[QUAT_Z]);
+	m[MATRIX_13] = 2*(q[QUAT_W]*q[QUAT_Y] + q[QUAT_X]*q[QUAT_Z]);
+	m[MATRIX_21] = 2*(q[QUAT_X]*q[QUAT_Y] + q[QUAT_W]*q[QUAT_Z]);
+	m[MATRIX_22] = q[QUAT_W]*q[QUAT_W] - q[QUAT_X]*q[QUAT_X] + q[QUAT_Y]*q[QUAT_Y] - q[QUAT_Z]*q[QUAT_Z];
+	m[MATRIX_23] = 2*(q[QUAT_Y]*q[QUAT_Z] - q[QUAT_W]*q[QUAT_X]);
+	m[MATRIX_31] = 2*(q[QUAT_X]*q[QUAT_Z] - q[QUAT_W]*q[QUAT_Y]);
+	m[MATRIX_32] = 2*(q[QUAT_W]*q[QUAT_X] + q[QUAT_Y]*q[QUAT_Z]);
+	m[MATRIX_33] = q[QUAT_W]*q[QUAT_W] - q[QUAT_X]*q[QUAT_X] - q[QUAT_Y]*q[QUAT_Y] + q[QUAT_Z]*q[QUAT_Z];
+}
+
 void eulerToQuaternion(vector3d_t v, quaternion_t q)
 {
 	float cosX2 = cosf(v[VEC3_X] / 2.0f);

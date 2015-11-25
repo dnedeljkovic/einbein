@@ -19,11 +19,13 @@ src/mpu9250/CMakeFiles/mpu9250.dir/glue/linux_glue.c.o: ../src/mpu9250/glue/linu
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o: ../src/mpu9250/eMPL/inv_mpu.h
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o: ../src/mpu9250/eMPL/inv_mpu_dmp_motion_driver.h
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o: ../src/mpu9250/glue/linux_glue.h
+src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o: ../src/mpu9250/mpu9250/matrix3d.h
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o: ../src/mpu9250/mpu9250/mpu9250.c
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o: ../src/mpu9250/mpu9250/mpu9250.h
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o: ../src/mpu9250/mpu9250/quaternion.h
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o: ../src/mpu9250/mpu9250/vector3d.h
 
+src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o: ../src/mpu9250/mpu9250/matrix3d.h
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o: ../src/mpu9250/mpu9250/quaternion.c
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o: ../src/mpu9250/mpu9250/quaternion.h
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o: ../src/mpu9250/mpu9250/vector3d.h

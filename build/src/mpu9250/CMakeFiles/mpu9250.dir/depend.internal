@@ -20,11 +20,13 @@ src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o
  /home/dejan/projects/einbein/src/mpu9250/eMPL/inv_mpu.h
  /home/dejan/projects/einbein/src/mpu9250/eMPL/inv_mpu_dmp_motion_driver.h
  /home/dejan/projects/einbein/src/mpu9250/glue/linux_glue.h
+ /home/dejan/projects/einbein/src/mpu9250/mpu9250/matrix3d.h
  /home/dejan/projects/einbein/src/mpu9250/mpu9250/mpu9250.c
  /home/dejan/projects/einbein/src/mpu9250/mpu9250/mpu9250.h
  /home/dejan/projects/einbein/src/mpu9250/mpu9250/quaternion.h
  /home/dejan/projects/einbein/src/mpu9250/mpu9250/vector3d.h
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o
+ /home/dejan/projects/einbein/src/mpu9250/mpu9250/matrix3d.h
  /home/dejan/projects/einbein/src/mpu9250/mpu9250/quaternion.c
  /home/dejan/projects/einbein/src/mpu9250/mpu9250/quaternion.h
  /home/dejan/projects/einbein/src/mpu9250/mpu9250/vector3d.h

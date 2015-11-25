@@ -22,6 +22,7 @@ test/CMakeFiles/imu.dir/imu.cpp.o: /home/dejan/eeros-framework/includes/eeros/sa
 test/CMakeFiles/imu.dir/imu.cpp.o: /home/dejan/eeros-framework/includes/eeros/safety/SafetySystem.hpp
 test/CMakeFiles/imu.dir/imu.cpp.o: ../src/mpu9250/eMPL/inv_mpu.h
 test/CMakeFiles/imu.dir/imu.cpp.o: ../src/mpu9250/glue/linux_glue.h
+test/CMakeFiles/imu.dir/imu.cpp.o: ../src/mpu9250/mpu9250/matrix3d.h
 test/CMakeFiles/imu.dir/imu.cpp.o: ../src/mpu9250/mpu9250/mpu9250.h
 test/CMakeFiles/imu.dir/imu.cpp.o: ../src/mpu9250/mpu9250/quaternion.h
 test/CMakeFiles/imu.dir/imu.cpp.o: ../src/mpu9250/mpu9250/vector3d.h
