@@ -29,6 +29,6 @@ test/CMakeFiles/fqdMot.dir/fqdMot.cpp.o: /home/dejan/eeros-framework/includes/ee
 test/CMakeFiles/fqdMot.dir/fqdMot.cpp.o: /home/dejan/eeros-framework/includes/eeros/safety/SafetyProperties.hpp
 test/CMakeFiles/fqdMot.dir/fqdMot.cpp.o: /home/dejan/eeros-framework/includes/eeros/safety/SafetySystem.hpp
 test/CMakeFiles/fqdMot.dir/fqdMot.cpp.o: /home/dejan/flinklib/include/flinklib.h
-test/CMakeFiles/fqdMot.dir/fqdMot.cpp.o: ../constants/constants.hpp
+test/CMakeFiles/fqdMot.dir/fqdMot.cpp.o: ../include/einbein/constants.hpp
 test/CMakeFiles/fqdMot.dir/fqdMot.cpp.o: ../test/fqdMot.cpp
 

@@ -40,17 +40,32 @@ int use_accel_cal;
 caldata_t accel_cal_data;
 
 int first = 1;
-float RAccel, RREst;
-float Axz, Ayz, AxzOld, AyzOld;
-float normAccel[3];
-float REst[3], REstOld[3];
-float rGyro[3], rawGyroOld[3];
-float euler[3];
+short rawGyro[3];
+short rawAccel[3];
+double accel[3];
+double gyro[3];
+double accNorm;
+double rEstNorm;
+double Axz, Ayz;
+double AxzOld = 0.0;
+double AyzOld = 0.0; 
+double rAcc[3];
+double rEst[3];
+double rEstOld[3];
+double rGyro[3];
+double angDisp[3];
+double angDispOld[3];
+double euler[3];
 double timeOld = 0.0;
-int wGyro = 10; //can be chosen from 5 to 20;
+int wGyro = 15; //can be chosen from 5 to 20;
+
+#define ACCSENS 32768/2
+#define GYROSENS 32768/2000
+
 
 int cRow = 0;
 char data[512000];
+
 
 
 
@@ -325,10 +340,6 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
   
   double timedelay = (time-timeOld);
   
-  short gyro[3];
-  short accel[3];
-  
-
   
   unsigned char data_read[6];
   
@@ -341,64 +352,76 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
 //   printf("ZH: %d\n",(int)data_read[4]);
 //   printf("ZL: %d\n",(int)data_read[5]);
   
-  accel[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
-  accel[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
-  accel[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
+  rawAccel[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
+  rawAccel[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
+  rawAccel[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
   
+//   printf("%d  %d  %d \t ", rawAccel[VEC3_X], rawAccel[VEC3_Y], rawAccel[VEC3_Z]);
   //printf("%d  %d  %d  %f\n", accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], time);
-  
   
   //read gyro
   i2c_read(0x69, 0x43, 6, data_read);
   
-  gyro[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
-  gyro[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
-  gyro[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
+  rawGyro[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
+  rawGyro[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
+  rawGyro[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
   
+//   printf("%d  %d  %d  \t", rawGyro[VEC3_X], rawGyro[VEC3_Y], rawGyro[VEC3_Z]);
   //printf("%d  %d  %d  %f\n\n", gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], time);
   
+  
+  
+  for(i=VEC3_X;i<(VEC3_Z+1);i++){
+    accel[i] = (float)rawAccel[i] / (ACCSENS);
+    gyro[i] = (float)rawGyro[i] / (GYROSENS);
+    angDisp[i] = gyro[i] * timedelay; // *DEGREE_TO_RAD
+    
+  }
+//   printf("%f  %f  %f \t %f\n", accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], time);
+  
   // normalize acceleration
-  RAccel = sqrt(accel[VEC3_X]*accel[VEC3_X] + 
-		accel[VEC3_Y]*accel[VEC3_Y] +
-		accel[VEC3_Z]*accel[VEC3_Z] );
-  normAccel[VEC3_X] = accel[VEC3_X] / RAccel;
-  normAccel[VEC3_Y] = accel[VEC3_Y] / RAccel;
-  normAccel[VEC3_Z] = accel[VEC3_Z] / RAccel;
+  accNorm = sqrt(accel[VEC3_X]*accel[VEC3_X] + accel[VEC3_Y]*accel[VEC3_Y] + accel[VEC3_Z]*accel[VEC3_Z] );
+  for(i=VEC3_X;i<(VEC3_Z+1);i++){
+    rAcc[i] = accel[i] / accNorm;
+  }
   
   if(first){
     printf("first estimation\n");
     for(i=VEC3_X;i<(VEC3_Z+1);i++){
-      REst[i] = normAccel[i];
-      REstOld[i] = REst[i];
+      rEst[i] = rAcc[i];
+      rEstOld[i] = rEst[i];
+      angDispOld[i] = angDisp[i];
     }
     first = 0;
   }else{
     // estimation
-    AxzOld = atan2f(REstOld[VEC3_X],REstOld[VEC3_Z]);
-    AyzOld = atan2f(REstOld[VEC3_Y],REstOld[VEC3_Z]);
-    Axz = AxzOld + (-gyro[VEC3_X] - rawGyroOld[VEC3_X])/**DEGREE_TO_RAD*//2 * timedelay;
-    Ayz = AyzOld + (-gyro[VEC3_Y] - rawGyroOld[VEC3_Y])/**DEGREE_TO_RAD*//2 * timedelay;
+    Axz = AxzOld + (-angDisp[VEC3_X] - angDispOld[VEC3_X])/2 ;
+    Ayz = AyzOld + (-angDisp[VEC3_Y] - angDispOld[VEC3_Y])/2 ;
     rGyro[VEC3_X] = sinf(Axz) / sqrt(1 + cosf(Axz)*cos(Axz) * tan(Ayz)*tan(Ayz));
     rGyro[VEC3_Y] = sinf(Ayz) / sqrt(1 + cosf(Ayz)*cos(Ayz) * tan(Axz)*tan(Axz));
    
-    if(REstOld[VEC3_Z]>0){
+    if(rEstOld[VEC3_Z]>0){
       rGyro[VEC3_Z] = sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
-    }else if(REstOld[VEC3_Z]==0){
+    }else if(rEstOld[VEC3_Z]==0){
       rGyro[VEC3_Z] = 0;
     }else{
       rGyro[VEC3_Z] = -sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
     }
     
-    RREst = sqrt(REst[VEC3_X]*REst[VEC3_X] + REst[VEC3_Y]*REst[VEC3_Y] + REst[VEC3_Z]*REst[VEC3_Z]);
+    rEstNorm = sqrt(rEst[VEC3_X]*rEst[VEC3_X] + rEst[VEC3_Y]*rEst[VEC3_Y] + rEst[VEC3_Z]*rEst[VEC3_Z]);
     for(i=VEC3_X;i<(VEC3_Z+1);i++){
-      REst[i] = ((normAccel[i] + rGyro[i] * wGyro)/(1 + wGyro)) / RREst;
-      REstOld[i] = REst[i];
+      rEst[i] = ((rAcc[i] + rGyro[i] * wGyro)/(1 + wGyro)) / rEstNorm;
+      rEstOld[i] = rEst[i];
+      angDispOld[i] = gyro[i];
     }
     
-    euler[VEC3_X] = asinf(REst[VEC3_X]);
-    euler[VEC3_Y] = asinf(REst[VEC3_Y]);
-//     if(REst[VEC3_Z]<1){
-      euler[VEC3_Z] = asinf(REst[VEC3_Z]);
+    AxzOld = atan2f(rEstOld[VEC3_X],rEstOld[VEC3_Z]);
+    AyzOld = atan2f(rEstOld[VEC3_Y],rEstOld[VEC3_Z]);
+    
+    euler[VEC3_X] = asinf(rEst[VEC3_X]);
+    euler[VEC3_Y] = asinf(rEst[VEC3_Y]);
+//     if(rEst[VEC3_Z]<1){
+      euler[VEC3_Z] = asinf(rEst[VEC3_Z]);
 //     }else{
 //       euler[VEC3_Z] = asinf(1);
 //     }
@@ -407,7 +430,7 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
     
     //printf("rEst: X %f    Y %f    Z %f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z]);
     
-     printf("%f;%f;%f;%f;%f;%f;%d;%d;%d;%d;%d;%d;%f;%f;%f;%f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z], euler[VEC3_X], euler[VEC3_Y], euler[VEC3_Z], gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], normAccel[VEC3_X], normAccel[VEC3_Y], normAccel[VEC3_Z], timedelay);
+    printf("%f;%f;%f;\t%f;%f;%f;\t%f;%f;%f;\t%f;%f;%f;\t%f;%f;%f;\t%f\n",rEst[VEC3_X], rEst[VEC3_Y], rEst[VEC3_Z], euler[VEC3_X], euler[VEC3_Y], euler[VEC3_Z], gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], rAcc[VEC3_X], rAcc[VEC3_Y], rAcc[VEC3_Z], timedelay);
   
   
 //   // normalize acceleration

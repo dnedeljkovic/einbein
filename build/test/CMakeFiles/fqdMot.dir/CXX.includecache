@@ -218,7 +218,7 @@ stdint.h
 sys/types.h
 -
 
-/home/dejan/projects/einbein/constants/constants.hpp
+/home/dejan/projects/einbein/include/einbein/constants.hpp
 
 /home/dejan/projects/einbein/test/fqdMot.cpp
 iostream
@@ -245,6 +245,6 @@ eeros/hal/FlinkAnalogOut.hpp
 -
 eeros/hal/FlinkPwm.hpp
 -
-../constants/constants.hpp
-/home/dejan/projects/einbein/constants/constants.hpp
+../include/einbein/constants.hpp
+/home/dejan/projects/einbein/include/einbein/constants.hpp
 

@@ -11,7 +11,7 @@
 #include <eeros/hal/FlinkFqd.hpp>
 #include <eeros/hal/FlinkAnalogOut.hpp>
 #include <eeros/hal/FlinkPwm.hpp>
-#include "../constants/constants.hpp"
+#include "../include/einbein/constants.hpp"
 
 
 #define FPGA_DEVICE "/dev/flink0"
