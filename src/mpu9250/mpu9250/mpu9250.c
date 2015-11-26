@@ -57,7 +57,7 @@ double angDisp[3];
 double angDispOld[3];
 double euler[3];
 double timeOld = 0.0;
-int wGyro = 15; //can be chosen from 5 to 20;
+int wGyro = 10; //can be chosen from 5 to 20;
 
 #define ACCSENS 32768/2
 #define GYROSENS 32768/2000
@@ -374,7 +374,7 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
   for(i=VEC3_X;i<(VEC3_Z+1);i++){
     accel[i] = (float)rawAccel[i] / (ACCSENS);
     gyro[i] = (float)rawGyro[i] / (GYROSENS);
-    angDisp[i] = gyro[i] * timedelay; // *DEGREE_TO_RAD
+    angDisp[i] = gyro[i] *DEGREE_TO_RAD * timedelay; // *DEGREE_TO_RAD
     
   }
 //   printf("%f  %f  %f \t %f\n", accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], time);
@@ -399,6 +399,7 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
     Ayz = AyzOld + (-angDisp[VEC3_Y] - angDispOld[VEC3_Y])/2 ;
     rGyro[VEC3_X] = sinf(Axz) / sqrt(1 + cosf(Axz)*cos(Axz) * tan(Ayz)*tan(Ayz));
     rGyro[VEC3_Y] = sinf(Ayz) / sqrt(1 + cosf(Ayz)*cos(Ayz) * tan(Axz)*tan(Axz));
+    
    
     if(rEstOld[VEC3_Z]>0){
       rGyro[VEC3_Z] = sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
@@ -408,12 +409,18 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
       rGyro[VEC3_Z] = -sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
     }
     
+    for(i=VEC3_X;i<(VEC3_Z+1);i++){
+      rEst[i] = ((rAcc[i] + rGyro[i] * wGyro)/(1 + wGyro));
+    }
+//     printf("rAcc: %f  %f  %f\t rGyro: %f  %f  %f\t Axz: %f  Ayz: %f\t angDisp: %f %f  %f %f\t dt: %f\n",rAcc[0],rAcc[1],rAcc[2],rGyro[0],rGyro[1],rGyro[2],Axz,Ayz,angDisp[0],angDisp[1],angDispOld[0],angDispOld[1],timedelay);
+     
     rEstNorm = sqrt(rEst[VEC3_X]*rEst[VEC3_X] + rEst[VEC3_Y]*rEst[VEC3_Y] + rEst[VEC3_Z]*rEst[VEC3_Z]);
     for(i=VEC3_X;i<(VEC3_Z+1);i++){
-      rEst[i] = ((rAcc[i] + rGyro[i] * wGyro)/(1 + wGyro)) / rEstNorm;
+      rEst[i] = rEst[i] / rEstNorm;
       rEstOld[i] = rEst[i];
-      angDispOld[i] = gyro[i];
+      angDispOld[i] = angDisp[i];
     }
+
     
     AxzOld = atan2f(rEstOld[VEC3_X],rEstOld[VEC3_Z]);
     AyzOld = atan2f(rEstOld[VEC3_Y],rEstOld[VEC3_Z]);
