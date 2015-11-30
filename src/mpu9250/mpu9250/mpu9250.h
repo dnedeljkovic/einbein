@@ -71,23 +71,12 @@ void derivate_accel(mpudata_t *mpu);
 
 
 
-/* **************************************************************************
- * 
- * ********************  estimate position EVTL löschen  ********************
- * 
- * **************************************************************************
- */
+
 void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time);
+int estimate_position2(double time);
 int mpu9250_read_reg(mpudata_t *mpu);
 
 
-/* **************************************************************************
- * 
- * ********************  mpu9250_set_accel_cal löschen  ********************
- * 
- * **************************************************************************
- */
-void mpu9250_set_accel_cal(caldata_t *cal);
 
 #endif /* MPU9250_H */
 
