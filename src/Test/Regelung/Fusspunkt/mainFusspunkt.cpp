@@ -20,7 +20,7 @@ using namespace eeros::hal;
 //using namespace eeros::control;
 using namespace eeros::safety;
 using namespace eeros::logger;
-using namespace constFusspunkt;
+using namespace einbein;
 
 // enable to stop the program with ctrl c
 volatile bool running = true;
