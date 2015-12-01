@@ -152,7 +152,8 @@ void read_loop(unsigned int sample_rate, Logger<LogWriter> *log)
       
 //       time = System::getTime();
       
-      estimate_position(/*&mpu, loop_delay,*/ System::getTime());
+//       estimate_position(/*&mpu, loop_delay,*/ System::getTime());
+      estimate_position2(System::getTime()); linux_delay_ms(10);
       
 //       printf("time do calculate: %f\n",System::getTime()-time);
       
@@ -240,7 +241,6 @@ int set_cal()
   cal.range[2] = (short)(val[5] - cal.offset[2]);
 
   
-  mpu9250_set_accel_cal(&cal);
 
   return 0;
   

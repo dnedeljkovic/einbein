@@ -603,7 +603,7 @@ printf("\nread mem defined MPU6500\n");
         reg_int_cb(int_param);
 
     setup_compass();
-    if (mpu_set_compass_sample_rate(10))
+    if (mpu_set_compass_sample_rate(100))
         return -1;
 
     mpu_set_sensors(0);
@@ -2497,7 +2497,8 @@ static int setup_compass(void)
         log_e("Compass not found.\n");
         return -1;
     }
-
+    
+    printf("akm addr: 0x0%x\n",akm_addr&0xff);
     st.chip_cfg.compass_addr = akm_addr;
 
     data[0] = AKM_POWER_DOWN;
