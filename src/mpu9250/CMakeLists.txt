@@ -7,4 +7,6 @@ add_library(mpu9250
 	    mpu9250/vector3d.c
 )
 
+
+
 #target_link_libraries(mpu9250 eeros) # Link mpu9250 library against libeeros

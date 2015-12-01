@@ -1,0 +1,2 @@
+add_subdirectory(Trajektorie)
+add_subdirectory(Fusspunkt)

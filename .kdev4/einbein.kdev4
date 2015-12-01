@@ -7,11 +7,11 @@ Current Build Directory Index=0
 ProjectRootRelative=./
 
 [CMake][CMake Build Directory 0]
-Build Directory Path=file:///home/dejan/projects/einbein/build
+Build Directory Path=file:///home/reto/projects/einbein/build-arm
 Build Type=Debug
 CMake Binary=file:///usr/bin/cmake
 Environment Profile=
-Extra Arguments=-DADDITIONAL_INCLUDE_DIRS="/home/dejan/eeros-framework/includes /home/dejan/flinklib/include" -DADDITIONAL_LINK_DIRS="/home/dejan/eeros-framework/build-arm/src/libeeros.so /home/dejan/flinklib/build-arm/lib/libflink.so" -DCMAKE_TOOLCHAIN_FILE=/home/dejan/arm-toolchain.cmake
+Extra Arguments=-DADDITIONAL_INCLUDE_DIRS="/home/dejan/eeros-framework/includes /home/dejan/flinklib/include" -DADDITIONAL_LINK_DIRS="/home/reto/eeros-framework/build-arm/src/libeeros.so /home/reto/flinklib/build-arm/lib/libflink.so" -DCMAKE_TOOLCHAIN_FILE=/home/reto/arm-toolchain.cmake
 Install Directory=file:///usr/local
 
 [Project]
