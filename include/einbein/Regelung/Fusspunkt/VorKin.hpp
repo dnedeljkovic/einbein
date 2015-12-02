@@ -74,7 +74,17 @@ namespace einbein{
 	      eeros::math::Matrix<3,1> r43_1, r43_2, r43_3;
 	      double l_1, l_2, l_3;
 	      
-	     
+
+//-------------------------FPf2F3i Methode------------------------------------------------	      
+	      virtual void FPf2F3i(Vector3 &F31_IMU, Vector3 &F32_IMU, Vector3 &F33_IMU, Vector3 &F_Fuss_vec, Vector3 ek_M1_IMU,Vector3 ek_M2_IMU, Vector3 ek_M3_IMU);
+	      double F_x, F_y, F_z;
+	      double a11, a12, a13, a21, a22, a23, a31, a32, a33;
+	      eeros::math::Matrix<3,3> A, A_invers;
+	      double det_A; 
+	      Vector3 F3_skalar;
+
+
+	      
 //-----------------Rotationsmatrix R_0_IMU_R------------------------------------------------
 	      eeros::math::Matrix<3,3> R_0_IMU_R;
 	      eeros::math::Matrix<3,3> R_0_IMU_R_rotX;

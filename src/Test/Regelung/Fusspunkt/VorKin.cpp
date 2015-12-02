@@ -14,7 +14,6 @@ using namespace eeros::math;
 
 //Konstruktor
 VorKin::VorKin(){
-
 };
 
 //Destruktor
@@ -134,9 +133,6 @@ void VorKin::calculateGeoData(Vector3 &P2i_Mi, Vector3 &P3i_Mi,  Vector3 &P6i_Mi
       
       
 }//end VorKin
-
-
-
 
 
 //Berechnet Fusspunkt und deren Einheitsvektoren. Rückgabe per Reference
@@ -290,3 +286,62 @@ void VorKin::calculateP3i2pf(Vector3 &Pf_IMU, Vector3 &ek1_IMU, Vector3 &ek2_IMU
     
 }//end calculateP3i2pf
 
+
+//Berechnung Kraft, welche dem Oberschenkel übergeben werden. Rückgabe per Reference
+void VorKin::FPf2F3i(Vector3 &F31_IMU, Vector3 &F32_IMU, Vector3 &F33_IMU, Vector3 &F_Fuss_vec, Vector3 ek_M1_IMU,Vector3 ek_M2_IMU, Vector3 ek_M3_IMU){
+    
+    F_x  = F_Fuss_vec(0);
+    F_y  = F_Fuss_vec(1);
+    F_z  = F_Fuss_vec(2);
+  
+    //A-Matrix
+    a11= e_x.transpose()*ek_M1_IMU;
+    a12 = e_x.transpose()*ek_M2_IMU;
+    a13 = e_x.transpose()*ek_M3_IMU;
+    a21 = e_y.transpose()*ek_M1_IMU;
+    a22 = e_y.transpose()*ek_M2_IMU;
+    a23 = e_y.transpose()*ek_M3_IMU;
+    a31 = e_z.transpose()*ek_M1_IMU;
+    a32 = e_z.transpose()*ek_M2_IMU;
+    a33 = e_z.transpose()*ek_M3_IMU;
+    
+    //A_Matrix
+    A(0,0) = a22*a33-a23*a32;	A(0,1) = a13*a32-a12*a33;   A(0,2) = a12*a23-a13*a22;
+    A(1,0) = a23*a31-a21*a33;	A(1,1) = a11*a33-a13*a31;   A(1,2) = a13*a21-a11*a23;
+    A(2,0) = a21*a32-a22*a31;	A(2,1) = a12*a31-a11*a32;   A(2,2) = a11*a22-a12*a21;
+    
+    //det(A)
+    det_A = A.det();
+    A_invers = 1/det_A*A;
+    
+    //Kraft als Skalar am Punkt 3
+    F3_skalar = A_invers*F_Fuss_vec;
+    
+  
+    //Lösung kontrollieren
+    if (isnan(F3_skalar(1)) == 1 ){
+        F3_skalar(0) = 1e-3;
+        printf("F_Motor_vec(0) --> NaN !!\n");
+	}
+   
+         
+ 
+    if (isnan(F3_skalar(2)) == 1 ){
+        F3_skalar(1) = 1e-3;
+        printf("F_Motor_vec(1) --> NaN !!\n");
+	}
+    
+    
+    if (isnan(F3_skalar(3)) == 1 ){
+        F3_skalar(2) = 1e-3;
+        printf("F_Motor_vec(2) --> NaN !!\n");
+	}
+    
+    
+    //Lösung Übergeben   
+    F31_IMU = ek_M1_IMU *F3_skalar(0);
+    F32_IMU = ek_M2_IMU *F3_skalar(1);
+    F33_IMU = ek_M3_IMU *F3_skalar(2);
+    
+  
+}//end 

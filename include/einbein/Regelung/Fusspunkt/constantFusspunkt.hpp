@@ -8,6 +8,12 @@ using namespace eeros::math;
 
 
 namespace einbein{
+  
+  /*///------------------------------------------------------------------------------
+   * 	Konstante Vorwärtskinemtaik
+   *///------------------------------------------------------------------------------
+  
+  
     //static constant ist für alle erzeugten Objekten gleich 
   
     static const double pi  	= 3.14159265358979323846; 	// [m]
@@ -107,11 +113,20 @@ namespace einbein{
     static const eeros::math::Matrix<3,3,double> R_0_IMU_R;
 
 
+   /*///------------------------------------------------------------------------------
+   * 	Konstante Direkte transformierte Jacobimatrix
+   *///------------------------------------------------------------------------------
+    static const eeros::math::Matrix<3,1,double> e_x  = eeros::math::Matrix<3,1,double> ({1.0,
+											  0.0,
+											  0.0,});
     
+    static const eeros::math::Matrix<3,1,double> e_y  = eeros::math::Matrix<3,1,double> ({0.0,
+											  1.0,
+											  0.0,});    
     
-    
-    
-    
+    static const eeros::math::Matrix<3,1,double> e_z  = eeros::math::Matrix<3,1,double> ({0.0,
+											  0.0,
+											  1.0,});    
     
     
     
