@@ -6,7 +6,6 @@
 
 
 //namespace
-
 using namespace einbein;
 using namespace eeros;
 using namespace eeros::math;
@@ -15,6 +14,7 @@ using namespace eeros::math;
 
 //Konstruktor
 VorKin::VorKin(){
+
 };
 
 //Destruktor
@@ -23,7 +23,7 @@ VorKin::~VorKin(){};
 
 
 void VorKin::run(){
-  //Input
+//-----------------------------  set Input-------------------------------------------------
   alpha1	= in_alpha1.getSignal().getValue(); 
   beta1		= in_beta1.getSignal().getValue();   
   gamma1	= in_gamma1.getSignal().getValue();
@@ -31,23 +31,60 @@ void VorKin::run(){
   enc2 		= in_enc2.getSignal().getValue();  
   enc3 		= in_enc3.getSignal().getValue();
 
-  calculateGeoData(P13_M3,P23_M3, P33_M3, P53_M3, h3, sigma_3, enc3);
+ 
+//------------------------------------------------------------------------------
+
+  //geometrische Punkte berechnen
+  calculateGeoData(P21_M1, P31_M1, P61_M1, eP2P6_M1, h1, sigma_1, enc1);
+  calculateGeoData(P22_M2, P32_M2, P62_M2, eP2P6_M2, h2, sigma_2, enc2);
+  calculateGeoData(P23_M3, P33_M3, P63_M3, eP2P6_M3, h3, sigma_3, enc3);
 
 
-
+  //Transoformation der P3i-Werte in das KS {IMU}.  R-Matrizen sind Konstante
+  P31_IMU     =  R_IMU_M1_R * P31_M1;
+  P32_IMU     =  R_IMU_M2_R * P32_M2;
+  P33_IMU     =  R_IMU_M3_R * P33_M3;
+  
 
   
+  //Fusspunkt berechnen"IM {IMU}
+  calculateP3i2pf(Pf_IMU, ek1_IMU, ek2_IMU, ek3_IMU,  P31_IMU,  P32_IMU,  P33_IMU);
+   
+  //Rotationsmatrix "Quasigelenk x-y-z" \\TODO ev. wird Matrix noch von links nach rechts berechnet!!!!!!
+  R_0_IMU_R = R_0_IMU_R_rotX.createRotX(alpha1)*(R_0_IMU_R_rotX.createRotY(beta1)*R_0_IMU_R_rotX.createRotZ(gamma1));
   
-}
+  //Fusspunkt im {0}
+  Pf_0 = R_0_IMU_R*Pf_IMU;
+ 
+  
+//-----------------------------  set Output------------------------------------------------- 
+
+  out_Pf_IMU.getSignal().setValue(Pf_IMU);
+  out_Pf_0.getSignal().setValue(Pf_0);
+  
+  //set Timestamp
+  out_Pf_IMU.getSignal().setTimestamp(in_alpha1.getSignal().getTimestamp());
+  out_Pf_0.getSignal().setTimestamp(in_alpha1.getSignal().getTimestamp());  
+   
+  //set Name
+  out_Pf_IMU.getSignal().setName("Pf_IMU [m]");
+  out_Pf_0.getSignal().setName("Pf_0 [m]");
+  
+}//end run
 
 
 
-//Punkte Oberschenkel berechnen 
-void VorKin::calculateGeoData(Vector3& P1i_Mi, Vector3& P2i_Mi, Vector3& P3i_Mi, Vector3& P5i_Mi, Vector3& P6i_Mi,Vector3& eP2P5_Mi, double& hi, double& sigma_i, double enc_i){
-     z = enc_i + m + enc_zusatz;
+//Berechnet Punkte vom Oberschenkel. Rückgabewert per Reference
+void VorKin::calculateGeoData(Vector3 &P2i_Mi, Vector3 &P3i_Mi,  Vector3 &P6i_Mi,Vector3 &eP2P6_Mi, double &hi, double &sigma_i, double enc_i){
+      /*
+       * In dieser Funktion werde die Punkte im Oberschenkel berechnet. Input ist jeweils der Encoderwert.
+       */
+    
+      z = enc_i + m + enc_zusatz;
       
+ 
      //Winkelberechnungen
-      gamma   = atan(rP5i_P1i_Mi(3)/rP5i_P1i_Mi(1));
+      gamma   = atan(rP5i_P1i_Mi(2)/rP5i_P1i_Mi(0));
       Lambda  = atan(n/z);
       l       = sqrt(n*n + z*z);
       beta    = acos((a*a + c*c - l*l)/(2*a*c));
@@ -55,6 +92,7 @@ void VorKin::calculateGeoData(Vector3& P1i_Mi, Vector3& P2i_Mi, Vector3& P3i_Mi,
       alpha   = kappa + Lambda;
       sigma_i = beta - gamma;
       
+         
       //Rotationsmatrix um y-Achse von P1
       R_1_P1_R(0,0) = cos(sigma_i);
       R_1_P1_R(1,0) = 0.0;
@@ -67,7 +105,6 @@ void VorKin::calculateGeoData(Vector3& P1i_Mi, Vector3& P2i_Mi, Vector3& P3i_Mi,
       R_1_P1_R(2,2) = cos(sigma_i);
       
       //P2 und P3
-      
       rP2_p1_Mi = R_1_P1_R*c_vec;    
       P2i_Mi = P1i_Mi + rP2_p1_Mi;
       P3i_Mi = P1i_Mi + R_1_P1_R*rP3i_P1i_P1i;
@@ -93,18 +130,22 @@ void VorKin::calculateGeoData(Vector3& P1i_Mi, Vector3& P2i_Mi, Vector3& P3i_Mi,
       eP2P6_Mi = (P2i_Mi-P6i_Mi)/norm(P2i_Mi-P6i_Mi);
 
       //h
-      hi = c*sin(alpha);    
+      hi = c*sin(alpha);  
+      
+      
 }//end VorKin
 
 
 
 
-void VorKin::calculateP3i2pf(Vector3& Pf_IMU, Vector3& ek1_IMU, Vector3& ek2_IMU, Vector3& ek3_IMU, Vector3 P31_IMU,Vector3 P32_IMU, Vector3 P33_IMU){
+
+//Berechnet Fusspunkt und deren Einheitsvektoren. Rückgabe per Reference
+void VorKin::calculateP3i2pf(Vector3 &Pf_IMU, Vector3 &ek1_IMU, Vector3 &ek2_IMU, Vector3 &ek3_IMU, Vector3 P31_IMU,Vector3 P32_IMU, Vector3 P33_IMU){
     /*
-    in dieser Funktion wird der Fusspunkt Pf in Abhängigkeit der Punkte P3i
-    bestimmt (Delta-Prinzip)
-    P31, P32, P33:     Befestigungspunkte, welche verändert werden können.
-    Pf41, Pf42, Pf43:  Abstand vom Ende des Unterschenkel bis zum Fusspunkt
+    *in dieser Funktion wird der Fusspunkt Pf in Abhängigkeit der Punkte P3i
+    *bestimmt (Delta-Prinzip)
+    *P31, P32, P33:     Befestigungspunkte, welche verändert werden können.
+    *Pf41, Pf42, Pf43:  Abstand vom Ende des Unterschenkel bis zum Fusspunkt
 
       o P31             o P3x
        \               /
@@ -115,30 +156,30 @@ void VorKin::calculateP3i2pf(Vector3& Pf_IMU, Vector3& ek1_IMU, Vector3& ek2_IMU
            P41---P4x
                |
 
-  */
+    */
   
     //Variablen zuweisen
     //Befestigungspunkte
-    x31 = P31_IMU(1);
-    y31 = P31_IMU(2);
-    z31 = P31_IMU(3);
-    x32 = P32_IMU(1);
-    y32 = P32_IMU(2);
-    z32 = P32_IMU(3);
-    x33 = P33_IMU(1);
-    y33 = P33_IMU(2);
-    z33 = P33_IMU(3);
+    x31 = P31_IMU(0);
+    y31 = P31_IMU(1);
+    z31 = P31_IMU(2);
+    x32 = P32_IMU(0);
+    y32 = P32_IMU(1);
+    z32 = P32_IMU(2);
+    x33 = P33_IMU(0);
+    y33 = P33_IMU(1);
+    z33 = P33_IMU(2);
 
     //Fusspunkte
-    x41 = rf41_IMU(1);
-    y41 = rf41_IMU(2);
-    z41 = rf41_IMU(3);
-    x42 = rf42_IMU(1);
-    y42 = rf42_IMU(2);
-    z42 = rf42_IMU(3);
-    x43 = rf43_IMU(1);
-    y43 = rf43_IMU(2);
-    z43 = rf43_IMU(3);
+    x41 = rf41_IMU(0);
+    y41 = rf41_IMU(1);
+    z41 = rf41_IMU(2);
+    x42 = rf42_IMU(0);
+    y42 = rf42_IMU(1);
+    z42 = rf42_IMU(2);
+    x43 = rf43_IMU(0);
+    y43 = rf43_IMU(1);
+    z43 = rf43_IMU(2);
 
  
     //Pf berechnen
@@ -155,7 +196,7 @@ void VorKin::calculateP3i2pf(Vector3& Pf_IMU, Vector3& ek1_IMU, Vector3& ek2_IMU
 
 
     //Variablen für Matrixdivision
-    a1  = z1_*z1_ - z2_*z2_ + x1_*x1_ - x2_*x3_ + y1_*y1_ - y2_*y2_;
+    a1  = z1_*z1_ - z2_*z2_ + x1_*x1_ - x2_*x2_ + y1_*y1_ - y2_*y2_;
     a2  = z1_*z1_ - z3_*z3_ + x1_*x1_ - x3_*x3_ + y1_*y1_ - y3_*y3_;
     b1  = z1_ - z2_;
     b2  = z1_ - z3_;
@@ -172,7 +213,8 @@ void VorKin::calculateP3i2pf(Vector3& Pf_IMU, Vector3& ek1_IMU, Vector3& ek2_IMU
     lambda_2 = -(b1*c22-b2*c12)/(c11*c22-c21*c12);
     lambda_3 = (c11*a2-c21*a1)/(2*(c11*c22-c21*c12));
     lambda_4 = -(b2*c11-b1*c21)/(c11*c22-c21*c12);
-
+    
+        
     //zf berechnen (quadtratische Funktion): negativer realer Wert wird ausgewählt
     //Variable für quatratische Formel bestimmen: p*zf^2 + q*zf + r = 0
     p = lambda_2*lambda_2 + lambda_4*lambda_4 + 1;
@@ -181,6 +223,7 @@ void VorKin::calculateP3i2pf(Vector3& Pf_IMU, Vector3& ek1_IMU, Vector3& ek2_IMU
     zf_positiv = (-q + sqrt(q*q-4*p*r))/(2*p);
     zf_negativ = (-q - sqrt(q*q-4*p*r))/(2*p);
 
+        
     //Lösung auswählen
     if (zf_positiv <= 0){
         zf = zf_positiv;
@@ -194,27 +237,25 @@ void VorKin::calculateP3i2pf(Vector3& Pf_IMU, Vector3& ek1_IMU, Vector3& ek2_IMU
         zf = 0;
 	printf("Keine Lösung beim Berechnen von zf in VorKin Methode calculateP3i2pf"); //TODO Ausgabe über log
 	//log.info() << "Application OmniMoBot started...";
-    }
+    }//end if
         
 
     //Fusspunkt aus einzelnen Lösungen zusammensetzen
     //xf und yf
     xf = lambda_1 + lambda_2*zf;
     yf = lambda_3 + lambda_4*zf;
-    Pf_IMU(1) = xf;
-    Pf_IMU(2) = yf;
-    Pf_IMU(3) = zf;
+    Pf_IMU(0) = xf;
+    Pf_IMU(1) = yf;
+    Pf_IMU(2) = zf;
     
     
     
     //Der Einheitsvektor wird in Abhängigkeit des Fusspunktes, dem Vektor rf4i
     //und dem Punkt P3i des Unterschenkels bestimmt
-
     //P41 berechenen
     P41_IMU =  Pf_IMU - rf41_IMU;
     P42_IMU =  Pf_IMU - rf42_IMU;
     P43_IMU =  Pf_IMU - rf43_IMU;
-
 
     //Einheitsvektor der Beine berechenen
     ek1_IMU = (P31_IMU - P41_IMU)/norm(P31_IMU - P41_IMU);
@@ -230,29 +271,22 @@ void VorKin::calculateP3i2pf(Vector3& Pf_IMU, Vector3& ek1_IMU, Vector3& ek2_IMU
 
     if (abs(l_1) > (l_Unterschenkel+1e-8)){
         printf("Fehler Berechnung l_1 in Funktion p3ipf ");//TODO Ausgabe über log
-    }
+    }//end if
     
     //Kontrolle Punk 32
     r43_2 = Pf_IMU-P32_IMU-rf42_IMU;
     l_2 = norm(r43_2);
     if (abs(l_2) > (l_Unterschenkel+1e-8)) {
          printf("Fehler Berechnung l_2 in Funktion p3ipf ");//TODO Ausgabe über log
-    }
+    }//end if
 
     //Kontrolle Punk 32
     r43_3 = Pf_IMU-P33_IMU-rf43_IMU;
     l_3 = norm(r43_3);
     if (abs(l_3) > (l_Unterschenkel+1e-8)) {
         printf("Fehler Berechnung l_3 in Funktion p3ipf ");//TODO Ausgabe über log
-    }  
+    }//end if  
 
-    
-    
-    
-    
-    
-    
-    
     
 }//end calculateP3i2pf
 

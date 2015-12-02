@@ -6,17 +6,18 @@
 #include <eeros/math/Matrix.hpp>
 using namespace eeros::math;
 
+
 namespace einbein{
     //static constant ist für alle erzeugten Objekten gleich 
   
-    static const double pi  	= 3.14159265359; 	// [m]
+    static const double pi  	= 3.14159265358979323846; 	// [m]
 
     // geometrische Parameter Roboter (CAD)
     static const double n 		= 0.013; 	// [m]
     static const double m 		= 0.04275; 	// [m]
-    static const double enc_zusatz = 0.025; 	// [m]
+    static const double enc_zusatz 	= 0.025; 	// [m]
     static const double c 		= 0.0750257; 	// [m]
-    static const double a 		=  0.12820;	// [m]
+    static const double a 		= 0.128196762829644;	// norm(rP5i_P1i_Mi)[m]
     static const double l_Unterschenkel = 0.4;	// [m]
     static const double epsilon 	= 2*pi/3; 	// Versatzwinkel Motor [m]    
     
@@ -68,34 +69,30 @@ namespace einbein{
     //konstante Rotationsmatrizen
     //KS {1}
     static const eeros::math::Matrix<3,3,double> R_IMU_1_R  = eeros::math::Matrix<3,3,double> ({1.0,	0.0,	0.0,	 
-											 0.0,	1.0,	0.0,
-											 0.0,	0.0, 	1.0}); 
+												0.0,	1.0,	0.0,
+												0.0,	0.0, 	1.0}); 
         
     //KS {M1}
-    //const eeros::math::Matrix<3,3,double> R_1_M1_R  = eeros::math::Matrix<3,3,double> ({1.0,	0.0,	0.0,	 
-											 //0.0,	1.0,	0.0,
-											// 0.0,	0.0, 	1.0});  
-    
-    static const eeros::math::Matrix<3,3,double> R_1_M1_R({1.0,	0.0,	0.0,	 
-						    0.0,	1.0,	0.0,
-						    0.0,	0.0, 	1.0});		//TODO Ausgabe kontrollieren und andere T anpassen
+    static const eeros::math::Matrix<3,3,double> R_1_M1_R = eeros::math::Matrix<3,3,double>({1.0,	0.0,	0.0,	 
+											     0.0,	1.0,	0.0,
+											     0.0,	0.0, 	1.0});		//TODO Ausgabe kontrollieren und andere T anpassen
     
     static const eeros::math::Matrix<3,3,double> R_IMU_M1_R  =  R_IMU_1_R*R_1_M1_R; 
     
     
     //KS {M2}
-    static const eeros::math::Matrix<3,3,double> R_M1_M2_R({cos(epsilon),	0.0,	-sin(epsilon),	 
-						    sin(epsilon),	1.0,	cos(epsilon),
-						    0.0,		0.0, 	1.0});
+    static const eeros::math::Matrix<3,3,double> R_M1_M2_R = eeros::math::Matrix<3,3,double>({cos(epsilon),	-sin(epsilon), 	0, 	 
+											      sin(epsilon),	cos(epsilon), 	0,
+											      0.0,		0.0, 		1.0}).transpose();
     
     
     static const eeros::math::Matrix<3,3,double> R_IMU_M2_R  =  R_IMU_M1_R*R_M1_M2_R;
     
     
     //KS {M3}
-    static const eeros::math::Matrix<3,3,double> R_M2_M3_R({cos(epsilon),	0.0,	-sin(epsilon),	 
-						    sin(epsilon),	1.0,	cos(epsilon),
-						    0.0,		0.0, 	1.0});
+    static const eeros::math::Matrix<3,3,double> R_M2_M3_R = eeros::math::Matrix<3,3,double>({cos(epsilon),	-sin(epsilon),	 0,	 
+											    sin(epsilon),	cos(epsilon),	 0,
+											    0.0,		0.0, 		1.0}).transpose();
     
     static const eeros::math::Matrix<3,3,double> R_IMU_M3_R = R_IMU_M2_R*R_M2_M3_R;
     

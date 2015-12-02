@@ -10,14 +10,14 @@
 #include <eeros/logger/StreamLogWriter.hpp>
 #include <eeros/logger/SysLogWriter.hpp>
 
-
 #include <einbein/Regelung/Fusspunkt/constantFusspunkt.hpp>
+#include <einbein/Regelung/Fusspunkt/CSVorKin.hpp>
 #include <einbein/templates_function.hpp>
 
 
 using namespace eeros;
 using namespace eeros::hal;
-//using namespace eeros::control;
+using namespace eeros::control;
 using namespace eeros::safety;
 using namespace eeros::logger;
 using namespace einbein;
@@ -49,40 +49,40 @@ int main() {
 	
 	// create control system
 	//TODO lw 0.001 durch dt ersetzten und testen
-	//ControlSystem ControlSys(0.01);
+	CSVorKin csVorKin(1);
 	
 	// initialize hardware
-	//ControlSys.start();
+	csVorKin.start();
 	
 	printf("Init done\n");
+	/*
 	double test_s = rP1i_1_Mi(0);
 	std::cout << test_s <<  std::endl;
-	
+	*/
  
 
 	
 	while (running) {
-/*
+
 		std::cout << "------------------------------------------------------------------------------ "  << std::endl; 
 			
 		
-		//Beschleunigung
- 		std::cout << "Beschleunigung 		: " << ControlSys.trajektorie.getOut_ddx_d().getSignal().getValue() << "  [m/s²]" << std::endl;
+		//Pf_IMU
+ 		std::cout << "Pf_IMU	: " << csVorKin.vorKin.getOut_Pf_IMU().getSignal().getValue()<< "  [m]" << std::endl;
 
-		//Geschwindigkeit
- 		std::cout << "Geschwindigkeit 	: " << ControlSys.trajektorie.getOut_dx_d().getSignal().getValue() << "  [m/s]" << std::endl;
+
+		//Pf_0
+ 		std::cout << "Pf_0	: " << csVorKin.vorKin.getOut_Pf_0().getSignal().getValue() << "  [m]" << std::endl;
+		sleep(1);
 		
-		//Position
- 		std::cout << "Position		: " << ControlSys.trajektorie.getOut_x_d().getSignal().getValue() << "  [m]" << std::endl;
-*/
-		sleep(0.1);
+		
 	}
 	
 	
 	
 	
-	//ControlSys.stop();
-	//ControlSys.join();
+	csVorKin.stop();
+	csVorKin.join();
 	
 	
 	

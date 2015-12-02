@@ -112,6 +112,30 @@ Fusspunkt/fast:
 	cd /home/reto/projects/einbein/build-arm && $(MAKE) -f src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build
 .PHONY : Fusspunkt/fast
 
+CSVorKin.o: CSVorKin.cpp.o
+.PHONY : CSVorKin.o
+
+# target to build an object file
+CSVorKin.cpp.o:
+	cd /home/reto/projects/einbein/build-arm && $(MAKE) -f src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/CSVorKin.cpp.o
+.PHONY : CSVorKin.cpp.o
+
+CSVorKin.i: CSVorKin.cpp.i
+.PHONY : CSVorKin.i
+
+# target to preprocess a source file
+CSVorKin.cpp.i:
+	cd /home/reto/projects/einbein/build-arm && $(MAKE) -f src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/CSVorKin.cpp.i
+.PHONY : CSVorKin.cpp.i
+
+CSVorKin.s: CSVorKin.cpp.s
+.PHONY : CSVorKin.s
+
+# target to generate assembly for a file
+CSVorKin.cpp.s:
+	cd /home/reto/projects/einbein/build-arm && $(MAKE) -f src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/CSVorKin.cpp.s
+.PHONY : CSVorKin.cpp.s
+
 VorKin.o: VorKin.cpp.o
 .PHONY : VorKin.o
 
@@ -169,6 +193,9 @@ help:
 	@echo "... Fusspunkt"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... CSVorKin.o"
+	@echo "... CSVorKin.i"
+	@echo "... CSVorKin.s"
 	@echo "... VorKin.o"
 	@echo "... VorKin.i"
 	@echo "... VorKin.s"

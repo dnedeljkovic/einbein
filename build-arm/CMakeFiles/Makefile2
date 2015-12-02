@@ -79,7 +79,7 @@ src/preinstall: src/Test/preinstall
 src/CMakeFiles/einbein.dir/all:
 	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/depend
 	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  8
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  9
 	@echo "Built target einbein"
 .PHONY : src/CMakeFiles/einbein.dir/all
 
@@ -129,7 +129,7 @@ src/mpu9250/preinstall:
 src/mpu9250/CMakeFiles/mpu9250.dir/all:
 	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/depend
 	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  11 12 13 14 15 16
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  12 13 14 15 16 17
 	@echo "Built target mpu9250"
 .PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/all
 
@@ -212,7 +212,7 @@ src/Test/Regelung/Trajektorie/preinstall:
 src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/all:
 	$(MAKE) -f src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build.make src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/depend
 	$(MAKE) -f src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build.make src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  3 4 5
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  4 5 6
 	@echo "Built target Trajektorie"
 .PHONY : src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/all
 
@@ -262,7 +262,7 @@ src/Test/Regelung/Fusspunkt/preinstall:
 src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/all:
 	$(MAKE) -f src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/depend
 	$(MAKE) -f src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  1 2
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  1 2 3
 	@echo "Built target Fusspunkt"
 .PHONY : src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/all
 
@@ -272,7 +272,7 @@ all: src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/all
 
 # Build rule for subdir invocation for target.
 src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 0
 .PHONY : src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/rule
@@ -318,7 +318,7 @@ test/preinstall:
 test/CMakeFiles/dacMot.dir/all:
 	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/depend
 	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  6
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  7
 	@echo "Built target dacMot"
 .PHONY : test/CMakeFiles/dacMot.dir/all
 
@@ -353,7 +353,7 @@ clean: test/CMakeFiles/dacMot.dir/clean
 test/CMakeFiles/digIO.dir/all:
 	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/depend
 	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  7
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  8
 	@echo "Built target digIO"
 .PHONY : test/CMakeFiles/digIO.dir/all
 
@@ -388,7 +388,7 @@ clean: test/CMakeFiles/digIO.dir/clean
 test/CMakeFiles/fqdMot.dir/all:
 	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/depend
 	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  9
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  10
 	@echo "Built target fqdMot"
 .PHONY : test/CMakeFiles/fqdMot.dir/all
 
@@ -423,7 +423,7 @@ clean: test/CMakeFiles/fqdMot.dir/clean
 test/CMakeFiles/imu.dir/all: src/mpu9250/CMakeFiles/mpu9250.dir/all
 	$(MAKE) -f test/CMakeFiles/imu.dir/build.make test/CMakeFiles/imu.dir/depend
 	$(MAKE) -f test/CMakeFiles/imu.dir/build.make test/CMakeFiles/imu.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  10
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  11
 	@echo "Built target imu"
 .PHONY : test/CMakeFiles/imu.dir/all
 

@@ -58,7 +58,7 @@ int main() {
 	
 	while (running) {
 		std::cout << "------------------------------------------------------------------------------ "  << std::endl; 
-			
+		/*	
 		
 		//Beschleunigung
  		std::cout << "Beschleunigung 		: " << ControlSys.trajektorie.getOut_ddx_d().getSignal().getValue() << "  [m/s²]" << std::endl;
@@ -68,7 +68,7 @@ int main() {
 		
 		//Position
  		std::cout << "Position		: " << ControlSys.trajektorie.getOut_x_d().getSignal().getValue() << "  [m]" << std::endl;
-		
+		*/
 		sleep(0.1);
 	}
 	

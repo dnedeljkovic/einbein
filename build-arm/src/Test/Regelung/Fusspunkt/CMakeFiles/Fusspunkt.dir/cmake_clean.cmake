@@ -1,5 +1,6 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/Fusspunkt.dir/mainFusspunkt.cpp.o"
+  "CMakeFiles/Fusspunkt.dir/CSVorKin.cpp.o"
   "CMakeFiles/Fusspunkt.dir/VorKin.cpp.o"
   "Fusspunkt.pdb"
   "Fusspunkt"

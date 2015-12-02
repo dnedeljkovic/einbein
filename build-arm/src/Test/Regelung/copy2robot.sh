@@ -1,3 +1,3 @@
-scp Trajektorie/Trajektorie root@146.136.18.246:03_Test_Regelung
-scp Fusspunkt/Fusspunkt root@146.136.18.246:03_Test_Regelung
+scp Trajektorie/Trajektorie root@es139.ntb.ch:einbein/03_Test_Regelung
+scp Fusspunkt/Fusspunkt root@es139.ntb.ch:einbein/03_Test_Regelung
 

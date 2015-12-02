@@ -155,6 +155,6 @@ void Trajektorie::run(){
   
   //set Name
   out_ddx_d.getSignal().setName("acceloration m/s²");
-  out_dx_d.getSignal().setName("velocity m/s");
-  out_x_d.getSignal().setName("position m/s²");
+  out_dx_d.getSignal().setName("velocity [m/s]");
+  out_x_d.getSignal().setName("position [m/s²]");
 }
