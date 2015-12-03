@@ -4,7 +4,6 @@
 #include <einbein/templates_function.hpp>
 
 
-
 //namespace
 using namespace einbein;
 using namespace eeros;
@@ -62,24 +61,25 @@ void VorKin::run(){
   
   //Kraft an Oberschenkel P3
   calculateFPf2F3i(F31_IMU, F32_IMU, F33_IMU, F_Fuss_vec, ek1_IMU, ek2_IMU, ek3_IMU);
-  
+
   
   //Transformation der Kraft in das KS {Mi}
   F31_M1 = R_M1_IMU_R * F31_IMU;
   F32_M2 = R_M2_IMU_R * F32_IMU;
   F33_M3 = R_M3_IMU_R * F33_IMU;
-  
+ 
   
   //Kraft an Motoren FM1, FM2, FM3 als Skalar
   calculateF3i2FMi(FM1, F31_M1, h1, sigma_1);
   calculateF3i2FMi(FM2, F32_M2, h2, sigma_2);
   calculateF3i2FMi(FM3, F33_M3, h3, sigma_3);
   
+  //Motorenkrat zusammengefasst
   FMsoll(0) = FM1;
   FMsoll(1) = FM2;
   FMsoll(2) = FM3; 
   
-  printf("FMsoll(0) %f,  FMsoll(1)%f,  FMsoll(2) %f \n", FMsoll(0), FMsoll(1), FMsoll(2)  );
+  
   
 //-----------------------------  set Output ----------------------------------------------- 
 
@@ -322,9 +322,12 @@ void VorKin::calculateFPf2F3i(Vector3 &F31_IMU, Vector3 &F32_IMU, Vector3 &F33_I
     F_y  = F_Fuss_vec(1);
     F_z  = F_Fuss_vec(2);
   
+    /*
     printf("ek1_IMU(0) %f, ek1_IMU(1) %f, ek1_IMU(2) %f\n", ek1_IMU(0) , ek1_IMU(1) , ek1_IMU(2));
     printf("ek2_IMU(0) %f, ek2_IMU(1) %f, ek2_IMU(2) %f\n", ek2_IMU(0) , ek2_IMU(1) , ek2_IMU(2));
     printf("ek3_IMU(0) %f, ek3_IMU(1) %f, ek3_IMU(2) %f\n", ek3_IMU(0) , ek3_IMU(1) , ek3_IMU(2));
+    */
+    
     
     //A-Matrix
     a11	= e_x.transpose()*ek1_IMU;
@@ -338,24 +341,30 @@ void VorKin::calculateFPf2F3i(Vector3 &F31_IMU, Vector3 &F32_IMU, Vector3 &F33_I
     a33 = e_z.transpose()*ek3_IMU;
     
     //printf("a11 %f, a12 %f, a13 %f, a21 %f, a22 %f, a23 %f, a31 %f, a32 %f, a33 %f\n", a11 , a12 , a13 , a21 , a22 , a23 , a31 , a32 , a33);
-    printf("e_x.transpose()*ek1_IMU %f\n", e_x.transpose()*ek1_IMU);
+    //printf("e_x.transpose()*ek1_IMU(0) %f, e_x.transpose()*ek1_IMU(1) %f, e_x.transpose()*ek1_IMU(2) %f\n", e_x.transpose()*ek1_IMU(0), e_x.transpose()*ek1_IMU(1), e_x.transpose()*ek1_IMU(2));
     
     
-    //A_Matrix
-    A(0,0) = a22*a33-a23*a32;	A(0,1) = a13*a32-a12*a33;   A(0,2) = a12*a23-a13*a22;
-    A(1,0) = a23*a31-a21*a33;	A(1,1) = a11*a33-a13*a31;   A(1,2) = a13*a21-a11*a23;
-    A(2,0) = a21*a32-a22*a31;	A(2,1) = a12*a31-a11*a32;   A(2,2) = a11*a22-a12*a21;
+    A = eeros::math::Matrix<3,3,double> ({a11,  	a12, 	a13,
+					  a21, 		a22, 	a23,
+					  a31, 		a32,	a33}).transpose();
     
+    
+    B = eeros::math::Matrix<3,3,double> ({a22*a33-a23*a32,  	a13*a32-a12*a33, 	a12*a23-a13*a22,
+					  a23*a31-a21*a33, 	a11*a33-a13*a31, 	a13*a21-a11*a23,
+					  a21*a32-a22*a31, 	a12*a31-a11*a32,	a11*a22-a12*a21}).transpose();
     
     //det(A)
     det_A = A.det();
-    A_invers = 1/det_A*A;
+    
+    A_invers = (1/det_A)*B;
     
     
     //Kraft als Skalar am Punkt 3
     F3_skalar = A_invers*F_Fuss_vec;
     
-  
+   
+    
+   
     //Lösung kontrollieren
     if (isnan(F3_skalar(0)) == 1 ){
         F3_skalar(0) = 1e-3;
@@ -387,16 +396,16 @@ void VorKin::calculateFPf2F3i(Vector3 &F31_IMU, Vector3 &F32_IMU, Vector3 &F33_I
 
 //Berechnung Motorenkraft als Skalar. Rückgabe per Reference
 void VorKin::calculateF3i2FMi(double& FMi, Vector3 F31_Mi, double hi, double sigma_i){
-    //Moment durch F3i
-    R_Mi_P1_R.createRotY(sigma_i);
     
+  //Moment durch F3i				
+    R_Mi_P1_R = eeros::math::Matrix<3,3,double>().createRotY(sigma_i);
     rP3iP1i_Mi = R_Mi_P1_R*rP3i_P1i_P1i;    
-    tau1_Mi_vec.crossProduct(rP3iP1i_Mi, F31_Mi);
-    
+    tau1_Mi_vec = Vector3::crossProduct(rP3iP1i_Mi,F31_Mi);
+        
     //Projektion
     //tau_1 = dot(b_Mi, tau1_Mi_vec); mit b_Mi = [0 1 0]';
-    tau_1 = tau1_Mi_vec(2);
-    FMi = tau_1/hi; 
+    tau_1 = tau1_Mi_vec(1);
+    FMi = tau_1/hi;  
     
 }//end calculateF3i2FMi
 

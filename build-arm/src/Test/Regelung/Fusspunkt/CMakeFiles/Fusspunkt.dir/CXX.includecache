@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+../include/einbein/Regelung/Fusspunkt/CSVorKin.hpp
+einbein/Regelung/Fusspunkt/VorKin.hpp
+-
+eeros/control/TimeDomain.hpp
+-
+eeros/control/Constant.hpp
+-
+einbein/Regelung/Fusspunkt/constantFusspunkt.hpp
+-
+
 ../include/einbein/Regelung/Fusspunkt/VorKin.hpp
 eeros/control/Block.hpp
 -
@@ -22,14 +32,26 @@ eeros/math/Matrix.hpp
 eeros/math/Matrix.hpp
 -
 
-../include/einbein/templates_function.hpp
-eeros/math/Matrix.hpp
--
-
 /home/reto/eeros-framework/includes/eeros/control/Block.hpp
 string
 -
 eeros/core/Runnable.hpp
+-
+
+/home/reto/eeros-framework/includes/eeros/control/Block1o.hpp
+eeros/control/Block.hpp
+-
+eeros/control/Output.hpp
+-
+eeros/control/Signal.hpp
+-
+
+/home/reto/eeros-framework/includes/eeros/control/Constant.hpp
+type_traits
+-
+eeros/control/Block1o.hpp
+-
+eeros/core/System.hpp
 -
 
 /home/reto/eeros-framework/includes/eeros/control/Input.hpp
@@ -104,6 +126,10 @@ atomic
 
 /home/reto/eeros-framework/includes/eeros/core/Statistics.hpp
 
+/home/reto/eeros-framework/includes/eeros/core/System.hpp
+stdint.h
+-
+
 /home/reto/eeros-framework/includes/eeros/core/Thread.hpp
 eeros/logger/Logger.hpp
 -
@@ -154,13 +180,7 @@ string
 stdint.h
 -
 
-/home/reto/projects/einbein/src/Test/Regelung/Fusspunkt/VorKin.cpp
-cmath
--
-einbein/Regelung/Fusspunkt/constantFusspunkt.hpp
--
-einbein/Regelung/Fusspunkt/VorKin.hpp
--
-einbein/templates_function.hpp
--
+/home/reto/projects/einbein/src/Test/Regelung/Fusspunkt/CSVorKin.cpp
+einbein/Regelung/Fusspunkt/CSVorKin.hpp
+/home/reto/projects/einbein/src/Test/Regelung/Fusspunkt/einbein/Regelung/Fusspunkt/CSVorKin.hpp
 
