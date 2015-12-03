@@ -73,6 +73,12 @@ int main() {
 
 		//Pf_0
  		std::cout << "Pf_0	: " << csVorKin.vorKin.getOut_Pf_0().getSignal().getValue() << "  [m]" << std::endl;
+		
+		
+		//FM
+ 		std::cout << "FM	: " << csVorKin.vorKin.getOut_FMsoll().getSignal().getValue() << "  [N]" << std::endl;
+		
+		
 		sleep(1);
 		
 		

@@ -29,9 +29,11 @@ void VorKin::run(){
   enc1 		= in_enc1.getSignal().getValue();
   enc2 		= in_enc2.getSignal().getValue();  
   enc3 		= in_enc3.getSignal().getValue();
+  F_Fuss_vec 	= in_F_Fuss_vec.getSignal().getValue();
 
+  
  
-//------------------------------------------------------------------------------
+//---------------------------- Fusspunkt berechnen (Vorwärtskinematik) -------------------
 
   //geometrische Punkte berechnen
   calculateGeoData(P21_M1, P31_M1, P61_M1, eP2P6_M1, h1, sigma_1, enc1);
@@ -44,30 +46,56 @@ void VorKin::run(){
   P32_IMU     =  R_IMU_M2_R * P32_M2;
   P33_IMU     =  R_IMU_M3_R * P33_M3;
   
-
-  
   //Fusspunkt berechnen"IM {IMU}
   calculateP3i2pf(Pf_IMU, ek1_IMU, ek2_IMU, ek3_IMU,  P31_IMU,  P32_IMU,  P33_IMU);
    
-  //Rotationsmatrix "Quasigelenk x-y-z" \\TODO ev. wird Matrix noch von links nach rechts berechnet!!!!!!
-  R_0_IMU_R = R_0_IMU_R_rotX.createRotX(alpha1)*(R_0_IMU_R_rotX.createRotY(beta1)*R_0_IMU_R_rotX.createRotZ(gamma1));
+  //Rotationsmatrix "Quasigelenk x-y-z" 
+   R_0_IMU_R = R_0_IMU_R_rotX.createRotX(alpha1)*(R_0_IMU_R_rotX.createRotY(beta1)*R_0_IMU_R_rotX.createRotZ(gamma1));
   
   //Fusspunkt im {0}
   Pf_0 = R_0_IMU_R*Pf_IMU;
  
+
   
-//-----------------------------  set Output------------------------------------------------- 
+  
+//------------- Motorenkraft berechnen (direkt transformierte Jacobimatrix)---------------
+  
+  //Kraft an Oberschenkel P3
+  calculateFPf2F3i(F31_IMU, F32_IMU, F33_IMU, F_Fuss_vec, ek1_IMU, ek2_IMU, ek3_IMU);
+  
+  
+  //Transformation der Kraft in das KS {Mi}
+  F31_M1 = R_M1_IMU_R * F31_IMU;
+  F32_M2 = R_M2_IMU_R * F32_IMU;
+  F33_M3 = R_M3_IMU_R * F33_IMU;
+  
+  
+  //Kraft an Motoren FM1, FM2, FM3 als Skalar
+  calculateF3i2FMi(FM1, F31_M1, h1, sigma_1);
+  calculateF3i2FMi(FM2, F32_M2, h2, sigma_2);
+  calculateF3i2FMi(FM3, F33_M3, h3, sigma_3);
+  
+  FMsoll(0) = FM1;
+  FMsoll(1) = FM2;
+  FMsoll(2) = FM3; 
+  
+  printf("FMsoll(0) %f,  FMsoll(1)%f,  FMsoll(2) %f \n", FMsoll(0), FMsoll(1), FMsoll(2)  );
+  
+//-----------------------------  set Output ----------------------------------------------- 
 
   out_Pf_IMU.getSignal().setValue(Pf_IMU);
   out_Pf_0.getSignal().setValue(Pf_0);
+  out_FMsoll.getSignal().setValue(FMsoll); 
   
   //set Timestamp
   out_Pf_IMU.getSignal().setTimestamp(in_alpha1.getSignal().getTimestamp());
-  out_Pf_0.getSignal().setTimestamp(in_alpha1.getSignal().getTimestamp());  
+  out_Pf_0.getSignal().setTimestamp(in_alpha1.getSignal().getTimestamp());
+  out_FMsoll.getSignal().setTimestamp(in_alpha1.getSignal().getTimestamp());
    
   //set Name
   out_Pf_IMU.getSignal().setName("Pf_IMU [m]");
   out_Pf_0.getSignal().setName("Pf_0 [m]");
+  out_FMsoll.getSignal().setName("FMi [N]");
   
 }//end run
 
@@ -288,60 +316,91 @@ void VorKin::calculateP3i2pf(Vector3 &Pf_IMU, Vector3 &ek1_IMU, Vector3 &ek2_IMU
 
 
 //Berechnung Kraft, welche dem Oberschenkel übergeben werden. Rückgabe per Reference
-void VorKin::FPf2F3i(Vector3 &F31_IMU, Vector3 &F32_IMU, Vector3 &F33_IMU, Vector3 &F_Fuss_vec, Vector3 ek_M1_IMU,Vector3 ek_M2_IMU, Vector3 ek_M3_IMU){
+void VorKin::calculateFPf2F3i(Vector3 &F31_IMU, Vector3 &F32_IMU, Vector3 &F33_IMU, Vector3 &F_Fuss_vec, Vector3 ek1_IMU,Vector3 ek2_IMU, Vector3 ek3_IMU){
     
     F_x  = F_Fuss_vec(0);
     F_y  = F_Fuss_vec(1);
     F_z  = F_Fuss_vec(2);
   
+    printf("ek1_IMU(0) %f, ek1_IMU(1) %f, ek1_IMU(2) %f\n", ek1_IMU(0) , ek1_IMU(1) , ek1_IMU(2));
+    printf("ek2_IMU(0) %f, ek2_IMU(1) %f, ek2_IMU(2) %f\n", ek2_IMU(0) , ek2_IMU(1) , ek2_IMU(2));
+    printf("ek3_IMU(0) %f, ek3_IMU(1) %f, ek3_IMU(2) %f\n", ek3_IMU(0) , ek3_IMU(1) , ek3_IMU(2));
+    
     //A-Matrix
-    a11= e_x.transpose()*ek_M1_IMU;
-    a12 = e_x.transpose()*ek_M2_IMU;
-    a13 = e_x.transpose()*ek_M3_IMU;
-    a21 = e_y.transpose()*ek_M1_IMU;
-    a22 = e_y.transpose()*ek_M2_IMU;
-    a23 = e_y.transpose()*ek_M3_IMU;
-    a31 = e_z.transpose()*ek_M1_IMU;
-    a32 = e_z.transpose()*ek_M2_IMU;
-    a33 = e_z.transpose()*ek_M3_IMU;
+    a11	= e_x.transpose()*ek1_IMU;
+    a12 = e_x.transpose()*ek2_IMU;
+    a13 = e_x.transpose()*ek3_IMU;
+    a21 = e_y.transpose()*ek1_IMU;
+    a22 = e_y.transpose()*ek2_IMU;
+    a23 = e_y.transpose()*ek3_IMU;
+    a31 = e_z.transpose()*ek1_IMU;
+    a32 = e_z.transpose()*ek2_IMU;
+    a33 = e_z.transpose()*ek3_IMU;
+    
+    //printf("a11 %f, a12 %f, a13 %f, a21 %f, a22 %f, a23 %f, a31 %f, a32 %f, a33 %f\n", a11 , a12 , a13 , a21 , a22 , a23 , a31 , a32 , a33);
+    printf("e_x.transpose()*ek1_IMU %f\n", e_x.transpose()*ek1_IMU);
+    
     
     //A_Matrix
     A(0,0) = a22*a33-a23*a32;	A(0,1) = a13*a32-a12*a33;   A(0,2) = a12*a23-a13*a22;
     A(1,0) = a23*a31-a21*a33;	A(1,1) = a11*a33-a13*a31;   A(1,2) = a13*a21-a11*a23;
     A(2,0) = a21*a32-a22*a31;	A(2,1) = a12*a31-a11*a32;   A(2,2) = a11*a22-a12*a21;
     
+    
     //det(A)
     det_A = A.det();
     A_invers = 1/det_A*A;
+    
     
     //Kraft als Skalar am Punkt 3
     F3_skalar = A_invers*F_Fuss_vec;
     
   
     //Lösung kontrollieren
-    if (isnan(F3_skalar(1)) == 1 ){
+    if (isnan(F3_skalar(0)) == 1 ){
         F3_skalar(0) = 1e-3;
         printf("F_Motor_vec(0) --> NaN !!\n");
 	}
    
          
  
-    if (isnan(F3_skalar(2)) == 1 ){
+    if (isnan(F3_skalar(1)) == 1 ){
         F3_skalar(1) = 1e-3;
         printf("F_Motor_vec(1) --> NaN !!\n");
 	}
     
     
-    if (isnan(F3_skalar(3)) == 1 ){
+    if (isnan(F3_skalar(2)) == 1 ){
         F3_skalar(2) = 1e-3;
         printf("F_Motor_vec(2) --> NaN !!\n");
 	}
     
     
     //Lösung Übergeben   
-    F31_IMU = ek_M1_IMU *F3_skalar(0);
-    F32_IMU = ek_M2_IMU *F3_skalar(1);
-    F33_IMU = ek_M3_IMU *F3_skalar(2);
+    F31_IMU = ek1_IMU *F3_skalar(0);
+    F32_IMU = ek2_IMU *F3_skalar(1);
+    F33_IMU = ek3_IMU *F3_skalar(2);
     
   
-}//end 
+}//end calculateFPf2F3i 
+
+
+//Berechnung Motorenkraft als Skalar. Rückgabe per Reference
+void VorKin::calculateF3i2FMi(double& FMi, Vector3 F31_Mi, double hi, double sigma_i){
+    //Moment durch F3i
+    R_Mi_P1_R.createRotY(sigma_i);
+    
+    rP3iP1i_Mi = R_Mi_P1_R*rP3i_P1i_P1i;    
+    tau1_Mi_vec.crossProduct(rP3iP1i_Mi, F31_Mi);
+    
+    //Projektion
+    //tau_1 = dot(b_Mi, tau1_Mi_vec); mit b_Mi = [0 1 0]';
+    tau_1 = tau1_Mi_vec(2);
+    FMi = tau_1/hi; 
+    
+}//end calculateF3i2FMi
+
+
+  
+
+

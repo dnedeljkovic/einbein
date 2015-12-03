@@ -15,6 +15,7 @@ CSVorKin::CSVorKin(double ts) :
     enc1.setValue(0);
     enc2.setValue(0);
     enc3.setValue(0);
+    FVec_Fuss.setValue({0,0,1});
 
 
     
@@ -26,6 +27,8 @@ CSVorKin::CSVorKin(double ts) :
     vorKin.getIn_enc1().connect(enc1.getOut());
     vorKin.getIn_enc2().connect(enc2.getOut());
     vorKin.getIn_enc3().connect(enc3.getOut());
+    
+    vorKin.getIn_F_Fuss_vec().connect(FVec_Fuss.getOut());
 
    
     
@@ -36,6 +39,7 @@ CSVorKin::CSVorKin(double ts) :
     timedomain.addBlock(&enc1);
     timedomain.addBlock(&enc2);
     timedomain.addBlock(&enc3);
+    timedomain.addBlock(&FVec_Fuss);
     timedomain.addBlock(&vorKin);
     
     printf("\nAdd Block to run-Methode\n");

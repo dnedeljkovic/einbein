@@ -21,6 +21,7 @@ class CSVorKin{
   eeros::control::Constant<double> enc1;
   eeros::control::Constant<double> enc2;
   eeros::control::Constant<double> enc3;
+  eeros::control::Constant<Vector3> FVec_Fuss;
   
   double out_Pf_IMU;
   

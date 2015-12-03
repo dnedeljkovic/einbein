@@ -132,29 +132,10 @@ namespace einbein{
     
     
     
+         
     
     
-    
-    /* --> wenn auf Objekt zugegriffen werden sollte
-    class Fusspunkt{
-  public:
-    static Fusspunkt* instance(){ 
-      if( instanz == 0 )
-	  instanz = new Fusspunkt();
-      return instanz;
-    }
-    private:
-     static Fusspunkt *instanz;
-     Fusspunkt(){
-       R_1_test.eye();
-     }
-    public:
-    eeros::math::Matrix<3,3, double> R_1_test;
-    //eeros::math::Matrix<3,3> R_1_tes;
-    //R_1 = R_1_tes::eye();
-    
-  };
-  */
+ 
 }
 #endif // CONSTANTSFUSSPUNKT_HPP
 
