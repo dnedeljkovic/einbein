@@ -5,6 +5,7 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o"
   "CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o"
   "CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o"
+  "CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o"
   "libmpu9250.pdb"
   "libmpu9250.a"
 )

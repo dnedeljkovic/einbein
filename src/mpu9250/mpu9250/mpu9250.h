@@ -74,7 +74,10 @@ void derivate_accel(mpudata_t *mpu);
 
 void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time);
 int estimate_position2(double time);
+void estimate_pos_madgwick(double time);
+void estimate_pos_mahony(double time);
 int mpu9250_read_reg(mpudata_t *mpu);
+
 
 
 

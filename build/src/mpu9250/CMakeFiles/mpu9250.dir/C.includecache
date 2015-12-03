@@ -20,6 +20,8 @@ math.h
 ../eMPL/inv_mpu.h
 /home/dejan/projects/einbein/src/mpu9250/eMPL/inv_mpu.h
 
+/home/dejan/projects/einbein/src/mpu9250/mpu9250/MahonyAHRS.h
+
 /home/dejan/projects/einbein/src/mpu9250/mpu9250/matrix3d.h
 math.h
 -
@@ -37,6 +39,8 @@ string.h
 /home/dejan/projects/einbein/src/mpu9250/eMPL/inv_mpu_dmp_motion_driver.h
 mpu9250.h
 /home/dejan/projects/einbein/src/mpu9250/mpu9250/mpu9250.h
+MahonyAHRS.h
+/home/dejan/projects/einbein/src/mpu9250/mpu9250/MahonyAHRS.h
 
 /home/dejan/projects/einbein/src/mpu9250/mpu9250/mpu9250.h
 quaternion.h

@@ -28,6 +28,8 @@
 #include "../eMPL/inv_mpu.h"
 #include "../eMPL/inv_mpu_dmp_motion_driver.h"
 #include "mpu9250.h"
+//#include "MadgwickAHRS.h"
+#include "MahonyAHRS.h"
 
 static int data_ready();
 static int data_fusion(mpudata_t *mpu);
@@ -81,10 +83,12 @@ double sm = 1;
 double sa = 0.1;
 int wGyro = 10; //can be chosen from 5 to 20;
 
-#define ACCSENS  (32768/2)
-#define GYROSENS (32768/2000)
-#define MAGSENS  (32768/2)
-
+#define ACCSENS  	(32768/2)
+#define GYROSENS 	(32768/2000)
+#define MAGSENS  	(32768/2)
+#define OFFSETGYROX	37
+#define OFFSETGYROY	(-13)
+#define OFFSETGYROZ	19
 
 int cRow = 0;
 char data[512000];
@@ -330,32 +334,17 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
   unsigned char data_read[6];
   
   //read accel
-  i2c_read(0x69, 0x3B, 6, data_read);
-//   printf("XH: %d\n",(int)data_read[0]);
-//   printf("XL: %d\n",(int)data_read[1]);
-//   printf("YH: %d\n",(int)data_read[2]);
-//   printf("YL: %d\n",(int)data_read[3]);
-//   printf("ZH: %d\n",(int)data_read[4]);
-//   printf("ZL: %d\n",(int)data_read[5]);
-  
+  i2c_read(0x69, 0x3B, 6, data_read); 
   rawAccel[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
   rawAccel[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
-  rawAccel[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
-  
-//   printf("%d  %d  %d \t ", rawAccel[VEC3_X], rawAccel[VEC3_Y], rawAccel[VEC3_Z]);
-  //printf("%d  %d  %d  %f\n", accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], time);
-  
+  rawAccel[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5]; 
   //read gyro
   i2c_read(0x69, 0x43, 6, data_read);
   
-  rawGyro[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
-  rawGyro[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
-  rawGyro[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
-  
-//   printf("%d  %d  %d  \t", rawGyro[VEC3_X], rawGyro[VEC3_Y], rawGyro[VEC3_Z]);
-  //printf("%d  %d  %d  %f\n\n", gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], time);
-  
-  
+  rawGyro[VEC3_X] = (((short)data_read[0] << 8) | data_read[1]) - OFFSETGYROX;
+  rawGyro[VEC3_Y] = (((short)data_read[2] << 8) | data_read[3]) - OFFSETGYROY;
+  rawGyro[VEC3_Z] = (((short)data_read[4] << 8) | data_read[5]) - OFFSETGYROZ;
+ 
   
   for(i=VEC3_X;i<(VEC3_Z+1);i++){
     accel[i] = (float)rawAccel[i] / (ACCSENS);
@@ -363,7 +352,6 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
     angDispGyro[i] = gyro[i] *DEGREE_TO_RAD * timedelay; // *DEGREE_TO_RAD
     
   }
-//   printf("%f  %f  %f \t %f\n", accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], time);
   
   // normalize acceleration
   accNorm = sqrt(accel[VEC3_X]*accel[VEC3_X] + accel[VEC3_Y]*accel[VEC3_Y] + accel[VEC3_Z]*accel[VEC3_Z] );
@@ -398,7 +386,6 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
     for(i=VEC3_X;i<(VEC3_Z+1);i++){
       rEst[i] = ((rAcc[i] + rGyro[i] * wGyro)/(1 + wGyro));
     }
-//     printf("rAcc: %f  %f  %f\t rGyro: %f  %f  %f\t Axz: %f  Ayz: %f\t angDisp: %f %f  %f %f\t dt: %f\n",rAcc[0],rAcc[1],rAcc[2],rGyro[0],rGyro[1],rGyro[2],Axz,Ayz,angDisp[0],angDisp[1],angDispOld[0],angDispOld[1],timedelay);
      
     rEstNorm = sqrt(rEst[VEC3_X]*rEst[VEC3_X] + rEst[VEC3_Y]*rEst[VEC3_Y] + rEst[VEC3_Z]*rEst[VEC3_Z]);
     for(i=VEC3_X;i<(VEC3_Z+1);i++){
@@ -419,49 +406,12 @@ void estimate_position(/*mpudata_t *mpu, unsigned long loop_delay,*/ double time
     
     //printf("rEst: X %f    Y %f    Z %f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z]);
     
-    printf("%f;%f;%f;\t%f;%f;%f;\t%f;%f;%f;\t%f;%f;%f;\t%f;%f;%f;\t%f\n",rEst[VEC3_X], rEst[VEC3_Y], rEst[VEC3_Z], euler[VEC3_X], euler[VEC3_Y], euler[VEC3_Z], gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], rAcc[VEC3_X], rAcc[VEC3_Y], rAcc[VEC3_Z], timedelay);
+//     printf("%f;%f;%f;\t%f;%f;%f;\t%f;%f;%f;\t%f;%f;%f;\t%f;%f;%f;\t%f\n",rEst[VEC3_X], rEst[VEC3_Y], rEst[VEC3_Z], euler[VEC3_X], euler[VEC3_Y], euler[VEC3_Z], gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], rAcc[VEC3_X], rAcc[VEC3_Y], rAcc[VEC3_Z], timedelay);
+    
+    printf("%f\t%f\t%f\t%f\t%f\t%f\t%f\n", gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], timedelay);
+//     printf("%f\t%f\t%f\t%d\t%d\t%d\t%f\n", gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], rawGyro[VEC3_X], rawGyro[VEC3_Y], rawGyro[VEC3_Z], timedelay);
   
-  
-//   // normalize acceleration
-//   RAccel = sqrt(mpu->calibratedAccel[VEC3_X]*mpu->calibratedAccel[VEC3_X] + 
-// 		    mpu->calibratedAccel[VEC3_Y]*mpu->calibratedAccel[VEC3_Y] +
-// 		    mpu->calibratedAccel[VEC3_Z]*mpu->calibratedAccel[VEC3_Z] );
-//   normAccel[VEC3_X] = mpu->calibratedAccel[VEC3_X] / RAccel;
-//   normAccel[VEC3_Y] = mpu->calibratedAccel[VEC3_Y] / RAccel;
-//   normAccel[VEC3_Z] = mpu->calibratedAccel[VEC3_Z] / RAccel;
-//   
-//   if(first){
-//     printf("first estimation\n");
-//     for(i=VEC3_X;i<(VEC3_Z+1);i++){
-//       REst[i] = //normAccel[i];
-//       REstOld[i] = REst[i];
-//     }
-//     first = 0;
-//   }else{
-//     // estimation
-//     AxzOld = atan2f(REstOld[VEC3_X],REstOld[VEC3_Z]);
-//     AyzOld = atan2f(REstOld[VEC3_Y],REstOld[VEC3_Z]);
-//     Axz = AxzOld + (-mpu->rawGyro[VEC3_X] - rawGyroOld[VEC3_X])*DEGREE_TO_RAD/2 * timedelay;
-//     Ayz = AyzOld + (-mpu->rawGyro[VEC3_Y] - rawGyroOld[VEC3_Y])*DEGREE_TO_RAD/2 * timedelay;
-//     rGyro[VEC3_X] = sinf(Axz) / sqrt(1 + cosf(Axz)*cos(Axz) * tan(Ayz)*tan(Ayz));
-//     rGyro[VEC3_Y] = sinf(Ayz) / sqrt(1 + cosf(Ayz)*cos(Ayz) * tan(Axz)*tan(Axz));
-//    
-//     if(REstOld[VEC3_Z]>=0){
-//       rGyro[VEC3_Z] = sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
-//     }else{
-//       rGyro[VEC3_Z] = -sqrt(1 - rGyro[VEC3_X]*rGyro[VEC3_X] - rGyro[VEC3_Y]*rGyro[VEC3_Y]);
-//     }
-//     
-//     RREst = sqrt(REst[VEC3_X]*REst[VEC3_X] + REst[VEC3_Y]*REst[VEC3_Y] + REst[VEC3_Z]*REst[VEC3_Z]);
-//     for(i=VEC3_X;i<(VEC3_Z+1);i++){
-//       REst[i] = ((normAccel[i] + rGyro[i] * wGyro)/(1 + wGyro)) / RREst;
-//       REstOld[i] = REst[i];
-//     }    
-//     timeOld = time;
-//     
-//     //printf("rEst: X %f    Y %f    Z %f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z]);
-//     
-//     printf("%f;%f;%f;%f;%f;%f;%f\n",REst[VEC3_X], REst[VEC3_Y], REst[VEC3_Z], normAccel[VEC3_X], normAccel[VEC3_Y], normAccel[VEC3_Z], timedelay);
+
      
   }
   
@@ -482,9 +432,9 @@ int estimate_position2(double time){
   rawAccel[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
   //read gyro
   i2c_read(0x69, 0x43, 6, data_read);
-  rawGyro[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
-  rawGyro[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
-  rawGyro[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
+  rawGyro[VEC3_X] = (((short)data_read[0] << 8) | data_read[1]) - OFFSETGYROX;
+  rawGyro[VEC3_Y] = (((short)data_read[2] << 8) | data_read[3]) - OFFSETGYROY;
+  rawGyro[VEC3_Z] = (((short)data_read[4] << 8) | data_read[5]) - OFFSETGYROZ;
   
   //read mag
 //   i2c_read(0x69, 0x49, 8, data_read);
@@ -499,11 +449,6 @@ int estimate_position2(double time){
 //   rawMag[VEC3_X] = ((short)data_read[2] << 8) | data_read[1];
 //   rawMag[VEC3_Y] = ((short)data_read[4] << 8) | data_read[3];
 //   rawMag[VEC3_Z] = ((short)data_read[6] << 8) | data_read[5];
-  
-  
-//   printf("%d;%d;%d;%f\n", rawMag[VEC3_X], rawMag[VEC3_Y], rawMag[VEC3_Z], timedelay);
-  
- 
   
   
   for(i=VEC3_X;i<(VEC3_Z+1);i++){
@@ -573,9 +518,7 @@ int estimate_position2(double time){
     dcm[4] = dcm[8]*dcm[0] - dcm[6]*dcm[2];
     dcm[5] = dcm[6]*dcm[1] - dcm[7]*dcm[0];
     
-    
-    
-//     orthErr = dcm[3]*dcm[7] - dcm[6]*dcm[4] + dcm[6]*dcm[1] - dcm[0]*dcm[7] + dcm[0]*dcm[4] - dcm[3]*dcm[0];
+//     orthErr = dcm[3]*dcm[7] - dcm[6]*dcm[4] + dcm[6]*dcm[1] - dcm[0]*dcm[7] + dcm[0]*dcm[4] - dcm[3]*dcm[1];
 //     for(i=0;i<3;i++){
 //       xOrth[i] = dcm[i*3] - orthErr/2*dcm[i*3+1];
 //       yOrth[i] = dcm[i*3+1] - orthErr/2*dcm[i*3];
@@ -633,6 +576,92 @@ int estimate_position2(double time){
   timeOld = time;
   
   return 0;
+}
+
+
+
+
+
+
+// void estimate_pos_madgwick(double time){
+//   quaternion_t quaternion;
+//   vector3d_t euler;
+//   int i;
+//   
+//   double timedelay = (time-timeOld);
+//   
+//   unsigned char data_read[6];
+//   //read accel
+//   i2c_read(0x69, 0x3B, 6, data_read); 
+//   rawAccel[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
+//   rawAccel[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
+//   rawAccel[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
+//   //read gyro
+//   i2c_read(0x69, 0x43, 6, data_read);
+//   rawGyro[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
+//   rawGyro[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
+//   rawGyro[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
+//   
+//   
+//   for(i=VEC3_X;i<(VEC3_Z+1);i++){
+//     accel[i] = (float)rawAccel[i] / (ACCSENS);
+//     gyro[i] = (float)rawGyro[i] * DEGREE_TO_RAD / (GYROSENS);  
+//   }
+//   
+//   MadgwickAHRSupdate(gyro[VEC3_X],gyro[VEC3_Y],gyro[VEC3_Z],accel[VEC3_X],accel[VEC3_Y],accel[VEC3_Z],0,0,0);
+//   
+//   quaternion[QUAT_W] = q0;
+//   quaternion[QUAT_X] = q1;
+//   quaternion[QUAT_Y] = q2;
+//   quaternion[QUAT_Z] = q3;
+//   
+//   quaternionToEuler(quaternion,euler);
+//     
+// //   printf("%f  %f  %f  |  %f\n",euler[VEC3_X]*RAD_TO_DEGREE,euler[VEC3_Y]*RAD_TO_DEGREE,euler[VEC3_Z]*RAD_TO_DEGREE, timedelay);
+//   printf("%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\n", gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], euler[VEC3_X]*RAD_TO_DEGREE,euler[VEC3_Y]*RAD_TO_DEGREE,euler[VEC3_Z]*RAD_TO_DEGREE, timedelay);
+// 
+//   timeOld = time;
+// }
+
+
+void estimate_pos_mahony(double time){
+  quaternion_t quaternion;
+  vector3d_t euler;
+  int i;
+  
+  double timedelay = (time-timeOld);
+  
+  unsigned char data_read[6];
+  //read accel
+  i2c_read(0x69, 0x3B, 6, data_read); 
+  rawAccel[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
+  rawAccel[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
+  rawAccel[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
+  //read gyro
+  i2c_read(0x69, 0x43, 6, data_read);
+  rawGyro[VEC3_X] = ((short)data_read[0] << 8) | data_read[1];
+  rawGyro[VEC3_Y] = ((short)data_read[2] << 8) | data_read[3];
+  rawGyro[VEC3_Z] = ((short)data_read[4] << 8) | data_read[5];
+  
+  
+  for(i=VEC3_X;i<(VEC3_Z+1);i++){
+    accel[i] = (float)rawAccel[i] / (ACCSENS);
+    gyro[i] = (float)rawGyro[i] * DEGREE_TO_RAD / (GYROSENS);  
+  }
+  
+  MahonyAHRSupdate(gyro[VEC3_X],gyro[VEC3_Y],gyro[VEC3_Z],accel[VEC3_X],accel[VEC3_Y],accel[VEC3_Z],0,0,0);
+  
+  quaternion[QUAT_W] = q0;
+  quaternion[QUAT_X] = q1;
+  quaternion[QUAT_Y] = q2;
+  quaternion[QUAT_Z] = q3;
+  
+  quaternionToEuler(quaternion,euler);
+    
+//   printf("%f  %f  %f  |  %f\n",euler[VEC3_X]*RAD_TO_DEGREE,euler[VEC3_Y]*RAD_TO_DEGREE,euler[VEC3_Z]*RAD_TO_DEGREE, timedelay);
+  printf("%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\n", gyro[VEC3_X], gyro[VEC3_Y], gyro[VEC3_Z], accel[VEC3_X], accel[VEC3_Y], accel[VEC3_Z], euler[VEC3_X]*RAD_TO_DEGREE,euler[VEC3_Y]*RAD_TO_DEGREE,euler[VEC3_Z]*RAD_TO_DEGREE, q0,q1,q2,q3, timedelay);
+
+  timeOld = time;
 }
 
 
