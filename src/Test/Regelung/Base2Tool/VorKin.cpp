@@ -1,6 +1,6 @@
 #include <cmath>
-#include <einbein/Regelung/Fusspunkt/constantFusspunkt.hpp>
-#include <einbein/Regelung/Fusspunkt/VorKin.hpp>
+#include <einbein/Regelung/Base2Tool/constantFusspunkt.hpp>
+#include <einbein/Regelung/Base2Tool/VorKin.hpp>
 #include <einbein/templates_function.hpp>
 
 

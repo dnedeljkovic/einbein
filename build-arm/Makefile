@@ -147,7 +147,7 @@ Fusspunkt: cmake_check_build_system
 
 # fast build rule for target.
 Fusspunkt/fast:
-	$(MAKE) -f src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build
+	$(MAKE) -f src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/build
 .PHONY : Fusspunkt/fast
 
 #=============================================================================

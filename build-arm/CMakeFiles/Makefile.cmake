@@ -14,8 +14,8 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/2.8.12.2/CMakeSystem.cmake"
   "../src/CMakeLists.txt"
   "../src/Test/CMakeLists.txt"
+  "../src/Test/Regelung/Base2Tool/CMakeLists.txt"
   "../src/Test/Regelung/CMakeLists.txt"
-  "../src/Test/Regelung/Fusspunkt/CMakeLists.txt"
   "../src/Test/Regelung/Trajektorie/CMakeLists.txt"
   "../src/mpu9250/CMakeLists.txt"
   "../test/CMakeLists.txt"
@@ -48,7 +48,7 @@ SET(CMAKE_MAKEFILE_PRODUCTS
   "src/Test/CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/Test/Regelung/CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/Test/Regelung/Trajektorie/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "src/Test/Regelung/Fusspunkt/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "src/Test/Regelung/Base2Tool/CMakeFiles/CMakeDirectoryInformation.cmake"
   "test/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
@@ -57,7 +57,7 @@ SET(CMAKE_DEPEND_INFO_FILES
   "src/CMakeFiles/einbein.dir/DependInfo.cmake"
   "src/mpu9250/CMakeFiles/mpu9250.dir/DependInfo.cmake"
   "src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/DependInfo.cmake"
-  "src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/DependInfo.cmake"
+  "src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/DependInfo.cmake"
   "test/CMakeFiles/dacMot.dir/DependInfo.cmake"
   "test/CMakeFiles/digIO.dir/DependInfo.cmake"
   "test/CMakeFiles/fqdMot.dir/DependInfo.cmake"

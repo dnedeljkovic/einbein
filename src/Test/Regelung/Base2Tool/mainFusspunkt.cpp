@@ -10,8 +10,8 @@
 #include <eeros/logger/StreamLogWriter.hpp>
 #include <eeros/logger/SysLogWriter.hpp>
 
-#include <einbein/Regelung/Fusspunkt/constantFusspunkt.hpp>
-#include <einbein/Regelung/Fusspunkt/CSVorKin.hpp>
+#include <einbein/Regelung/Base2Tool/constantFusspunkt.hpp>
+#include <einbein/Regelung/Base2Tool/CSVorKin.hpp>
 #include <einbein/templates_function.hpp>
 
 
