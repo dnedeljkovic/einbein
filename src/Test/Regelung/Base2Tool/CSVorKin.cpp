@@ -1,5 +1,5 @@
 
-#include "einbein/Regelung/Fusspunkt/CSVorKin.hpp"
+#include "einbein/Regelung/Base2Tool/CSVorKin.hpp"
 
 
 using namespace einbein;
@@ -12,10 +12,10 @@ CSVorKin::CSVorKin(double ts) :
     alpha1.setValue(0);
     beta1.setValue(0);
     gamma1.setValue(0);
-    enc1.setValue(0);
-    enc2.setValue(0);
+    enc1.setValue(0.1);
+    enc2.setValue(0.05);
     enc3.setValue(0);
-    FVec_Fuss.setValue({0,0,1});
+    FVec_Fuss.setValue({-3,1,0});
 
 
     

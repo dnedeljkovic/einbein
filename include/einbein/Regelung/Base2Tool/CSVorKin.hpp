@@ -1,10 +1,10 @@
 #ifndef EINBEIN_CSVORKIN_HPP
 #define EINBEIN_CSVORKIN_HPP
 
-#include <einbein/Regelung/Fusspunkt/VorKin.hpp>
+#include <einbein/Regelung/Base2Tool/VorKin.hpp>
 #include <eeros/control/TimeDomain.hpp>
 #include <eeros/control/Constant.hpp>
-#include <einbein/Regelung/Fusspunkt/constantFusspunkt.hpp>
+#include <einbein/Regelung/Base2Tool/constantFusspunkt.hpp>
 
 namespace einbein {
 

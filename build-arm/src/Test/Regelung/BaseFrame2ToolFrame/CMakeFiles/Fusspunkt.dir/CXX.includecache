@@ -32,10 +32,6 @@ eeros/math/Matrix.hpp
 eeros/math/Matrix.hpp
 -
 
-../include/einbein/templates_function.hpp
-eeros/math/Matrix.hpp
--
-
 /home/reto/eeros-framework/includes/eeros/control/Block.hpp
 string
 -
@@ -184,17 +180,7 @@ string
 stdint.h
 -
 
-/home/reto/projects/einbein/src/Test/Regelung/Fusspunkt/CSVorKin.cpp
+/home/reto/projects/einbein/src/Test/Regelung/BaseFrame2ToolFrame/CSVorKin.cpp
 einbein/Regelung/Fusspunkt/CSVorKin.hpp
-/home/reto/projects/einbein/src/Test/Regelung/Fusspunkt/einbein/Regelung/Fusspunkt/CSVorKin.hpp
-
-/home/reto/projects/einbein/src/Test/Regelung/Fusspunkt/VorKin.cpp
-cmath
--
-einbein/Regelung/Fusspunkt/constantFusspunkt.hpp
--
-einbein/Regelung/Fusspunkt/VorKin.hpp
--
-einbein/templates_function.hpp
--
+/home/reto/projects/einbein/src/Test/Regelung/BaseFrame2ToolFrame/einbein/Regelung/Fusspunkt/CSVorKin.hpp
 

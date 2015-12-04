@@ -83,7 +83,7 @@ namespace einbein{
 	      virtual void calculateFPf2F3i(Vector3 &F31_IMU, Vector3 &F32_IMU, Vector3 &F33_IMU, Vector3 &F_Fuss_vec, Vector3 ek1_IMU,Vector3 ek2_IMU, Vector3 ek3_IMU);
 	      double F_x, F_y, F_z;
 	      double a11, a12, a13, a21, a22, a23, a31, a32, a33;
-	      eeros::math::Matrix<3,3> A, A_invers;
+	      eeros::math::Matrix<3,3> A, B, A_invers;
 	      double det_A; 
 	      Vector3 F3_skalar;
 
