@@ -5,6 +5,8 @@ add_library(mpu9250
 	    mpu9250/mpu9250.c
 	    mpu9250/quaternion.c
 	    mpu9250/vector3d.c
+	    #mpu9250/MadgwickAHRS.c
+	    mpu9250/MahonyAHRS.c
 )
 
 

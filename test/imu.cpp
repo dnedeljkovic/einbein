@@ -152,8 +152,10 @@ void read_loop(unsigned int sample_rate, Logger<LogWriter> *log)
       
 //       time = System::getTime();
       
-//       estimate_position(/*&mpu, loop_delay,*/ System::getTime());
-      estimate_position2(System::getTime()); linux_delay_ms(10);
+//       estimate_position(System::getTime());
+//       estimate_position2(System::getTime());
+//       estimate_pos_madgwick(System::getTime());
+      estimate_pos_mahony(System::getTime());
       
 //       printf("time do calculate: %f\n",System::getTime()-time);
       

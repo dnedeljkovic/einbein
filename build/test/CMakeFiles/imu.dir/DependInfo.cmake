@@ -17,6 +17,9 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
 SET(CMAKE_C_TARGET_INCLUDE_PATH
   "/home/dejan/eeros-framework/includes"
   "/home/dejan/flinklib/include"
+  "/home/reto/eeros-framework/includes"
+  "/home/reto/flinklib/include"
+  "../include"
   )
 SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
 SET(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

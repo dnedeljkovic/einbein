@@ -125,6 +125,32 @@ mpu9250/fast:
 .PHONY : mpu9250/fast
 
 #=============================================================================
+# Target rules for targets named Trajektorie
+
+# Build rule for target.
+Trajektorie: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Trajektorie
+.PHONY : Trajektorie
+
+# fast build rule for target.
+Trajektorie/fast:
+	$(MAKE) -f src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build.make src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build
+.PHONY : Trajektorie/fast
+
+#=============================================================================
+# Target rules for targets named Fusspunkt
+
+# Build rule for target.
+Fusspunkt: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Fusspunkt
+.PHONY : Fusspunkt
+
+# fast build rule for target.
+Fusspunkt/fast:
+	$(MAKE) -f src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Fusspunkt/CMakeFiles/Fusspunkt.dir/build
+.PHONY : Fusspunkt/fast
+
+#=============================================================================
 # Target rules for targets named dacMot
 
 # Build rule for target.
@@ -186,6 +212,8 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... einbein"
 	@echo "... mpu9250"
+	@echo "... Trajektorie"
+	@echo "... Fusspunkt"
 	@echo "... dacMot"
 	@echo "... digIO"
 	@echo "... fqdMot"

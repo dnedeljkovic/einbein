@@ -2,8 +2,8 @@
 BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00\x0e\x00e\x00i\x00n\x00b\x00e\x00i\x00n)
 
 [CMake]
-Build Directory Count=1
-Current Build Directory Index=0
+Build Directory Count=2
+Current Build Directory Index=1
 ProjectRootRelative=./
 
 [CMake][CMake Build Directory 0]
@@ -12,6 +12,14 @@ Build Type=Debug
 CMake Binary=file:///usr/bin/cmake
 Environment Profile=
 Extra Arguments=-DADDITIONAL_INCLUDE_DIRS="/home/dejan/eeros-framework/includes /home/dejan/flinklib/include" -DADDITIONAL_LINK_DIRS="/home/reto/eeros-framework/build-arm/src/libeeros.so /home/reto/flinklib/build-arm/lib/libflink.so" -DCMAKE_TOOLCHAIN_FILE=/home/reto/arm-toolchain.cmake
+Install Directory=file:///usr/local
+
+[CMake][CMake Build Directory 1]
+Build Directory Path=file:///home/dejan/projects/einbein/build
+Build Type=Debug
+CMake Binary=file:///usr/bin/cmake
+Environment Profile=
+Extra Arguments=-DCMAKE_TOOLCHAIN_FILE=/home/dejan/arm-toolchain.cmake
 Install Directory=file:///usr/local
 
 [Project]
