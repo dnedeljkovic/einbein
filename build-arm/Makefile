@@ -151,6 +151,19 @@ Fusspunkt/fast:
 .PHONY : Fusspunkt/fast
 
 #=============================================================================
+# Target rules for targets named Controller
+
+# Build rule for target.
+Controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Controller
+.PHONY : Controller
+
+# fast build rule for target.
+Controller/fast:
+	$(MAKE) -f src/Test/Regelung/Controller/CMakeFiles/Controller.dir/build.make src/Test/Regelung/Controller/CMakeFiles/Controller.dir/build
+.PHONY : Controller/fast
+
+#=============================================================================
 # Target rules for targets named dacMot
 
 # Build rule for target.
@@ -214,6 +227,7 @@ help:
 	@echo "... mpu9250"
 	@echo "... Trajektorie"
 	@echo "... Fusspunkt"
+	@echo "... Controller"
 	@echo "... dacMot"
 	@echo "... digIO"
 	@echo "... fqdMot"

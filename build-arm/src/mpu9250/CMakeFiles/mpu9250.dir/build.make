@@ -187,6 +187,29 @@ src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o.provides: src/mpu9250/CM
 
 src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o.provides.build: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o
 
+src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o: src/mpu9250/CMakeFiles/mpu9250.dir/flags.make
+src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o: ../src/mpu9250/mpu9250/MahonyAHRS.c
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles $(CMAKE_PROGRESS_7)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building C object src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o"
+	cd /home/reto/projects/einbein/build-arm/src/mpu9250 && /usr/bin/arm-linux-gnueabihf-gcc  $(C_DEFINES) $(C_FLAGS) -o CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o   -c /home/reto/projects/einbein/src/mpu9250/mpu9250/MahonyAHRS.c
+
+src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.i"
+	cd /home/reto/projects/einbein/build-arm/src/mpu9250 && /usr/bin/arm-linux-gnueabihf-gcc  $(C_DEFINES) $(C_FLAGS) -E /home/reto/projects/einbein/src/mpu9250/mpu9250/MahonyAHRS.c > CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.i
+
+src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.s"
+	cd /home/reto/projects/einbein/build-arm/src/mpu9250 && /usr/bin/arm-linux-gnueabihf-gcc  $(C_DEFINES) $(C_FLAGS) -S /home/reto/projects/einbein/src/mpu9250/mpu9250/MahonyAHRS.c -o CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.s
+
+src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o.requires:
+.PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o.requires
+
+src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o.provides: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o.requires
+	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o.provides.build
+.PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o.provides
+
+src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o.provides.build: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o
+
 # Object files for target mpu9250
 mpu9250_OBJECTS = \
 "CMakeFiles/mpu9250.dir/eMPL/inv_mpu.c.o" \
@@ -194,7 +217,8 @@ mpu9250_OBJECTS = \
 "CMakeFiles/mpu9250.dir/glue/linux_glue.c.o" \
 "CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o" \
 "CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o" \
-"CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o"
+"CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o" \
+"CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o"
 
 # External object files for target mpu9250
 mpu9250_EXTERNAL_OBJECTS =
@@ -205,6 +229,7 @@ src/mpu9250/libmpu9250.a: src/mpu9250/CMakeFiles/mpu9250.dir/glue/linux_glue.c.o
 src/mpu9250/libmpu9250.a: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o
 src/mpu9250/libmpu9250.a: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o
 src/mpu9250/libmpu9250.a: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o
+src/mpu9250/libmpu9250.a: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o
 src/mpu9250/libmpu9250.a: src/mpu9250/CMakeFiles/mpu9250.dir/build.make
 src/mpu9250/libmpu9250.a: src/mpu9250/CMakeFiles/mpu9250.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking C static library libmpu9250.a"
@@ -221,6 +246,7 @@ src/mpu9250/CMakeFiles/mpu9250.dir/requires: src/mpu9250/CMakeFiles/mpu9250.dir/
 src/mpu9250/CMakeFiles/mpu9250.dir/requires: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/mpu9250.c.o.requires
 src/mpu9250/CMakeFiles/mpu9250.dir/requires: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/quaternion.c.o.requires
 src/mpu9250/CMakeFiles/mpu9250.dir/requires: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/vector3d.c.o.requires
+src/mpu9250/CMakeFiles/mpu9250.dir/requires: src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o.requires
 .PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/requires
 
 src/mpu9250/CMakeFiles/mpu9250.dir/clean:

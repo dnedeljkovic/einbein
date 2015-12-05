@@ -13,6 +13,15 @@ using namespace eeros::math;
 
 //Konstruktor
 VorKin::VorKin(){
+  Pf_IMU 	= Vector3{0,0,0};
+  Pf_0 	 	= Vector3{0,0,0};
+  FMsoll 	= Vector3{0,0,0};
+  
+  
+  out_Pf_IMU.getSignal().setValue(Pf_IMU);
+  out_Pf_0.getSignal().setValue(Pf_0);
+  out_FMsoll.getSignal().setValue(FMsoll);
+  
 };
 
 //Destruktor

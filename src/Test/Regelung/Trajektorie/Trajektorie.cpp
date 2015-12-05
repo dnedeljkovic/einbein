@@ -75,9 +75,9 @@ void Trajektorie::run(){
     
     
     //Zustandsmachine (switch für Ausgang Beschleunigung) starten
-    punkte  = 1;
-    zustand = 1;
-    xf_end_1 = xf_end;
+    punkte  		= 1;
+    zustand_intern 	= 1;
+    xf_end_1 		= xf_end;
  
     //printf("punkte_pos: %i  punkte_null: %i    punkte_neg: %i   Zustand: %i  t_b: %f  delta_x:  %f vorzeichen_ddx: %f ,  \n", punkte_pos, punkte_null, punkte_neg, zustand, t_b, dd_x_calc, vorzeichen_ddx);  
   }
@@ -85,11 +85,11 @@ void Trajektorie::run(){
  
  
  //Trajektorie Beschleunigung erzeugen
-  switch(zustand){
+  switch(zustand_intern){
     case 1: //positive Beschleunigung
       ddx_d = dd_x_calc;
       if(punkte >= punkte_pos){
-	zustand = 2;
+	zustand_intern = 2;
 	punkte = 0;
       }
       break;
@@ -97,7 +97,7 @@ void Trajektorie::run(){
     case 2: //keine Beschleunigung
       ddx_d = 0;
       if(punkte >= punkte_null){
-	zustand = 3;
+	zustand_intern = 3;
 	punkte = 0;
       }
       break;
@@ -106,7 +106,7 @@ void Trajektorie::run(){
       ddx_d = -dd_x_calc;
       //printf("Case 3: %i   ddx_d: %f zustand: %i \n ", punkte, ddx_d, zustand);
       if(punkte >= punkte_neg){
-	zustand = 4;
+	zustand_intern = 4;
 	punkte = 0;
       }
       break;
@@ -129,8 +129,13 @@ void Trajektorie::run(){
 
   //Berechnen der Integrale
   if(delta_x != 0){
-    dx_d = Ts*ddx_d + dx_d_1;
-    x_d  = Ts*dx_d + x_d_1; 
+    //exakte Transformation
+    //dx_d = Ts*ddx_d + dx_d_1;
+    //x_d  = Ts*dx_d + x_d_1;
+    
+    //Trapezregelen
+    dx_d = (ddx_d + ddx_d_1)/2 *Ts +dx_d_1;   
+    x_d = (dx_d + dx_d_1)/2 *Ts +x_d_1;
   }
     
   //Parameter übergeben

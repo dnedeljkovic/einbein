@@ -79,7 +79,7 @@ src/preinstall: src/Test/preinstall
 src/CMakeFiles/einbein.dir/all:
 	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/depend
 	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  9
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  12
 	@echo "Built target einbein"
 .PHONY : src/CMakeFiles/einbein.dir/all
 
@@ -129,7 +129,7 @@ src/mpu9250/preinstall:
 src/mpu9250/CMakeFiles/mpu9250.dir/all:
 	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/depend
 	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  12 13 14 15 16 17
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  15 16 17 18 19 20 21
 	@echo "Built target mpu9250"
 .PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/all
 
@@ -139,7 +139,7 @@ all: src/mpu9250/CMakeFiles/mpu9250.dir/all
 
 # Build rule for subdir invocation for target.
 src/mpu9250/CMakeFiles/mpu9250.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 7
 	$(MAKE) -f CMakeFiles/Makefile2 src/mpu9250/CMakeFiles/mpu9250.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 0
 .PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/rule
@@ -178,16 +178,19 @@ src/Test/preinstall: src/Test/Regelung/preinstall
 # Convenience name for "all" pass in the directory.
 src/Test/Regelung/all: src/Test/Regelung/Trajektorie/all
 src/Test/Regelung/all: src/Test/Regelung/Base2Tool/all
+src/Test/Regelung/all: src/Test/Regelung/Controller/all
 .PHONY : src/Test/Regelung/all
 
 # Convenience name for "clean" pass in the directory.
 src/Test/Regelung/clean: src/Test/Regelung/Trajektorie/clean
 src/Test/Regelung/clean: src/Test/Regelung/Base2Tool/clean
+src/Test/Regelung/clean: src/Test/Regelung/Controller/clean
 .PHONY : src/Test/Regelung/clean
 
 # Convenience name for "preinstall" pass in the directory.
 src/Test/Regelung/preinstall: src/Test/Regelung/Trajektorie/preinstall
 src/Test/Regelung/preinstall: src/Test/Regelung/Base2Tool/preinstall
+src/Test/Regelung/preinstall: src/Test/Regelung/Controller/preinstall
 .PHONY : src/Test/Regelung/preinstall
 
 #=============================================================================
@@ -212,7 +215,7 @@ src/Test/Regelung/Trajektorie/preinstall:
 src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/all:
 	$(MAKE) -f src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build.make src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/depend
 	$(MAKE) -f src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build.make src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  4 5 6
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  7 8 9
 	@echo "Built target Trajektorie"
 .PHONY : src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/all
 
@@ -262,7 +265,7 @@ src/Test/Regelung/Base2Tool/preinstall:
 src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/all:
 	$(MAKE) -f src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/depend
 	$(MAKE) -f src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/build.make src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  1 2 3
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  4 5 6
 	@echo "Built target Fusspunkt"
 .PHONY : src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/all
 
@@ -288,6 +291,56 @@ src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/clean:
 
 # clean rule for target.
 clean: src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory src/Test/Regelung/Controller
+
+# Convenience name for "all" pass in the directory.
+src/Test/Regelung/Controller/all: src/Test/Regelung/Controller/CMakeFiles/Controller.dir/all
+.PHONY : src/Test/Regelung/Controller/all
+
+# Convenience name for "clean" pass in the directory.
+src/Test/Regelung/Controller/clean: src/Test/Regelung/Controller/CMakeFiles/Controller.dir/clean
+.PHONY : src/Test/Regelung/Controller/clean
+
+# Convenience name for "preinstall" pass in the directory.
+src/Test/Regelung/Controller/preinstall:
+.PHONY : src/Test/Regelung/Controller/preinstall
+
+#=============================================================================
+# Target rules for target src/Test/Regelung/Controller/CMakeFiles/Controller.dir
+
+# All Build rule for target.
+src/Test/Regelung/Controller/CMakeFiles/Controller.dir/all:
+	$(MAKE) -f src/Test/Regelung/Controller/CMakeFiles/Controller.dir/build.make src/Test/Regelung/Controller/CMakeFiles/Controller.dir/depend
+	$(MAKE) -f src/Test/Regelung/Controller/CMakeFiles/Controller.dir/build.make src/Test/Regelung/Controller/CMakeFiles/Controller.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  1 2 3
+	@echo "Built target Controller"
+.PHONY : src/Test/Regelung/Controller/CMakeFiles/Controller.dir/all
+
+# Include target in all.
+all: src/Test/Regelung/Controller/CMakeFiles/Controller.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+src/Test/Regelung/Controller/CMakeFiles/Controller.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 src/Test/Regelung/Controller/CMakeFiles/Controller.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 0
+.PHONY : src/Test/Regelung/Controller/CMakeFiles/Controller.dir/rule
+
+# Convenience name for target.
+Controller: src/Test/Regelung/Controller/CMakeFiles/Controller.dir/rule
+.PHONY : Controller
+
+# clean rule for target.
+src/Test/Regelung/Controller/CMakeFiles/Controller.dir/clean:
+	$(MAKE) -f src/Test/Regelung/Controller/CMakeFiles/Controller.dir/build.make src/Test/Regelung/Controller/CMakeFiles/Controller.dir/clean
+.PHONY : src/Test/Regelung/Controller/CMakeFiles/Controller.dir/clean
+
+# clean rule for target.
+clean: src/Test/Regelung/Controller/CMakeFiles/Controller.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -318,7 +371,7 @@ test/preinstall:
 test/CMakeFiles/dacMot.dir/all:
 	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/depend
 	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  7
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  10
 	@echo "Built target dacMot"
 .PHONY : test/CMakeFiles/dacMot.dir/all
 
@@ -353,7 +406,7 @@ clean: test/CMakeFiles/dacMot.dir/clean
 test/CMakeFiles/digIO.dir/all:
 	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/depend
 	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  8
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  11
 	@echo "Built target digIO"
 .PHONY : test/CMakeFiles/digIO.dir/all
 
@@ -388,7 +441,7 @@ clean: test/CMakeFiles/digIO.dir/clean
 test/CMakeFiles/fqdMot.dir/all:
 	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/depend
 	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  10
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  13
 	@echo "Built target fqdMot"
 .PHONY : test/CMakeFiles/fqdMot.dir/all
 
@@ -423,7 +476,7 @@ clean: test/CMakeFiles/fqdMot.dir/clean
 test/CMakeFiles/imu.dir/all: src/mpu9250/CMakeFiles/mpu9250.dir/all
 	$(MAKE) -f test/CMakeFiles/imu.dir/build.make test/CMakeFiles/imu.dir/depend
 	$(MAKE) -f test/CMakeFiles/imu.dir/build.make test/CMakeFiles/imu.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  11
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  14
 	@echo "Built target imu"
 .PHONY : test/CMakeFiles/imu.dir/all
 
@@ -433,7 +486,7 @@ all: test/CMakeFiles/imu.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/imu.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 8
 	$(MAKE) -f CMakeFiles/Makefile2 test/CMakeFiles/imu.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/reto/projects/einbein/build-arm/CMakeFiles 0
 .PHONY : test/CMakeFiles/imu.dir/rule
