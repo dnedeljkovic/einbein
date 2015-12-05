@@ -1,0 +1,15 @@
+
+function setc()
+{
+	if [ ! -v $1 ]; then
+		local var=$1
+		shift
+		eval $var="$@"
+	fi
+}
+
+if [ -f config.sh ]; then
+	echo "loading configuration from file: config.sh"
+	. config.sh
+fi
+

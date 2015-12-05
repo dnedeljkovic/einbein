@@ -72,7 +72,7 @@ namespace einbein{
 	    double ddx_d, dx_d, x_d;
 	    double ddx_d_1, dx_d_1, x_d_1, delta_xf_1;
 	    double t_Luft, t1, t2, t3, t4;
-	    int punkte, zustand, punkte_pos, punkte_neg, punkte_null;
+	    int punkte, zustand_intern, punkte_pos, punkte_neg, punkte_null;
 	    double delta_x, t_b, dd_x_calc, vorzeichen_ddx;
   };//end class Trajektorie
   

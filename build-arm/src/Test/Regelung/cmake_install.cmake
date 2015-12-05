@@ -36,6 +36,8 @@ IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   INCLUDE("/home/reto/projects/einbein/build-arm/src/Test/Regelung/Trajektorie/cmake_install.cmake")
   INCLUDE("/home/reto/projects/einbein/build-arm/src/Test/Regelung/Base2Tool/cmake_install.cmake")
+  INCLUDE("/home/reto/projects/einbein/build-arm/src/Test/Regelung/Controller/cmake_install.cmake")
+  INCLUDE("/home/reto/projects/einbein/build-arm/src/Test/Regelung/PDV/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

@@ -184,6 +184,30 @@ glue/linux_glue.c.s:
 	cd /home/reto/projects/einbein/build-arm && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/glue/linux_glue.c.s
 .PHONY : glue/linux_glue.c.s
 
+mpu9250/MahonyAHRS.o: mpu9250/MahonyAHRS.c.o
+.PHONY : mpu9250/MahonyAHRS.o
+
+# target to build an object file
+mpu9250/MahonyAHRS.c.o:
+	cd /home/reto/projects/einbein/build-arm && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.o
+.PHONY : mpu9250/MahonyAHRS.c.o
+
+mpu9250/MahonyAHRS.i: mpu9250/MahonyAHRS.c.i
+.PHONY : mpu9250/MahonyAHRS.i
+
+# target to preprocess a source file
+mpu9250/MahonyAHRS.c.i:
+	cd /home/reto/projects/einbein/build-arm && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.i
+.PHONY : mpu9250/MahonyAHRS.c.i
+
+mpu9250/MahonyAHRS.s: mpu9250/MahonyAHRS.c.s
+.PHONY : mpu9250/MahonyAHRS.s
+
+# target to generate assembly for a file
+mpu9250/MahonyAHRS.c.s:
+	cd /home/reto/projects/einbein/build-arm && $(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/mpu9250/MahonyAHRS.c.s
+.PHONY : mpu9250/MahonyAHRS.c.s
+
 mpu9250/mpu9250.o: mpu9250/mpu9250.c.o
 .PHONY : mpu9250/mpu9250.o
 
@@ -274,6 +298,9 @@ help:
 	@echo "... glue/linux_glue.o"
 	@echo "... glue/linux_glue.i"
 	@echo "... glue/linux_glue.s"
+	@echo "... mpu9250/MahonyAHRS.o"
+	@echo "... mpu9250/MahonyAHRS.i"
+	@echo "... mpu9250/MahonyAHRS.s"
 	@echo "... mpu9250/mpu9250.o"
 	@echo "... mpu9250/mpu9250.i"
 	@echo "... mpu9250/mpu9250.s"
