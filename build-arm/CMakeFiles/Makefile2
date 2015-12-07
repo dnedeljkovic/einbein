@@ -79,7 +79,11 @@ src/preinstall: src/Test/preinstall
 src/CMakeFiles/einbein.dir/all:
 	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/depend
 	$(MAKE) -f src/CMakeFiles/einbein.dir/build.make src/CMakeFiles/einbein.dir/build
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  15
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  12
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 	@echo "Built target einbein"
 .PHONY : src/CMakeFiles/einbein.dir/all
 
@@ -129,7 +133,11 @@ src/mpu9250/preinstall:
 src/mpu9250/CMakeFiles/mpu9250.dir/all:
 	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/depend
 	$(MAKE) -f src/mpu9250/CMakeFiles/mpu9250.dir/build.make src/mpu9250/CMakeFiles/mpu9250.dir/build
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  18 19 20 21 22 23 24
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  15 16 17 18 19 20 21
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 	@echo "Built target mpu9250"
 .PHONY : src/mpu9250/CMakeFiles/mpu9250.dir/all
 
@@ -179,21 +187,30 @@ src/Test/preinstall: src/Test/Regelung/preinstall
 src/Test/Regelung/all: src/Test/Regelung/Trajektorie/all
 src/Test/Regelung/all: src/Test/Regelung/Base2Tool/all
 src/Test/Regelung/all: src/Test/Regelung/Controller/all
+<<<<<<< HEAD
 src/Test/Regelung/all: src/Test/Regelung/PDV/all
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 .PHONY : src/Test/Regelung/all
 
 # Convenience name for "clean" pass in the directory.
 src/Test/Regelung/clean: src/Test/Regelung/Trajektorie/clean
 src/Test/Regelung/clean: src/Test/Regelung/Base2Tool/clean
 src/Test/Regelung/clean: src/Test/Regelung/Controller/clean
+<<<<<<< HEAD
 src/Test/Regelung/clean: src/Test/Regelung/PDV/clean
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 .PHONY : src/Test/Regelung/clean
 
 # Convenience name for "preinstall" pass in the directory.
 src/Test/Regelung/preinstall: src/Test/Regelung/Trajektorie/preinstall
 src/Test/Regelung/preinstall: src/Test/Regelung/Base2Tool/preinstall
 src/Test/Regelung/preinstall: src/Test/Regelung/Controller/preinstall
+<<<<<<< HEAD
 src/Test/Regelung/preinstall: src/Test/Regelung/PDV/preinstall
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 .PHONY : src/Test/Regelung/preinstall
 
 #=============================================================================
@@ -218,7 +235,11 @@ src/Test/Regelung/Trajektorie/preinstall:
 src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/all:
 	$(MAKE) -f src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build.make src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/depend
 	$(MAKE) -f src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build.make src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/build
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  10 11 12
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  7 8 9
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 	@echo "Built target Trajektorie"
 .PHONY : src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/all
 
@@ -347,6 +368,7 @@ clean: src/Test/Regelung/Controller/CMakeFiles/Controller.dir/clean
 .PHONY : clean
 
 #=============================================================================
+<<<<<<< HEAD
 # Directory level rules for directory src/Test/Regelung/PDV
 
 # Convenience name for "all" pass in the directory.
@@ -397,6 +419,8 @@ clean: src/Test/Regelung/PDV/CMakeFiles/PDV.dir/clean
 .PHONY : clean
 
 #=============================================================================
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 # Directory level rules for directory test
 
 # Convenience name for "all" pass in the directory.
@@ -424,7 +448,11 @@ test/preinstall:
 test/CMakeFiles/dacMot.dir/all:
 	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/depend
 	$(MAKE) -f test/CMakeFiles/dacMot.dir/build.make test/CMakeFiles/dacMot.dir/build
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  13
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  10
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 	@echo "Built target dacMot"
 .PHONY : test/CMakeFiles/dacMot.dir/all
 
@@ -459,7 +487,11 @@ clean: test/CMakeFiles/dacMot.dir/clean
 test/CMakeFiles/digIO.dir/all:
 	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/depend
 	$(MAKE) -f test/CMakeFiles/digIO.dir/build.make test/CMakeFiles/digIO.dir/build
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  14
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  11
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 	@echo "Built target digIO"
 .PHONY : test/CMakeFiles/digIO.dir/all
 
@@ -494,7 +526,11 @@ clean: test/CMakeFiles/digIO.dir/clean
 test/CMakeFiles/fqdMot.dir/all:
 	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/depend
 	$(MAKE) -f test/CMakeFiles/fqdMot.dir/build.make test/CMakeFiles/fqdMot.dir/build
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  16
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  13
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 	@echo "Built target fqdMot"
 .PHONY : test/CMakeFiles/fqdMot.dir/all
 
@@ -529,7 +565,11 @@ clean: test/CMakeFiles/fqdMot.dir/clean
 test/CMakeFiles/imu.dir/all: src/mpu9250/CMakeFiles/mpu9250.dir/all
 	$(MAKE) -f test/CMakeFiles/imu.dir/build.make test/CMakeFiles/imu.dir/depend
 	$(MAKE) -f test/CMakeFiles/imu.dir/build.make test/CMakeFiles/imu.dir/build
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  17
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/reto/projects/einbein/build-arm/CMakeFiles  14
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 	@echo "Built target imu"
 .PHONY : test/CMakeFiles/imu.dir/all
 

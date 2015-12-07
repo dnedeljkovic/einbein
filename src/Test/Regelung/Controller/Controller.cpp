@@ -39,6 +39,7 @@ Controller::~Controller(){};
 
 void Controller::run(){
 //-----------------------------  set Input-------------------------------------------------
+<<<<<<< HEAD
       Zustand 		= in_Zustand.getSignal().getValue();
 	
 	//für Testzwecke --> erhöhung des Zustandes
@@ -49,6 +50,17 @@ void Controller::run(){
       Ts 		= in_Ts.getSignal().getValue();
       VarZustand	= in_VarZustand.getSignal().getValue(); 
       DataImu		= in_DataImu.getSignal().getValue();   
+=======
+      //Zustand 	= in_Zustand.getSignal().getValue();
+	
+	//für Testzwecke --> erhöhung des Zustandes
+	if (point >= 1){Zustand++; point = 0; printf("Zustand %d/n", Zustand);}
+	else point ++;
+      
+      Ts 		= in_Ts.getSignal().getValue();
+      VarZustand	= in_VarZustand.getSignal().getValue(); 
+      DataImu	= in_DataImu.getSignal().getValue();   
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
       
       //Variablen zuweisen
       rz_Platte_max       = VarZustand(0);

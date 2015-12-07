@@ -17,7 +17,10 @@ SET(CMAKE_MAKEFILE_DEPENDS
   "../src/Test/Regelung/Base2Tool/CMakeLists.txt"
   "../src/Test/Regelung/CMakeLists.txt"
   "../src/Test/Regelung/Controller/CMakeLists.txt"
+<<<<<<< HEAD
   "../src/Test/Regelung/PDV/CMakeLists.txt"
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
   "../src/Test/Regelung/Trajektorie/CMakeLists.txt"
   "../src/mpu9250/CMakeLists.txt"
   "../test/CMakeLists.txt"
@@ -52,7 +55,10 @@ SET(CMAKE_MAKEFILE_PRODUCTS
   "src/Test/Regelung/Trajektorie/CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/Test/Regelung/Base2Tool/CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/Test/Regelung/Controller/CMakeFiles/CMakeDirectoryInformation.cmake"
+<<<<<<< HEAD
   "src/Test/Regelung/PDV/CMakeFiles/CMakeDirectoryInformation.cmake"
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
   "test/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
@@ -63,7 +69,10 @@ SET(CMAKE_DEPEND_INFO_FILES
   "src/Test/Regelung/Trajektorie/CMakeFiles/Trajektorie.dir/DependInfo.cmake"
   "src/Test/Regelung/Base2Tool/CMakeFiles/Fusspunkt.dir/DependInfo.cmake"
   "src/Test/Regelung/Controller/CMakeFiles/Controller.dir/DependInfo.cmake"
+<<<<<<< HEAD
   "src/Test/Regelung/PDV/CMakeFiles/PDV.dir/DependInfo.cmake"
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
   "test/CMakeFiles/dacMot.dir/DependInfo.cmake"
   "test/CMakeFiles/digIO.dir/DependInfo.cmake"
   "test/CMakeFiles/fqdMot.dir/DependInfo.cmake"

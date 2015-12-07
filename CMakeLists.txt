@@ -17,4 +17,7 @@ include_directories(include)
 add_subdirectory(src)
 add_subdirectory(test)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676

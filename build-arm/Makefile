@@ -164,6 +164,7 @@ Controller/fast:
 .PHONY : Controller/fast
 
 #=============================================================================
+<<<<<<< HEAD
 # Target rules for targets named PDV
 
 # Build rule for target.
@@ -177,6 +178,8 @@ PDV/fast:
 .PHONY : PDV/fast
 
 #=============================================================================
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 # Target rules for targets named dacMot
 
 # Build rule for target.
@@ -241,7 +244,10 @@ help:
 	@echo "... Trajektorie"
 	@echo "... Fusspunkt"
 	@echo "... Controller"
+<<<<<<< HEAD
 	@echo "... PDV"
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 	@echo "... dacMot"
 	@echo "... digIO"
 	@echo "... fqdMot"

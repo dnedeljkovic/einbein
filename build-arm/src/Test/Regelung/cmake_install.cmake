@@ -37,7 +37,10 @@ IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   INCLUDE("/home/reto/projects/einbein/build-arm/src/Test/Regelung/Trajektorie/cmake_install.cmake")
   INCLUDE("/home/reto/projects/einbein/build-arm/src/Test/Regelung/Base2Tool/cmake_install.cmake")
   INCLUDE("/home/reto/projects/einbein/build-arm/src/Test/Regelung/Controller/cmake_install.cmake")
+<<<<<<< HEAD
   INCLUDE("/home/reto/projects/einbein/build-arm/src/Test/Regelung/PDV/cmake_install.cmake")
+=======
+>>>>>>> 9f96e30b121cb26268f32b33fc2e8f1c5b32c676
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 
